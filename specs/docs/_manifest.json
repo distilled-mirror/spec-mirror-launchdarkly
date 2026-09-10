@@ -1,0 +1,28 @@
+{
+  "origin": "https://launchdarkly.com/docs/api",
+  "openapi": {
+    "file": "openapi.json",
+    "source": "https://app.launchdarkly.com/api/v2/openapi.json",
+    "version": "3.0.3",
+    "title": "LaunchDarkly REST API",
+    "infoVersion": "2.0",
+    "paths": 254
+  },
+  "docs": [
+    {
+      "path": "llms.txt",
+      "source": "https://launchdarkly.com/docs/llms.txt",
+      "bytes": 200706
+    },
+    {
+      "path": "api.md",
+      "source": "https://launchdarkly.com/docs/api.md",
+      "bytes": 32845
+    },
+    {
+      "path": "authentication.md",
+      "source": "https://launchdarkly.com/docs/home/account/api.md",
+      "bytes": 6753
+    }
+  ]
+}
