@@ -14776,6 +14776,16 @@
               }
             }
           },
+          "422": {
+            "description": "The patch cannot be applied",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PatchFailedErrorRep"
+                }
+              }
+            }
+          },
           "429": {
             "description": "Rate limited",
             "content": {
