@@ -24994,11 +24994,11 @@
           {
             "name": "projectKey",
             "in": "query",
-            "description": "A project key to filter results by. Can be specified multiple times, one query parameter per project key.",
+            "description": "A project key to filter results by. Filters to the project's current environments. Can be used without `environmentKey` to scope results to whole projects. Can be specified multiple times, one query parameter per project key.",
             "schema": {
               "type": "string",
               "format": "string",
-              "description": "A project key to filter results by. Can be specified multiple times, one query parameter per project key."
+              "description": "A project key to filter results by. Filters to the project's current environments. Can be used without `environmentKey` to scope results to whole projects. Can be specified multiple times, one query parameter per project key."
             }
           },
           {
@@ -50180,7 +50180,7 @@
           },
           "redshiftSetupScripts": {
             "type": "array",
-            "description": "SQL setup scripts (4 parts) for Redshift Native Experimentation setup. Present only for setup endpoint responses.",
+            "description": "SQL setup scripts (4 parts) for Redshift native Experimentation setup. Present on setup endpoint responses and, rehydrated from the persisted config, on active (finalized) Redshift native Experimentation configurations.",
             "items": {
               "type": "string"
             }
