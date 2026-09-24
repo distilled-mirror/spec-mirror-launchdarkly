@@ -8,9 +8,9 @@
 
 This topic explains how to use API access tokens to authenticate with the [LaunchDarkly REST API](/api), as well as constraints and suggestions for implementing them.
 
-#### API access tokens are private
-
-Only you have access to the secret values of tokens you create. Other account members cannot access them. Administrators can delete your tokens, but cannot view their values.
+> **API access tokens are private**
+>
+> Only you have access to the secret values of tokens you create. Other account members cannot access them. Administrators can delete your tokens, but cannot view their values.
 
 ## Scope personal API access tokens
 
@@ -23,21 +23,21 @@ When you [create an access token](/home/account/api-create), use the **Role** me
   * Select **Custom** to choose another role, either one you've created or one provided by LaunchDarkly. This option is available only if your LaunchDarkly subscription includes custom roles.
 * You can select **Inline policy** to create a role policy that applies only to this token. This option is available only if your LaunchDarkly subscription includes custom roles.
 
-#### Never share an API access token
-
-API access tokens are secrets. If you share your access token with others, they may be able to use it to impersonate you, or perform actions with it that could later be attributed to you or your integration erroneously.
+> **Never share an API access token**
+>
+> API access tokens are secrets. If you share your access token with others, they may be able to use it to impersonate you, or perform actions with it that could later be attributed to you or your integration erroneously.
 
 You can also use the REST API: [Access tokens](/api/access-tokens)
 
 ## Access token permissions
 
-#### Personal API access tokens and the principle of least privilege
+> **Personal API access tokens and the principle of least privilege**
+>
+> As a best practice, we recommend giving your tokens the smallest scope required for your integration. For example, if your integration is not designed to modify your Production environment, use a custom role or inline policy to restrict access appropriately.
 
-As a best practice, we recommend giving your tokens the smallest scope required for your integration. For example, if your integration is not designed to modify your Production environment, use a custom role or inline policy to restrict access appropriately.
-
-#### Using custom roles in access tokens
-
-If you use custom roles to scope your access tokens, modifying the permissions of the custom roles will also modify the permissions of related tokens.
+> **Using custom roles in access tokens**
+>
+> If you use custom roles to scope your access tokens, modifying the permissions of the custom roles will also modify the permissions of related tokens.
 
 There are two types of tokens you can create in LaunchDarkly. You can create a personal token, which is linked to an account member's account, or a service token, which is independent of the account that created it.
 
@@ -57,19 +57,19 @@ Use a personal token when you want to access the LaunchDarkly API for your tempo
 
 ### Service tokens
 
-#### Service tokens are available to customers on select plans
-
-Service tokens are only available to customers on select plans. To learn more, [read about our pricing](https://launchdarkly.com/pricing/). To upgrade your plan, [contact Sales](https://launchdarkly.com/contact-sales/).
+> **Service tokens are available to customers on select plans**
+>
+> Service tokens are only available to customers on select plans. To learn more, [read about our pricing](https://launchdarkly.com/pricing/). To upgrade your plan, [contact Sales](https://launchdarkly.com/contact-sales/).
 
 Unlike personal tokens, service tokens are not tied to your LaunchDarkly profile. You can assign an existing role to a service token, or create a custom role for it to use.
 
 A service token's permissions are permanently fixed after you create it. You cannot edit the permissions of a service token, and even if your permissions change, the service token's permissions stay the same.
 
-#### Service tokens can only have the permissions of the role assigned to their creator
-
-If you create a service token and give it more access than you have, the service token will fail to perform actions or access resources that you do not have permission to perform or access.
-
-You can never give a service token more permissions than you have.
+> **Service tokens can only have the permissions of the role assigned to their creator**
+>
+> If you create a service token and give it more access than you have, the service token will fail to perform actions or access resources that you do not have permission to perform or access.
+>
+> You can never give a service token more permissions than you have.
 
 Use a service token to create long-term integrations with the LaunchDarkly API.
 
