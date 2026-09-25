@@ -13599,11 +13599,12 @@
           {
             "name": "sort",
             "in": "query",
-            "description": "Specifies a field by which to sort. LaunchDarkly supports sorting by timestamp in ascending order by specifying `ts` for this value, or descending order by specifying `-ts`.",
+            "description": "Deprecated. This endpoint does not support sorting. Requests that include this parameter are rejected with a `400` response, so omit it.",
+            "deprecated": true,
             "schema": {
               "type": "string",
               "format": "string",
-              "description": "Specifies a field by which to sort. LaunchDarkly supports sorting by timestamp in ascending order by specifying `ts` for this value, or descending order by specifying `-ts`."
+              "description": "Deprecated. This endpoint does not support sorting. Requests that include this parameter are rejected with a `400` response, so omit it."
             }
           },
           {
@@ -13755,11 +13756,12 @@
           {
             "name": "sort",
             "in": "query",
-            "description": "Specifies a field by which to sort. LaunchDarkly supports sorting by timestamp in ascending order by specifying `ts` for this value, or descending order by specifying `-ts`.",
+            "description": "Deprecated. This endpoint does not support sorting. Requests that include this parameter are rejected with a `400` response, so omit it.",
+            "deprecated": true,
             "schema": {
               "type": "string",
               "format": "string",
-              "description": "Specifies a field by which to sort. LaunchDarkly supports sorting by timestamp in ascending order by specifying `ts` for this value, or descending order by specifying `-ts`."
+              "description": "Deprecated. This endpoint does not support sorting. Requests that include this parameter are rejected with a `400` response, so omit it."
             }
           },
           {
@@ -13998,11 +14000,12 @@
           {
             "name": "sort",
             "in": "query",
-            "description": "Specifies a field by which to sort. LaunchDarkly supports sorting by timestamp in ascending order by specifying `ts` for this value, or descending order by specifying `-ts`.",
+            "description": "Deprecated. This endpoint does not support sorting. Requests that include this parameter are rejected with a `400` response, so omit it.",
+            "deprecated": true,
             "schema": {
               "type": "string",
               "format": "string",
-              "description": "Specifies a field by which to sort. LaunchDarkly supports sorting by timestamp in ascending order by specifying `ts` for this value, or descending order by specifying `-ts`."
+              "description": "Deprecated. This endpoint does not support sorting. Requests that include this parameter are rejected with a `400` response, so omit it."
             }
           },
           {
@@ -14307,11 +14310,12 @@
           {
             "name": "sort",
             "in": "query",
-            "description": "Specifies a field by which to sort. LaunchDarkly supports sorting by timestamp in ascending order by specifying `ts` for this value, or descending order by specifying `-ts`.",
+            "description": "Deprecated. This endpoint does not support sorting. Requests that include this parameter are rejected with a `400` response, so omit it.",
+            "deprecated": true,
             "schema": {
               "type": "string",
               "format": "string",
-              "description": "Specifies a field by which to sort. LaunchDarkly supports sorting by timestamp in ascending order by specifying `ts` for this value, or descending order by specifying `-ts`."
+              "description": "Deprecated. This endpoint does not support sorting. Requests that include this parameter are rejected with a `400` response, so omit it."
             }
           },
           {
@@ -25022,13 +25026,23 @@
             }
           },
           {
-            "name": "groupBy",
+            "name": "destinationKind",
             "in": "query",
-            "description": "If specified, returns data for each distinct value of the given field. Can be specified multiple times to group data by multiple dimensions, one query parameter per dimension.<br/>Valid values: `environmentId`, `eventKind`.",
+            "description": "A Streaming configuration kind to filter results by. Values preserve raw product identity; `snowflake` is legacy Streaming Snowflake and is distinct from Warehouse `snowflake-v2`. Can be specified multiple times.<br/>Valid values: `kinesis`, `google-pubsub`, `mparticle`, `segment`, `azure-event-hubs`, `snowflake`, `unknown`.",
             "schema": {
               "type": "string",
               "format": "string",
-              "description": "If specified, returns data for each distinct value of the given field. Can be specified multiple times to group data by multiple dimensions, one query parameter per dimension.<br/>Valid values: `environmentId`, `eventKind`."
+              "description": "A Streaming configuration kind to filter results by. Values preserve raw product identity; `snowflake` is legacy Streaming Snowflake and is distinct from Warehouse `snowflake-v2`. Can be specified multiple times.<br/>Valid values: `kinesis`, `google-pubsub`, `mparticle`, `segment`, `azure-event-hubs`, `snowflake`, `unknown`."
+            }
+          },
+          {
+            "name": "groupBy",
+            "in": "query",
+            "description": "If specified, returns data for each distinct value of the given field. Can be specified multiple times to group data by multiple dimensions, one query parameter per dimension.<br/>Valid values: `environmentId`, `eventKind`, `destinationKind`.",
+            "schema": {
+              "type": "string",
+              "format": "string",
+              "description": "If specified, returns data for each distinct value of the given field. Can be specified multiple times to group data by multiple dimensions, one query parameter per dimension.<br/>Valid values: `environmentId`, `eventKind`, `destinationKind`."
             }
           },
           {
@@ -28088,23 +28102,33 @@
             }
           },
           {
-            "name": "destination",
+            "name": "destinationKind",
             "in": "query",
-            "description": "A destination kind to filter results by. Can be specified multiple times, one query parameter per destination kind.<br/>Valid values: `snowflake-v2`, `databricks`, `bigquery`, `redshift`, `clickhouse`.",
+            "description": "A Warehouse configuration kind to filter results by. Cannot be combined with `destination`. Can be specified multiple times.<br/>Valid values: `snowflake-v2`, `databricks`, `bigquery`, `redshift`, `clickhouse`, `s3`.",
             "schema": {
               "type": "string",
               "format": "string",
-              "description": "A destination kind to filter results by. Can be specified multiple times, one query parameter per destination kind.<br/>Valid values: `snowflake-v2`, `databricks`, `bigquery`, `redshift`, `clickhouse`."
+              "description": "A Warehouse configuration kind to filter results by. Cannot be combined with `destination`. Can be specified multiple times.<br/>Valid values: `snowflake-v2`, `databricks`, `bigquery`, `redshift`, `clickhouse`, `s3`."
+            }
+          },
+          {
+            "name": "destination",
+            "in": "query",
+            "description": "A Warehouse configuration kind to filter results by. Cannot be combined with `destinationKind`. Existing behavior is unchanged. Can be specified multiple times.<br/>Valid values: `snowflake-v2`, `databricks`, `bigquery`, `redshift`, `clickhouse`.",
+            "schema": {
+              "type": "string",
+              "format": "string",
+              "description": "A Warehouse configuration kind to filter results by. Cannot be combined with `destinationKind`. Existing behavior is unchanged. Can be specified multiple times.<br/>Valid values: `snowflake-v2`, `databricks`, `bigquery`, `redshift`, `clickhouse`."
             }
           },
           {
             "name": "groupBy",
             "in": "query",
-            "description": "If specified, returns data for each distinct value of the given field. Can be specified multiple times to group data by multiple dimensions, one query parameter per dimension.<br/>Valid values: `projectId`, `environmentId`, `destination`.",
+            "description": "If specified, returns data for each distinct value of the given field. Can be specified multiple times.<br/>Valid values: `projectId`, `environmentId`, `destination`, `destinationKind`. The two destination dimensions return the same raw Warehouse configuration kinds.",
             "schema": {
               "type": "string",
               "format": "string",
-              "description": "If specified, returns data for each distinct value of the given field. Can be specified multiple times to group data by multiple dimensions, one query parameter per dimension.<br/>Valid values: `projectId`, `environmentId`, `destination`."
+              "description": "If specified, returns data for each distinct value of the given field. Can be specified multiple times.<br/>Valid values: `projectId`, `environmentId`, `destination`, `destinationKind`. The two destination dimensions return the same raw Warehouse configuration kinds."
             }
           },
           {
@@ -46199,7 +46223,7 @@
         "properties": {
           "_id": {
             "type": "string",
-            "description": "The guarded rollout measured rollout Id",
+            "description": "The guarded rollout release phase ID",
             "example": "885ccadf-181b-4a9a-8414-7ad6f7ba2db0"
           },
           "flagKey": {
