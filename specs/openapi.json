@@ -25157,7 +25157,7 @@
           "Account usage (beta)"
         ],
         "summary": "Get evaluations usage",
-        "description": "Get time-series arrays of the number of times a flag is evaluated, broken down by the variation that resulted from that evaluation. The granularity of the data depends on the age of the data requested. If the requested range is within the past two hours, minutely data is returned. If it is within the last two days, hourly data is returned. Otherwise, daily data is returned.",
+        "description": "Get time-series arrays of the number of times a flag is evaluated, broken down by the variation that resulted from that evaluation. The granularity of the returned data depends on the length of the requested time range: ranges shorter than two hours return minutely data, ranges shorter than two days return hourly data, and ranges of two days or longer return daily data. Minutely data is retained for 70 days; a range shorter than two hours that starts before then is returned at hourly granularity instead, with the start of the range widened to the containing hour. Ranges that predate available data return an empty series list. If a flag has served many distinct variation values in the requested range, the least recently seen values may be aggregated into a single additional series labeled \"Other Variations\".",
         "parameters": [
           {
             "name": "projectKey",
@@ -38490,7 +38490,7 @@
             "style": "form"
           },
           {
-            "description": "A sort to apply to the list of SDK keys. Supported field: `createdAt`. Prefix the field with `-` to sort in descending order (for example, `-createdAt`).",
+            "description": "A sort to apply to the list of SDK keys. Supported fields: `createdAt` and `environmentKey`. Prefix `createdAt` with `-` to sort in descending order (for example, `-createdAt`). `environmentKey` orders keys by environment key ascending, then by creation time ascending within each environment, so each page is environment-contiguous.",
             "explode": true,
             "in": "query",
             "name": "sort",
@@ -38498,7 +38498,8 @@
             "schema": {
               "enum": [
                 "createdAt",
-                "-createdAt"
+                "-createdAt",
+                "environmentKey"
               ],
               "type": "string"
             },
