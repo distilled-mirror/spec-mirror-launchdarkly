@@ -83,7 +83,7 @@
     },
     {
       "name": "Contexts",
-      "description": "\nContexts are people, services, machines, or other resources that encounter feature flags in your product. Contexts are identified by their `kind`, which describes the type of resources encountering flags, and by their `key`. Each unique combination of one or more contexts that have encountered a feature flag in your product is called a context instance.\n\nWhen you use the LaunchDarkly SDK to evaluate a flag, you provide a context to that call. LaunchDarkly records the key and attributes of each context instance. You can view these in the LaunchDarkly user interface from the **Contexts** list, or use the Context APIs. To learn more, read [Contexts](https://launchdarkly.com/docs/home/observability/contexts).\n\nLaunchDarkly provides APIs for you to:\n\n* retrieve contexts, context instances, and context attribute names and values\n* search for contexts or context instances\n* delete context instances\n* fetch context kinds\n* create and update context kinds\n\nTo learn more about context kinds, read [Context kinds](https://launchdarkly.com/docs/home/observability/context-kinds).\n\nContexts are always scoped within a project and an environment. Each environment has its own set of context instance records.\n\nSeveral of the endpoints in the contexts API require a context instance ID or application ID. Both of these IDs are returned as part of the [Search for context instances](https://launchdarkly.com/docs/api/contexts/search-context-instances) response. The context instance ID is the `id` field of each element in the `items` array. The application ID is the `applicationId` field of each element in the `items` array. By default, the application ID is set to the SDK you are using. In the LaunchDarkly UI, the application ID and application version appear on the context details page in the \"From source\" field. You can change the application ID as part of your SDK configuration. To learn more, read [Application metadata configuration](https://launchdarkly.com/docs/sdk/features/app-config).\n\n### Filtering contexts and context instances\n\nWhen you [search for contexts](https://launchdarkly.com/docs/api/contexts/search-contexts) or [context instances](https://launchdarkly.com/docs/api/contexts/search-context-instances), you can filter the results using fields and operators with the `filter` parameter. Specify `filter` either as a query parameter or as a request body parameter.\n\nThe `filter` parameter supports the following operators: `after`, `anyOf`, `before`, `contains`, `equals`, `exists`, `notEquals`, `startsWith`.\n\n<details>\n<summary>Expand for details on operators and syntax</summary>\n\n#### after\n\nReturns contexts or context instances if the date field value occurs after the specified time. For example:\n\n* `myField after \"2022-09-21T19:03:15+00:00\"`\n\n#### anyOf\n\nReturns contexts or context instances if any field value matches any of the provided values. For example:\n\n* `myField anyOf [44]`\n* `myField anyOf [\"phone\",\"tablet\"]`\n* `myField anyOf [true]\"`\n\n#### before\n\nReturns contexts or context instances if the date field value occurs before the provided time. For example:\n\n* `myField before \"2022-09-21T19:03:15+00:00\"`\n\n#### contains\n\nReturns contexts or context instances if the field's list of values contains all of the provided values. For example:\n\n* `myListField contains 44`\n* `myListField contains [\"phone\",\"tablet\"]`\n* `myListField contains true`\n\n#### equals\n\nReturns contexts or context instances only if the field value exactly matches the provided value. For example:\n\n* `myField equals 44`\n* `myField equals \"device\"`\n* `myField equals true`\n* `myField equals [1,2,3,4]`\n* `myField equals [\"hello\",\"goodbye\"]`\n\n#### exists\n\nReturns contexts or context instances based on whether the specified field exists. For example:\n\n* `myField exists true`\n* `myField exists false`\n* `*.name exists true`\n\n#### notEquals\n\nReturns contexts or context instances if the field value does not exactly match the provided value. For example:\n\n* `myField notEquals 44`\n* `myField notEquals \"device\"`\n* `myField notEquals true`\n* `myField notEquals [1,2,3,4]`\n* `myField notEquals [\"hello\",\"goodbye\"]`\n\n#### startsWith\n\nReturns contexts or context instances if a singular string field value begins with the provided substring. For example:\n\n* `myField startsWith \"do\"`\n\n</details>\n\nYou can also combine filters in the following ways:\n\n* Use a comma (`,`) as an AND operator\n* Use a vertical bar (`|`) as an OR operator\n* Use parentheses `()` to group filters\n\nFor example:\n\n* `myField notEquals 0, myField notEquals 1` returns contexts or context instances where `myField` is not 0 and is not 1\n* `myFirstField equals \"device\",(mySecondField equals \"iPhone\"|mySecondField equals \"iPad\")` returns contexts or context instances where `myFirstField` is equal to \"device\" and `mySecondField` is equal to either \"iPhone\" or \"iPad\"\n\n#### Supported fields and operators\n\nThe `filter` parameter accepts different field types depending on whether you search for contexts or context instances. Also, you can only filter some fields using certain operators.\n\nWhen you search for [contexts](https://launchdarkly.com/docs/api/contexts/search-contexts), the `filter` parameter supports the following fields and operators:\n\n|<div style=\"width:120px\">Field</div> |Description |Supported operators |\n|---|---|---|\n|`applicationId` |An identifier that represents the application where the LaunchDarkly SDK is running. |`equals`, `notEquals`, `anyOf` |\n|`id` |The unique identifier for the context. |`equals`, `notEquals`, `anyOf` |\n|`key` |The context key. |`equals`, `notEquals`, `anyOf`, `startsWith` |\n|`kind` |The context kind. |`equals`, `notEquals`, `anyOf` |\n|`kinds` |A list of all kinds found in the context. Supply a list of strings to the operator. |`equals`, `anyOf`, `contains` |\n|`kindKey` |The kind and key for the context, joined with a `:`. For example, `user:user-key-abc123`. |`equals`, `notEquals`, `anyOf` |\n|`kindKeys` |A list of all kinds and keys found in the context. Join the kind and key with a `:`. For example, `user:user-key-abc123`. Supply a list of strings to the operator. |`equals`, `anyOf`, `contains` |\n|`q` |A \"fuzzy\" search across context attribute values and the context key. Supply a string or list of strings to the operator.  |`equals` |\n|`name` |The name for the context. |`equals`, `notEquals`, `exists`, `anyOf`, `startsWith` |\n|`<a kind>.<an attribute name>` |A kind and the name of any attribute that appears in a context of that kind, for example, `user.email`. To filter all kinds use `*` in place of the kind. For example, `*.email`. You can use either a literal attribute name or a JSON path to specify the attribute. If you use a JSON path, then you must escape the `/` character using `~1`, and escape the `~` character using `~0`. For example, use `user.job/title` or `user./job~1title` to filter the `/job/title` field in a user context kind. If the field or value includes whitespace, enclose it in double quotes. |`equals`, `notEquals`, `exists`, `startsWith`, `before`, `after`.|\n\nWhen searching for [context instances](https://launchdarkly.com/docs/api/contexts/search-context-instances), the `filter` parameter supports the following fields and operators:\n\n|<div style=\"width:120px\">Field</div> |Description |Supported operators |\n|---|---|---|\n|`applicationId` |An identifier representing the application where the LaunchDarkly SDK is running. |`equals`, `notEquals`, `anyOf` |\n|`id` |The unique identifier for the context instance. |`equals`, `notEquals`, `anyOf` |\n|`kinds` |A list of all kinds found in the context instance. Supply a list of strings to the operator. |`equals`, `anyOf`, `contains` |\n|`kindKeys` |A list of all kinds and keys found in the context instance. The kind and key are joined with `:`. For example, `user:user-key-abc123`. Supply a list of strings to the operator. |`equals`, `anyOf`, `contains` |\n"
+      "description": "\nContexts are people, services, machines, or other resources that encounter feature flags in your product. Contexts are identified by their `kind`, which describes the type of resources encountering flags, and by their `key`. Each unique combination of one or more contexts that have encountered a feature flag in your product is called a context instance.\n\nWhen you use the LaunchDarkly SDK to evaluate a flag, you provide a context to that call. LaunchDarkly records the key and attributes of each context. You can view these in the LaunchDarkly user interface from the **Contexts** list, or use the Context APIs. To learn more, read [Contexts](https://launchdarkly.com/docs/home/observability/contexts).\n\nLaunchDarkly provides APIs for you to:\n\n* retrieve contexts and context attribute names and values\n* search for contexts\n* fetch context kinds\n* create and update context kinds\n\nTo learn more about context kinds, read [Context kinds](https://launchdarkly.com/docs/home/observability/context-kinds).\n\nContexts are always scoped within a project and an environment. Each environment has its own set of context records. Context records reflect the contexts that LaunchDarkly has received within the last 30 days.\n\nSome of the endpoints in the contexts API accept an application ID. The application ID is returned as the `applicationId` field of each element in the `items` array of the [Get contexts](https://launchdarkly.com/docs/api/contexts/get-contexts) response. By default, the application ID is set to the SDK you are using. In the LaunchDarkly UI, the application ID and application version appear on the context details page in the \"From source\" field. You can change the application ID as part of your SDK configuration. To learn more, read [Application metadata configuration](https://launchdarkly.com/docs/sdk/features/app-config).\n\n### Filtering contexts\n\nWhen you [search for contexts](https://launchdarkly.com/docs/api/contexts/search-contexts), you can filter the results using fields and operators with the `filter` parameter. Specify `filter` either as a query parameter or as a request body parameter.\n\nThe `filter` parameter supports the following operators: `after`, `anyOf`, `before`, `contains`, `equals`, `exists`, `notEquals`, `startsWith`.\n\n<details>\n<summary>Expand for details on operators and syntax</summary>\n\n#### after\n\nReturns contexts if the field's date value occurs after the specified time. Provide an RFC 3339 timestamp or Unix epoch milliseconds. For example:\n\n* `myField after \"2022-09-21T19:03:15+00:00\"`\n\n#### anyOf\n\nReturns contexts if the field value matches any of the provided values. The `anyOf` operator is supported for the `applicationId`, `key`, `kind`, `kindKey`, `kindKeys`, and `kinds` fields only. To match an attribute against multiple values, use `equals` with an array value instead. For example:\n\n* `kind anyOf [\"user\",\"device\"]`\n* `key anyOf [\"user-key-123abc\",\"user-key-456def\"]`\n\n#### before\n\nReturns contexts if the field's date value occurs before the provided time. Provide an RFC 3339 timestamp or Unix epoch milliseconds. For example:\n\n* `myField before \"2022-09-21T19:03:15+00:00\"`\n\n#### contains\n\nReturns contexts whose kind or kind and key match the provided value. The `contains` operator is supported for the `kinds` and `kindKeys` fields only, and accepts exactly one value. For example:\n\n* `kinds contains [\"user\"]`\n* `kindKeys contains [\"user:user-key-123abc\"]`\n\n#### equals\n\nReturns contexts only if the field value exactly matches the provided value. If you provide an array, the filter matches if the field value equals any element of the array. For example:\n\n* `myField equals 44`\n* `myField equals \"device\"`\n* `myField equals true`\n* `myField equals [1,2,3,4]`\n* `myField equals [\"hello\",\"goodbye\"]`\n\n#### exists\n\nReturns contexts based on whether the specified field exists. The `exists` operator is supported for the `name` field and attribute fields only. For example:\n\n* `myField exists true`\n* `myField exists false`\n* `*.name exists true`\n\n#### notEquals\n\nReturns contexts if the field value does not exactly match the provided value. If you provide an array, the filter matches if the field value does not equal any element of the array. For example:\n\n* `myField notEquals 44`\n* `myField notEquals \"device\"`\n* `myField notEquals true`\n* `myField notEquals [1,2,3,4]`\n* `myField notEquals [\"hello\",\"goodbye\"]`\n\n#### startsWith\n\nReturns contexts if a singular string field value begins with the provided substring. The substring can be at most 500 characters. Matching is case-sensitive. For example:\n\n* `myField startsWith \"do\"`\n\n</details>\n\nYou can also combine filters in the following ways:\n\n* Use a comma (`,`) as an AND operator\n* Use a vertical bar (`|`) as an OR operator\n* Use parentheses `()` to group filters\n\nFor example:\n\n* `myField notEquals 0, myField notEquals 1` returns contexts where `myField` is not 0 and is not 1\n* `myFirstField equals \"device\",(mySecondField equals \"iPhone\"|mySecondField equals \"iPad\")` returns contexts where `myFirstField` is equal to \"device\" and `mySecondField` is equal to either \"iPhone\" or \"iPad\"\n\n#### Supported fields and operators\n\nYou can only filter some fields using certain operators.\n\nWhen you search for [contexts](https://launchdarkly.com/docs/api/contexts/search-contexts), the `filter` parameter supports the following fields and operators:\n\n|<div style=\"width:120px\">Field</div> |Description |Supported operators |\n|---|---|---|\n|`applicationId` |An identifier that represents the application where the LaunchDarkly SDK is running. |`equals`, `notEquals`, `anyOf`, `startsWith` |\n|`key` |The context key. |`equals`, `notEquals`, `anyOf`, `startsWith` |\n|`kind` |The context kind. |`equals`, `notEquals`, `anyOf`, `startsWith` |\n|`kinds` |The context's kind. Supply a list of strings to the operator. The filter matches contexts whose kind is any of the provided values. The `contains` operator accepts exactly one value. |`equals`, `anyOf`, `contains` |\n|`kindKey` |The kind and key for the context, joined with a `:`. For example, `user:user-key-abc123`. |`equals`, `notEquals`, `anyOf` |\n|`kindKeys` |The kind and key for the context, joined with a `:`. For example, `user:user-key-abc123`. Supply a list of strings to the operator. The filter matches contexts whose kind and key match any of the provided values. The `contains` operator accepts exactly one value. |`equals`, `anyOf`, `contains` |\n|`q` |A prefix search across the context key and the `name`, `firstName`, `lastName`, and `email` attributes. Supply a single string to the operator. |`equals` |\n|`name` |The name for the context. |`equals`, `notEquals`, `exists`, `startsWith` |\n|`<a kind>.<an attribute name>` |A kind and the name of any attribute that appears in a context of that kind, for example, `user.email`. To filter all kinds use `*` in place of the kind. For example, `*.email`. Reference a nested attribute by joining path segments with periods. For example, `user.address.city` filters on the `city` field within the `address` attribute of a user context. Each path segment may contain letters, numbers, underscores, and hyphens, and may not start with a number. JSON pointer escaping (`~0`, `~1`) is not supported. If the value includes whitespace, enclose it in double quotes. A filter may include at most 10 attribute clauses. |`equals`, `notEquals`, `exists`, `startsWith`, `before`, `after`.|\n"
     },
     {
       "name": "Custom roles",
@@ -92,6 +92,10 @@
     {
       "name": "Data Export destinations",
       "description": "> ### Data Export is an add-on feature\n>\n> Data Export is available as an add-on for customers on a Foundation or Enterprise plan. To learn more, [read about our pricing](https://launchdarkly.com/pricing/). To upgrade your plan, [contact Sales](https://launchdarkly.com/contact-sales/).\n\nData Export provides a real-time export of raw analytics data, including feature flag requests, analytics events, custom events, and more.\n\nData Export destinations are locations that receive exported data. The Data Export destinations API allows you to configure destinations so that your data can be exported.\n\nSeveral of the endpoints in the Data Export destinations API require a Data Export destination ID. The Data Export destination ID is returned as part of the [Create a Data Export destination](https://launchdarkly.com/docs/api/data-export-destinations/post-destination) and [List destinations](https://launchdarkly.com/docs/api/data-export-destinations/get-destinations) responses. It is the `_id` field, or the `_id` field of each element in the `items` array.\n\nTo learn more, read [Data Export](https://launchdarkly.com/docs/integrations/data-export).\n"
+    },
+    {
+      "name": "Environment releases (beta)",
+      "description": "> ### This feature is in beta\n>\n> To use this feature, pass in a header including the `LD-API-Version` key with value set to `beta`. Use this header with each call. To learn more, read [Beta resources](https://launchdarkly.com/docs/api#beta-resources).\n>\n> Resources that are in beta are still undergoing testing and development. They may change without notice, including becoming backwards incompatible.\n\nEnvironment releases progressively or guardedly roll out a flag targeting change in one environment. Use the environment releases API to list and retrieve releases, start a release, or stop an active release.\n"
     },
     {
       "name": "Environments",
@@ -4508,7 +4512,7 @@
           "Data Export destinations"
         ],
         "summary": "Get destination",
-        "description": "Get a single Data Export destination by ID.",
+        "description": "Get a single Data Export destination by ID. The destination must belong to the environment in the URL. Otherwise, the response is 404.",
         "parameters": [
           {
             "name": "projectKey",
@@ -4623,7 +4627,7 @@
           "Data Export destinations"
         ],
         "summary": "Update Data Export destination",
-        "description": "Update a Data Export destination. Updating a destination uses a [JSON patch](https://datatracker.ietf.org/doc/html/rfc6902) or [JSON merge patch](https://datatracker.ietf.org/doc/html/rfc7386) representation of the desired changes. To learn more, read [Updates](https://launchdarkly.com/docs/api#updates).",
+        "description": "Update a Data Export destination. The destination must belong to the environment in the URL. Otherwise, the response is 404. Updating a destination uses a [JSON patch](https://datatracker.ietf.org/doc/html/rfc6902) or [JSON merge patch](https://datatracker.ietf.org/doc/html/rfc7386) representation of the desired changes. To learn more, read [Updates](https://launchdarkly.com/docs/api#updates).",
         "parameters": [
           {
             "name": "projectKey",
@@ -4728,7 +4732,7 @@
           "Data Export destinations"
         ],
         "summary": "Delete Data Export destination",
-        "description": "Delete a Data Export destination by ID.",
+        "description": "Delete a Data Export destination by ID. The destination must belong to the environment in the URL. Otherwise, the response is 404.",
         "parameters": [
           {
             "name": "projectKey",
@@ -13356,11 +13360,11 @@
           {
             "name": "filter",
             "in": "query",
-            "description": "A comma-separated list of context filters. This endpoint only accepts `kind` filters, with the `equals` operator, and `name` filters, with the `startsWith` operator. To learn more about the filter syntax, read [Filtering contexts and context instances](https://launchdarkly.com/docs/ld-docs/api/contexts#filtering-contexts-and-context-instances).",
+            "description": "A comma-separated list of context filters. This endpoint only accepts `kind` filters, with the `equals` operator, and `name` filters, with the `startsWith` operator. To learn more about the filter syntax, read [Filtering contexts](https://launchdarkly.com/docs/ld-docs/api/contexts#filtering-contexts).",
             "schema": {
               "type": "string",
               "format": "string",
-              "description": "A comma-separated list of context filters. This endpoint only accepts `kind` filters, with the `equals` operator, and `name` filters, with the `startsWith` operator. To learn more about the filter syntax, read [Filtering contexts and context instances](https://launchdarkly.com/docs/ld-docs/api/contexts#filtering-contexts-and-context-instances)."
+              "description": "A comma-separated list of context filters. This endpoint only accepts `kind` filters, with the `equals` operator, and `name` filters, with the `startsWith` operator. To learn more about the filter syntax, read [Filtering contexts](https://launchdarkly.com/docs/ld-docs/api/contexts#filtering-contexts)."
             }
           },
           {
@@ -13473,11 +13477,11 @@
           {
             "name": "filter",
             "in": "query",
-            "description": "A comma-separated list of context filters. This endpoint only accepts `kind` filters, with the `equals` operator, and `value` filters, with the `startsWith` operator. To learn more about the filter syntax, read [Filtering contexts and context instances](https://launchdarkly.com/docs/ld-docs/api/contexts#filtering-contexts-and-context-instances).",
+            "description": "A comma-separated list of context filters. This endpoint requires a `kind` filter, with the `equals` operator, and also accepts a `value` filter, with the `startsWith` operator. To learn more about the filter syntax, read [Filtering contexts](https://launchdarkly.com/docs/ld-docs/api/contexts#filtering-contexts).",
             "schema": {
               "type": "string",
               "format": "string",
-              "description": "A comma-separated list of context filters. This endpoint only accepts `kind` filters, with the `equals` operator, and `value` filters, with the `startsWith` operator. To learn more about the filter syntax, read [Filtering contexts and context instances](https://launchdarkly.com/docs/ld-docs/api/contexts#filtering-contexts-and-context-instances)."
+              "description": "A comma-separated list of context filters. This endpoint requires a `kind` filter, with the `equals` operator, and also accepts a `value` filter, with the `startsWith` operator. To learn more about the filter syntax, read [Filtering contexts](https://launchdarkly.com/docs/ld-docs/api/contexts#filtering-contexts)."
             }
           },
           {
@@ -13492,407 +13496,6 @@
           }
         ],
         "operationId": "getContextAttributeValues"
-      }
-    },
-    "/api/v2/projects/{projectKey}/environments/{environmentKey}/context-instances/search": {
-      "post": {
-        "responses": {
-          "200": {
-            "description": "Context instances collection response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ContextInstances"
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Invalid request",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/InvalidRequestErrorRep"
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Invalid access token",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/UnauthorizedErrorRep"
-                }
-              }
-            }
-          },
-          "403": {
-            "description": "Forbidden",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ForbiddenErrorRep"
-                }
-              }
-            }
-          },
-          "429": {
-            "description": "Rate limited",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/RateLimitedErrorRep"
-                }
-              }
-            }
-          }
-        },
-        "tags": [
-          "Contexts"
-        ],
-        "summary": "Search for context instances",
-        "description": "\nSearch for context instances.\n\nYou can use either the query parameters or the request body parameters. If both are provided, there is an error.\n\nTo learn more about the filter syntax, read [Filtering contexts and context instances](https://launchdarkly.com/docs/api/contexts#filtering-contexts-and-context-instances). To learn more about context instances, read [Context instances](https://launchdarkly.com/docs/home/observability/multi-contexts#context-instances).\n",
-        "parameters": [
-          {
-            "name": "projectKey",
-            "in": "path",
-            "description": "The project key",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "format": "string",
-              "description": "The project key"
-            }
-          },
-          {
-            "name": "environmentKey",
-            "in": "path",
-            "description": "The environment key",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "format": "string",
-              "description": "The environment key"
-            }
-          },
-          {
-            "name": "limit",
-            "in": "query",
-            "description": "Specifies the maximum number of items in the collection to return (max: 50, default: 20)",
-            "schema": {
-              "type": "integer",
-              "format": "int64",
-              "description": "Specifies the maximum number of items in the collection to return (max: 50, default: 20)"
-            }
-          },
-          {
-            "name": "continuationToken",
-            "in": "query",
-            "description": "Limits results to context instances with sort values after the value specified. You can use this for pagination, however, we recommend using the `next` link we provide instead.",
-            "schema": {
-              "type": "string",
-              "format": "string",
-              "description": "Limits results to context instances with sort values after the value specified. You can use this for pagination, however, we recommend using the `next` link we provide instead."
-            }
-          },
-          {
-            "name": "sort",
-            "in": "query",
-            "description": "Deprecated. This endpoint does not support sorting. Requests that include this parameter are rejected with a `400` response, so omit it.",
-            "deprecated": true,
-            "schema": {
-              "type": "string",
-              "format": "string",
-              "description": "Deprecated. This endpoint does not support sorting. Requests that include this parameter are rejected with a `400` response, so omit it."
-            }
-          },
-          {
-            "name": "filter",
-            "in": "query",
-            "description": "A comma-separated list of context filters. This endpoint only accepts an `applicationId` filter. To learn more about the filter syntax, read [Filtering contexts and context instances](https://launchdarkly.com/docs/ld-docs/api/contexts#filtering-contexts-and-context-instances).",
-            "schema": {
-              "type": "string",
-              "format": "string",
-              "description": "A comma-separated list of context filters. This endpoint only accepts an `applicationId` filter. To learn more about the filter syntax, read [Filtering contexts and context instances](https://launchdarkly.com/docs/ld-docs/api/contexts#filtering-contexts-and-context-instances)."
-            }
-          },
-          {
-            "name": "includeTotalCount",
-            "in": "query",
-            "description": "Specifies whether to include or omit the total count of matching context instances. Defaults to true.",
-            "schema": {
-              "type": "boolean",
-              "description": "Specifies whether to include or omit the total count of matching context instances. Defaults to true."
-            }
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/ContextInstanceSearch"
-              }
-            }
-          },
-          "required": true
-        },
-        "operationId": "searchContextInstances"
-      }
-    },
-    "/api/v2/projects/{projectKey}/environments/{environmentKey}/context-instances/{id}": {
-      "get": {
-        "responses": {
-          "200": {
-            "description": "Context instances collection response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ContextInstances"
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Invalid request",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/InvalidRequestErrorRep"
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Invalid access token",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/UnauthorizedErrorRep"
-                }
-              }
-            }
-          },
-          "403": {
-            "description": "Forbidden",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ForbiddenErrorRep"
-                }
-              }
-            }
-          },
-          "429": {
-            "description": "Rate limited",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/RateLimitedErrorRep"
-                }
-              }
-            }
-          }
-        },
-        "tags": [
-          "Contexts"
-        ],
-        "summary": "Get context instances",
-        "description": "Get context instances by ID.",
-        "parameters": [
-          {
-            "name": "projectKey",
-            "in": "path",
-            "description": "The project key",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "format": "string",
-              "description": "The project key"
-            }
-          },
-          {
-            "name": "environmentKey",
-            "in": "path",
-            "description": "The environment key",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "format": "string",
-              "description": "The environment key"
-            }
-          },
-          {
-            "name": "id",
-            "in": "path",
-            "description": "The context instance ID",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "format": "string",
-              "description": "The context instance ID"
-            }
-          },
-          {
-            "name": "limit",
-            "in": "query",
-            "description": "Specifies the maximum number of context instances to return (max: 50, default: 20)",
-            "schema": {
-              "type": "integer",
-              "format": "int64",
-              "description": "Specifies the maximum number of context instances to return (max: 50, default: 20)"
-            }
-          },
-          {
-            "name": "continuationToken",
-            "in": "query",
-            "description": "Limits results to context instances with sort values after the value specified. You can use this for pagination, however, we recommend using the `next` link we provide instead.",
-            "schema": {
-              "type": "string",
-              "format": "string",
-              "description": "Limits results to context instances with sort values after the value specified. You can use this for pagination, however, we recommend using the `next` link we provide instead."
-            }
-          },
-          {
-            "name": "sort",
-            "in": "query",
-            "description": "Deprecated. This endpoint does not support sorting. Requests that include this parameter are rejected with a `400` response, so omit it.",
-            "deprecated": true,
-            "schema": {
-              "type": "string",
-              "format": "string",
-              "description": "Deprecated. This endpoint does not support sorting. Requests that include this parameter are rejected with a `400` response, so omit it."
-            }
-          },
-          {
-            "name": "filter",
-            "in": "query",
-            "description": "A comma-separated list of context filters. This endpoint only accepts an `applicationId` filter. To learn more about the filter syntax, read [Filtering contexts and context instances](https://launchdarkly.com/docs/ld-docs/api/contexts#filtering-contexts-and-context-instances).",
-            "schema": {
-              "type": "string",
-              "format": "string",
-              "description": "A comma-separated list of context filters. This endpoint only accepts an `applicationId` filter. To learn more about the filter syntax, read [Filtering contexts and context instances](https://launchdarkly.com/docs/ld-docs/api/contexts#filtering-contexts-and-context-instances)."
-            }
-          },
-          {
-            "name": "includeTotalCount",
-            "in": "query",
-            "description": "Specifies whether to include or omit the total count of matching context instances. Defaults to true.",
-            "schema": {
-              "type": "boolean",
-              "description": "Specifies whether to include or omit the total count of matching context instances. Defaults to true."
-            }
-          }
-        ],
-        "operationId": "getContextInstances"
-      },
-      "delete": {
-        "responses": {
-          "204": {
-            "description": "Action succeeded"
-          },
-          "400": {
-            "description": "Invalid request",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/InvalidRequestErrorRep"
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Invalid access token",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/UnauthorizedErrorRep"
-                }
-              }
-            }
-          },
-          "403": {
-            "description": "Forbidden",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ForbiddenErrorRep"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Invalid resource identifier",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/NotFoundErrorRep"
-                }
-              }
-            }
-          },
-          "410": {
-            "description": "Endpoint deprecated",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/InvalidRequestErrorRep"
-                }
-              }
-            }
-          },
-          "429": {
-            "description": "Rate limited",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/RateLimitedErrorRep"
-                }
-              }
-            }
-          }
-        },
-        "tags": [
-          "Contexts"
-        ],
-        "summary": "Delete context instances",
-        "description": "Delete context instances by ID.",
-        "parameters": [
-          {
-            "name": "projectKey",
-            "in": "path",
-            "description": "The project key",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "format": "string",
-              "description": "The project key"
-            }
-          },
-          {
-            "name": "environmentKey",
-            "in": "path",
-            "description": "The environment key",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "format": "string",
-              "description": "The environment key"
-            }
-          },
-          {
-            "name": "id",
-            "in": "path",
-            "description": "The context instance ID",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "format": "string",
-              "description": "The context instance ID"
-            }
-          }
-        ],
-        "operationId": "deleteContextInstances"
       }
     },
     "/api/v2/projects/{projectKey}/environments/{environmentKey}/contexts/search": {
@@ -13953,7 +13556,7 @@
           "Contexts"
         ],
         "summary": "Search for contexts",
-        "description": "\nSearch for contexts.\n\nYou can use either the query parameters or the request body parameters. If both are provided, there is an error.\n\nTo learn more about the filter syntax, read [Filtering contexts and context instances](https://launchdarkly.com/docs/api/contexts#filtering-contexts-and-context-instances). To learn more about contexts, read [Contexts and context kinds](https://launchdarkly.com/docs/home/observability/contexts#contexts-and-context-kinds).\n",
+        "description": "\nSearch for contexts.\n\nYou can use either the query parameters or the request body parameters. If both are provided, there is an error.\n\nResults are sorted by context kind and key. Each context appears once, with its most recently reported attributes. Results include contexts that LaunchDarkly has received within the last 30 days.\n\nTo learn more about the filter syntax, read [Filtering contexts](https://launchdarkly.com/docs/api/contexts#filtering-contexts). To learn more about contexts, read [Contexts and context kinds](https://launchdarkly.com/docs/home/observability/contexts#contexts-and-context-kinds).\n",
         "parameters": [
           {
             "name": "projectKey",
@@ -13990,41 +13593,41 @@
           {
             "name": "continuationToken",
             "in": "query",
-            "description": "Limits results to contexts with sort values after the value specified. You can use this for pagination, however, we recommend using the `next` link we provide instead.",
+            "description": "An opaque cursor that identifies the next page of results. You can use this for pagination, however, we recommend using the `next` link we provide instead.",
             "schema": {
               "type": "string",
               "format": "string",
-              "description": "Limits results to contexts with sort values after the value specified. You can use this for pagination, however, we recommend using the `next` link we provide instead."
+              "description": "An opaque cursor that identifies the next page of results. You can use this for pagination, however, we recommend using the `next` link we provide instead."
             }
           },
           {
             "name": "sort",
             "in": "query",
-            "description": "Deprecated. This endpoint does not support sorting. Requests that include this parameter are rejected with a `400` response, so omit it.",
+            "description": "Deprecated. This endpoint does not support sorting. Requests that include this parameter are rejected with a `400` response, so omit it. Results are always sorted by context kind and key.",
             "deprecated": true,
             "schema": {
               "type": "string",
               "format": "string",
-              "description": "Deprecated. This endpoint does not support sorting. Requests that include this parameter are rejected with a `400` response, so omit it."
+              "description": "Deprecated. This endpoint does not support sorting. Requests that include this parameter are rejected with a `400` response, so omit it. Results are always sorted by context kind and key."
             }
           },
           {
             "name": "filter",
             "in": "query",
-            "description": "A comma-separated list of context filters. To learn more about the filter syntax, read [Filtering contexts and context instances](https://launchdarkly.com/docs/ld-docs/api/contexts#filtering-contexts-and-context-instances).",
+            "description": "A comma-separated list of context filters. To learn more about the filter syntax, read [Filtering contexts](https://launchdarkly.com/docs/ld-docs/api/contexts#filtering-contexts).",
             "schema": {
               "type": "string",
               "format": "string",
-              "description": "A comma-separated list of context filters. To learn more about the filter syntax, read [Filtering contexts and context instances](https://launchdarkly.com/docs/ld-docs/api/contexts#filtering-contexts-and-context-instances)."
+              "description": "A comma-separated list of context filters. To learn more about the filter syntax, read [Filtering contexts](https://launchdarkly.com/docs/ld-docs/api/contexts#filtering-contexts)."
             }
           },
           {
             "name": "includeTotalCount",
             "in": "query",
-            "description": "Specifies whether to include or omit the total count of matching contexts. Defaults to true.",
+            "description": "Specifies whether to include or omit the total count of matching contexts. Defaults to true. The total count is approximate and may be omitted if it is unavailable.",
             "schema": {
               "type": "boolean",
-              "description": "Specifies whether to include or omit the total count of matching contexts. Defaults to true."
+              "description": "Specifies whether to include or omit the total count of matching contexts. Defaults to true. The total count is approximate and may be omitted if it is unavailable."
             }
           }
         ],
@@ -14241,7 +13844,7 @@
           "Contexts"
         ],
         "summary": "Get contexts",
-        "description": "Get contexts based on kind and key.",
+        "description": "Get contexts based on kind and key. Returns one item for each application from which LaunchDarkly has received the context, with the `applicationId` field populated.",
         "parameters": [
           {
             "name": "projectKey",
@@ -14300,32 +13903,32 @@
           {
             "name": "continuationToken",
             "in": "query",
-            "description": "Limits results to contexts with sort values after the value specified. You can use this for pagination, however, we recommend using the `next` link we provide instead.",
+            "description": "An opaque cursor that identifies the next page of results. You can use this for pagination, however, we recommend using the `next` link we provide instead.",
             "schema": {
               "type": "string",
               "format": "string",
-              "description": "Limits results to contexts with sort values after the value specified. You can use this for pagination, however, we recommend using the `next` link we provide instead."
+              "description": "An opaque cursor that identifies the next page of results. You can use this for pagination, however, we recommend using the `next` link we provide instead."
             }
           },
           {
             "name": "sort",
             "in": "query",
-            "description": "Deprecated. This endpoint does not support sorting. Requests that include this parameter are rejected with a `400` response, so omit it.",
+            "description": "Deprecated. This endpoint does not support sorting. Requests that include this parameter are rejected with a `400` response, so omit it. Results are always sorted by context kind and key.",
             "deprecated": true,
             "schema": {
               "type": "string",
               "format": "string",
-              "description": "Deprecated. This endpoint does not support sorting. Requests that include this parameter are rejected with a `400` response, so omit it."
+              "description": "Deprecated. This endpoint does not support sorting. Requests that include this parameter are rejected with a `400` response, so omit it. Results are always sorted by context kind and key."
             }
           },
           {
             "name": "filter",
             "in": "query",
-            "description": "A comma-separated list of context filters. This endpoint only accepts an `applicationId` filter. To learn more about the filter syntax, read [Filtering contexts and context instances](https://launchdarkly.com/docs/ld-docs/api/contexts#filtering-contexts-and-context-instances).",
+            "description": "A comma-separated list of context filters. This endpoint only accepts an `applicationId` filter. To learn more about the filter syntax, read [Filtering contexts](https://launchdarkly.com/docs/ld-docs/api/contexts#filtering-contexts).",
             "schema": {
               "type": "string",
               "format": "string",
-              "description": "A comma-separated list of context filters. This endpoint only accepts an `applicationId` filter. To learn more about the filter syntax, read [Filtering contexts and context instances](https://launchdarkly.com/docs/ld-docs/api/contexts#filtering-contexts-and-context-instances)."
+              "description": "A comma-separated list of context filters. This endpoint only accepts an `applicationId` filter. To learn more about the filter syntax, read [Filtering contexts](https://launchdarkly.com/docs/ld-docs/api/contexts#filtering-contexts)."
             }
           },
           {
@@ -24923,7 +24526,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/SeriesListRep"
+                  "$ref": "#/components/schemas/DataExportSeriesListRep"
                 }
               }
             }
@@ -25058,11 +24661,11 @@
           {
             "name": "groupBy",
             "in": "query",
-            "description": "If specified, returns data for each distinct value of the given field. Can be specified multiple times to group data by multiple dimensions, one query parameter per dimension. `projectId` requires one or more explicit `projectKey` filters and is capped at 100 selected projects.<br/>Valid values: `projectId`, `environmentId`, `eventKind`, `destinationKind`.",
+            "description": "If specified, returns data for each distinct value of the given field. Can be specified multiple times to group data by multiple dimensions, one query parameter per dimension. `projectId` requires one or more explicit `projectKey` filters and is capped at 100 selected projects. `destinationId` returns one series per streaming destination with `destinationName` metadata, plus `destinationViewable` when the destination is in the current configuration. The destination's own kind is added as `destinationKind` only when you can view the destination. A kind requested with `groupBy=destinationKind` is returned unchanged. A destination ID absent from the current configuration is named `Unknown historical destination`. Destinations you cannot view are reported together in one `Unknown destination` series with `destinationId` `hidden` and `destinationViewable` `false`, one per combination of the other requested dimensions, such as `destinationKind`. Usage without a destination ID is one series with an empty `destinationId` named `Unattributed`.<br/>Valid values: `projectId`, `environmentId`, `eventKind`, `destinationKind`, `destinationId`.",
             "schema": {
               "type": "string",
               "format": "string",
-              "description": "If specified, returns data for each distinct value of the given field. Can be specified multiple times to group data by multiple dimensions, one query parameter per dimension. `projectId` requires one or more explicit `projectKey` filters and is capped at 100 selected projects.<br/>Valid values: `projectId`, `environmentId`, `eventKind`, `destinationKind`."
+              "description": "If specified, returns data for each distinct value of the given field. Can be specified multiple times to group data by multiple dimensions, one query parameter per dimension. `projectId` requires one or more explicit `projectKey` filters and is capped at 100 selected projects. `destinationId` returns one series per streaming destination with `destinationName` metadata, plus `destinationViewable` when the destination is in the current configuration. The destination's own kind is added as `destinationKind` only when you can view the destination. A kind requested with `groupBy=destinationKind` is returned unchanged. A destination ID absent from the current configuration is named `Unknown historical destination`. Destinations you cannot view are reported together in one `Unknown destination` series with `destinationId` `hidden` and `destinationViewable` `false`, one per combination of the other requested dimensions, such as `destinationKind`. Usage without a destination ID is one series with an empty `destinationId` named `Unattributed`.<br/>Valid values: `projectId`, `environmentId`, `eventKind`, `destinationKind`, `destinationId`."
             }
           },
           {
@@ -28019,7 +27622,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/SeriesListRep"
+                  "$ref": "#/components/schemas/DataExportSeriesListRep"
                 }
               }
             }
@@ -28144,11 +27747,11 @@
           {
             "name": "groupBy",
             "in": "query",
-            "description": "If specified, returns data for each distinct value of the given field. Can be specified multiple times.<br/>Valid values: `projectId`, `environmentId`, `destination`, `destinationKind`. The two destination dimensions return the same raw Warehouse configuration kinds.",
+            "description": "If specified, returns data for each distinct value of the given field. Can be specified multiple times.<br/>Valid values: `projectId`, `environmentId`, `destination`, `destinationKind`, `destinationId`. `destination` and `destinationKind` return the same raw Warehouse configuration kinds. `destinationId` returns one series per warehouse destination with `destinationName` metadata. When a current destination you can view matches, its `destinationId` is the LaunchDarkly destination ID, with `destinationViewable`. Otherwise, it is the warehouse provider's destination ID, named `Unknown destination`. The destination's own kind is added as `destinationKind` only when you can view the destination. A kind requested with `groupBy=destinationKind` is returned unchanged. Destinations you cannot view are reported together in one `Unknown destination` series with `destinationId` `hidden` and `destinationViewable` `false`, one per combination of the other requested dimensions, such as `destinationKind`. Usage without a destination ID is one series with an empty `destinationId` named `Unattributed`.",
             "schema": {
               "type": "string",
               "format": "string",
-              "description": "If specified, returns data for each distinct value of the given field. Can be specified multiple times.<br/>Valid values: `projectId`, `environmentId`, `destination`, `destinationKind`. The two destination dimensions return the same raw Warehouse configuration kinds."
+              "description": "If specified, returns data for each distinct value of the given field. Can be specified multiple times.<br/>Valid values: `projectId`, `environmentId`, `destination`, `destinationKind`, `destinationId`. `destination` and `destinationKind` return the same raw Warehouse configuration kinds. `destinationId` returns one series per warehouse destination with `destinationName` metadata. When a current destination you can view matches, its `destinationId` is the LaunchDarkly destination ID, with `destinationViewable`. Otherwise, it is the warehouse provider's destination ID, named `Unknown destination`. The destination's own kind is added as `destinationKind` only when you can view the destination. A kind requested with `groupBy=destinationKind` is returned unchanged. Destinations you cannot view are reported together in one `Unknown destination` series with `destinationId` `hidden` and `destinationViewable` `false`, one per combination of the other requested dimensions, such as `destinationKind`. Usage without a destination ID is one series with an empty `destinationId` named `Unattributed`."
             }
           },
           {
@@ -28243,7 +27846,7 @@
           "Users"
         ],
         "summary": "Find users",
-        "description": "> ### Use contexts instead\n>\n> After you have upgraded your LaunchDarkly SDK to use contexts instead of users, you should use [Search for context instances](https://launchdarkly.com/docs/api/contexts/search-context-instances) instead of this endpoint.\n\nSearch users in LaunchDarkly based on their last active date, a user attribute filter set, or a search query.\n\nAn example user attribute filter set is `filter=firstName:Anna,activeTrial:false`. This matches users that have the user attribute `firstName` set to `Anna`, that also have the attribute `activeTrial` set to `false`.\n\nTo paginate through results, follow the `next` link in the `_links` object. To learn more, read [Representations](https://launchdarkly.com/docs/api#representations).\n",
+        "description": "> ### Use contexts instead\n>\n> After you have upgraded your LaunchDarkly SDK to use contexts instead of users, you should use [Search for contexts](https://launchdarkly.com/docs/api/contexts/search-contexts) instead of this endpoint.\n\nSearch users in LaunchDarkly based on their last active date, a user attribute filter set, or a search query.\n\nAn example user attribute filter set is `filter=firstName:Anna,activeTrial:false`. This matches users that have the user attribute `firstName` set to `Anna`, that also have the attribute `activeTrial` set to `false`.\n\nTo paginate through results, follow the `next` link in the `_links` object. To learn more, read [Representations](https://launchdarkly.com/docs/api#representations).\n",
         "parameters": [
           {
             "name": "projectKey",
@@ -28497,7 +28100,7 @@
           "Users"
         ],
         "summary": "Get user",
-        "description": "> ### Use contexts instead\n>\n> After you have upgraded your LaunchDarkly SDK to use contexts instead of users, you should use [Get context instances](https://launchdarkly.com/docs/api/contexts/get-context-instances) instead of this endpoint.\n\nGet a user by key. The `user` object contains all attributes sent in `variation` calls for that key.\n",
+        "description": "> ### Use contexts instead\n>\n> After you have upgraded your LaunchDarkly SDK to use contexts instead of users, you should use [Get contexts](https://launchdarkly.com/docs/api/contexts/get-contexts) instead of this endpoint.\n\nGet a user by key. The `user` object contains all attributes sent in `variation` calls for that key.\n",
         "parameters": [
           {
             "name": "projectKey",
@@ -44880,96 +44483,6 @@
           }
         }
       },
-      "ContextInstanceRecord": {
-        "type": "object",
-        "required": [
-          "id",
-          "context"
-        ],
-        "properties": {
-          "lastSeen": {
-            "type": "string",
-            "format": "date-time",
-            "description": "Timestamp of the last time an evaluation occurred for this context instance",
-            "example": "2022-04-15T15:00:57.526470334Z"
-          },
-          "id": {
-            "type": "string",
-            "description": "The context instance ID",
-            "example": "b3JnOmxhdW5jaGRhcmtseQ"
-          },
-          "applicationId": {
-            "type": "string",
-            "description": "An identifier representing the application where the LaunchDarkly SDK is running",
-            "example": "GoSDK/1.2"
-          },
-          "anonymousKinds": {
-            "type": "array",
-            "description": "A list of the context kinds this context was associated with that the SDK removed because they were marked as anonymous at flag evaluation",
-            "items": {
-              "type": "string"
-            },
-            "example": [
-              "device",
-              "privateKind"
-            ]
-          },
-          "context": {
-            "description": "The context, including its kind and attributes",
-            "example": "{\"kind\": \"user\", \"key\": \"context-key-123abc\", \"name\": \"Sandy Smith\", \"email\": \"sandy@example.com\"}"
-          },
-          "_links": {
-            "type": "object",
-            "additionalProperties": {
-              "$ref": "#/components/schemas/Link"
-            },
-            "description": "The location and content type of related resources",
-            "example": {
-              "parent": {
-                "href": "/api/v2/projects/my-project/environments/my-environment",
-                "type": "application/json"
-              },
-              "self": {
-                "href": "/api/v2/projects/my-project/environments/my-env/context-instances/organization:launch-darkly:user:henry?filter=applicationid+equals+%22GoSDK%2F1.2%22",
-                "type": "application/json"
-              },
-              "site": {
-                "href": "/my-project/my-environment/context-instances/organization:launch-darkly:user:henry",
-                "type": "text/html"
-              }
-            }
-          },
-          "_access": {
-            "description": "Details on the allowed and denied actions for this context instance",
-            "$ref": "#/components/schemas/Access"
-          }
-        }
-      },
-      "ContextInstanceSearch": {
-        "type": "object",
-        "properties": {
-          "filter": {
-            "type": "string",
-            "description": "A collection of context instance filters",
-            "example": "{\"filter\": \"kindKeys:{\"contains\": [\"user:Henry\"]},\"sort\": \"-ts\",\"limit\": 50}"
-          },
-          "sort": {
-            "type": "string",
-            "description": "Specifies a field by which to sort. LaunchDarkly supports sorting by timestamp in ascending order by specifying <code>ts</code> for this value, or descending order by specifying <code>-ts</code>.",
-            "example": "-ts"
-          },
-          "limit": {
-            "type": "integer",
-            "description": "Specifies the maximum number of items in the collection to return (max: 50, default: 20)",
-            "example": 10
-          },
-          "continuationToken": {
-            "type": "string",
-            "description": "Limits results to context instances with sort values after the value specified. You can use this for pagination, however, we recommend using the <code>next</code> link instead, because this value is an obfuscated string.",
-            "example": "QAGFKH1313KUGI2351"
-          }
-        }
-      },
       "ContextInstanceSegmentMembership": {
         "type": "object",
         "required": [
@@ -45052,54 +44565,6 @@
               "$ref": "#/components/schemas/Link"
             },
             "description": "The location and content type of related resources"
-          }
-        }
-      },
-      "ContextInstances": {
-        "type": "object",
-        "required": [
-          "_environmentId",
-          "items"
-        ],
-        "properties": {
-          "_links": {
-            "type": "object",
-            "additionalProperties": {
-              "$ref": "#/components/schemas/Link"
-            },
-            "description": "The location and content type of related resources",
-            "example": {
-              "next": {
-                "href": "/api/v2/projects/my-project/environments/my-env/context-instances/organization:launch-darkly:user:henry?limit=2&continuationToken=2022-04-15T15:00:57.526470334Z",
-                "type": "application/json"
-              },
-              "self": {
-                "href": "/api/v2/projects/my-proj/environments/my-env/context-instances/organization:launch-darkly:user:henry-jacobs?limit=2",
-                "type": "application/json"
-              }
-            }
-          },
-          "totalCount": {
-            "type": "integer",
-            "description": "The number of unique context instances",
-            "example": 100
-          },
-          "_environmentId": {
-            "type": "string",
-            "description": "The environment ID",
-            "example": "57be1db38b75bf0772d11384"
-          },
-          "continuationToken": {
-            "type": "string",
-            "description": "An obfuscated string that references the last context instance on the previous page of results. You can use this for pagination, however, we recommend using the <code>next</code> link instead.",
-            "example": "QAGFKH1313KUGI2351"
-          },
-          "items": {
-            "type": "array",
-            "description": "A collection of context instances. Can include multiple versions of context instances that have the same <code>id</code>, but different <code>applicationId</code>s.",
-            "items": {
-              "$ref": "#/components/schemas/ContextInstanceRecord"
-            }
           }
         }
       },
@@ -45245,7 +44710,7 @@
           },
           "applicationId": {
             "type": "string",
-            "description": "An identifier representing the application where the LaunchDarkly SDK is running",
+            "description": "An identifier representing the application where the LaunchDarkly SDK is running. Populated when you get contexts by kind and key. Empty in search results, which return each context's most recently reported data.",
             "example": "GoSDK/1.2"
           },
           "context": {
@@ -45279,8 +44744,9 @@
           },
           "associatedContexts": {
             "type": "integer",
-            "description": "The total number of associated contexts. Associated contexts are contexts that have appeared in the same context instance, that is, they were part of the same flag evaluation.",
-            "example": 0
+            "description": "Deprecated. This value is always 1.",
+            "example": 1,
+            "deprecated": true
           }
         }
       },
@@ -45335,7 +44801,7 @@
           },
           "totalCount": {
             "type": "integer",
-            "description": "The number of contexts",
+            "description": "The number of matching contexts. This value is approximate and may be omitted if it is unavailable.",
             "example": 100
           },
           "_environmentId": {
@@ -45345,7 +44811,7 @@
           },
           "continuationToken": {
             "type": "string",
-            "description": "An obfuscated string that references the last context instance on the previous page of results. You can use this for pagination, however, we recommend using the <code>next</code> link instead.",
+            "description": "An obfuscated string that references the last context on the previous page of results. You can use this for pagination, however, we recommend using the <code>next</code> link instead.",
             "example": "QAGFKH1313KUGI2351"
           },
           "items": {
@@ -45959,6 +45425,52 @@
           }
         }
       },
+      "DataExportSeriesListRep": {
+        "type": "object",
+        "required": [
+          "_links",
+          "metadata",
+          "series"
+        ],
+        "properties": {
+          "_links": {
+            "type": "object",
+            "additionalProperties": {},
+            "description": "The location and content type of related resources"
+          },
+          "metadata": {
+            "type": "array",
+            "description": "Metadata about each series",
+            "items": {
+              "$ref": "#/components/schemas/SeriesMetadataRep"
+            }
+          },
+          "series": {
+            "type": "array",
+            "description": "An array of data points with timestamps. Each element of the array is an object with a 'time' field, whose value is the timestamp, and one or more key fields. If there are multiple key fields, they are labeled '0', '1', and so on, and are explained in the <code>metadata</code>.",
+            "items": {
+              "$ref": "#/components/schemas/SeriesTimeSliceRep"
+            },
+            "example": [
+              {
+                "0": 11,
+                "1": 15,
+                "time": 1677888000000
+              }
+            ]
+          },
+          "dataThrough": {
+            "type": "string",
+            "description": "The end of the latest hour written by this source's usage pipeline, as an RFC 3339 UTC timestamp. It is measured across all accounts, not only yours, and usage after this time is not counted yet. Omitted when the watermark is unavailable.",
+            "example": "2026-09-30T15:00:00Z"
+          },
+          "delayed": {
+            "type": "boolean",
+            "description": "Whether this source's usage pipeline is late: it wrote every hour of the 24 hours ending at <code>dataThrough</code>, and more than three hours have passed since <code>dataThrough</code>. Always <code>false</code> for a source with gaps in those 24 hours, where gaps usually mean no usage rather than a stalled pipeline. Omitted when <code>dataThrough</code> is omitted.",
+            "example": false
+          }
+        }
+      },
       "DateVersion": {
         "type": "integer"
       },
@@ -46485,7 +45997,7 @@
             "description": "The location and content type of related resources",
             "example": {
               "self": {
-                "href": "/internal/projects/my-project/environments/production/automated-releases/885ccadf-181b-4a9a-8414-7ad6f7ba2db0",
+                "href": "/internal/projects/my-project/flags/my-flag/environments/production/releases/1b2a3c4d-5e6f-4a7b-8c9d-0e1f2a3b4c5d",
                 "type": "application/json"
               }
             }
