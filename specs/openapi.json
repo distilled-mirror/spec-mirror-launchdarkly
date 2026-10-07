@@ -42371,6 +42371,11 @@
           "defaultApiVersion": {
             "type": "integer",
             "description": "The default API version for this token"
+          },
+          "expiry": {
+            "description": "Timestamp of when the access token should expire, as a Unix epoch time in milliseconds. Omit for a token that does not expire.",
+            "example": "1735689600000",
+            "$ref": "#/components/schemas/UnixMillis"
           }
         }
       },
@@ -45142,7 +45147,7 @@
             }
           },
           "basePermissions": {
-            "description": "Base permissions to use for this role. Defaults to no_access (older roles defaulted to reader). Recommended to set this to no_access in all cases.",
+            "description": "When this field is omitted, reader is stored, and it grants read access across every project in addition to the policy. A value of no_access grants only what the policy allows.",
             "example": "reader",
             "$ref": "#/components/schemas/RoleType"
           },
@@ -45195,7 +45200,7 @@
             "$ref": "#/components/schemas/StatementPostList"
           },
           "basePermissions": {
-            "description": "Base permissions to use for this role. Defaults to no_access (older roles defaulted to reader). Recommended to set this to no_access in all cases.",
+            "description": "When this field is omitted, reader is stored, and it grants read access across every project in addition to the policy. A value of no_access grants only what the policy allows.",
             "example": "reader",
             "enum": [
               "reader",
@@ -64054,7 +64059,7 @@
           "markdown": "markdown",
           "maintainerTeamKey": "example-team-key",
           "description": "description",
-          "key": "key",
+          "key": "pdf-extraction",
           "tags": [
             "tags",
             "tags"
@@ -64062,6 +64067,8 @@
         },
         "properties": {
           "key": {
+            "description": "A unique key for the agent skill. The key must match `^[a-z0-9][a-z0-9-]*$`: it can only contain lowercase letters, numbers, or '-', and must start with a lowercase letter or number. The key can be at most 64 characters, and Windows reserved file names (`con`, `prn`, `aux`, `nul`, `com0`-`com9`, and `lpt0`-`lpt9`) aren't allowed.",
+            "example": "pdf-extraction",
             "type": "string"
           },
           "name": {
