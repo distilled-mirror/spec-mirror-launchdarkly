@@ -46151,14 +46151,37 @@
       "DurationUnit": {
         "type": "string"
       },
+      "DynamicOptionFiltersItems": {
+        "type": "object",
+        "properties": {
+          "attribute": {
+            "type": "string"
+          },
+          "variableKey": {
+            "type": "string"
+          }
+        }
+      },
       "DynamicOptions": {
         "type": "object",
         "properties": {
+          "allowUnknownValue": {
+            "type": "boolean"
+          },
           "endpoint": {
             "$ref": "#/components/schemas/Endpoint"
           },
+          "filters": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/DynamicOptionFiltersItems"
+            }
+          },
           "parser": {
             "$ref": "#/components/schemas/DynamicOptionsParser"
+          },
+          "source": {
+            "$ref": "#/components/schemas/DynamicOptionsSource"
           }
         }
       },
@@ -46169,6 +46192,17 @@
             "$ref": "#/components/schemas/OptionsArray"
           },
           "optionsPath": {
+            "type": "string"
+          }
+        }
+      },
+      "DynamicOptionsSource": {
+        "type": "object",
+        "properties": {
+          "key": {
+            "type": "string"
+          },
+          "type": {
             "type": "string"
           }
         }
