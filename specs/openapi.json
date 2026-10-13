@@ -81111,7 +81111,7 @@
                 "durationMillis": 60000
               },
               {
-                "allocation": 25000,
+                "allocation": 50000,
                 "durationMillis": 60000
               }
             ]
@@ -81134,7 +81134,7 @@
                 "durationMillis": 60000
               },
               {
-                "allocation": 25000,
+                "allocation": 50000,
                 "durationMillis": 60000
               }
             ],
@@ -81199,7 +81199,7 @@
                 "durationMillis": 60000
               },
               {
-                "allocation": 25000,
+                "allocation": 50000,
                 "durationMillis": 60000
               }
             ]
@@ -81222,7 +81222,7 @@
                 "durationMillis": 60000
               },
               {
-                "allocation": 25000,
+                "allocation": 50000,
                 "durationMillis": 60000
               }
             ],
@@ -81370,7 +81370,7 @@
                 "durationMillis": 60000
               },
               {
-                "allocation": 25000,
+                "allocation": 50000,
                 "durationMillis": 60000
               }
             ]
@@ -81395,7 +81395,7 @@
                 "durationMillis": 60000
               },
               {
-                "allocation": 25000,
+                "allocation": 50000,
                 "durationMillis": 60000
               }
             ],
@@ -81478,14 +81478,17 @@
             "type": "array"
           },
           "flagTagKeys": {
-            "description": "List of flag tag keys this policy applies to",
+            "description": "List of flag tag keys this policy applies to. At most 1000 keys. Each key must only contain letters, numbers, '-', '_', or '.', and be at most 64 characters.",
             "example": [
               "frontend",
               "backend"
             ],
             "items": {
+              "maxLength": 64,
+              "pattern": "^[.A-Za-z_0-9-]+$",
               "type": "string"
             },
+            "maxItems": 1000,
             "type": "array"
           }
         },
@@ -81510,7 +81513,7 @@
               "durationMillis": 60000
             },
             {
-              "allocation": 25000,
+              "allocation": 50000,
               "durationMillis": 60000
             }
           ],
@@ -81555,10 +81558,21 @@
             "type": "array"
           },
           "stages": {
-            "description": "List of stages",
+            "description": "List of stages. At most 10 stages by default; the server enforces the per-account limit, which is never more than 20.",
+            "example": [
+              {
+                "allocation": 25000,
+                "durationMillis": 60000
+              },
+              {
+                "allocation": 50000,
+                "durationMillis": 60000
+              }
+            ],
             "items": {
               "$ref": "#/components/schemas/ReleasePolicyStage"
             },
+            "maxItems": 20,
             "type": "array"
           }
         },
@@ -81574,7 +81588,7 @@
               "durationMillis": 60000
             },
             {
-              "allocation": 25000,
+              "allocation": 50000,
               "durationMillis": 60000
             }
           ]
@@ -81586,10 +81600,21 @@
             "type": "string"
           },
           "stages": {
-            "description": "List of stages",
+            "description": "List of stages. At most 10 stages by default; the server enforces the per-account limit, which is never more than 20.",
+            "example": [
+              {
+                "allocation": 25000,
+                "durationMillis": 60000
+              },
+              {
+                "allocation": 50000,
+                "durationMillis": 60000
+              }
+            ],
             "items": {
               "$ref": "#/components/schemas/ReleasePolicyStage"
             },
+            "maxItems": 20,
             "type": "array"
           }
         },
@@ -81713,7 +81738,7 @@
                     "durationMillis": 60000
                   },
                   {
-                    "allocation": 25000,
+                    "allocation": 50000,
                     "durationMillis": 60000
                   }
                 ]
@@ -81738,7 +81763,7 @@
                     "durationMillis": 60000
                   },
                   {
-                    "allocation": 25000,
+                    "allocation": 50000,
                     "durationMillis": 60000
                   }
                 ],
@@ -81860,7 +81885,7 @@
                     "durationMillis": 60000
                   },
                   {
-                    "allocation": 25000,
+                    "allocation": 50000,
                     "durationMillis": 60000
                   }
                 ]
@@ -81885,7 +81910,7 @@
                     "durationMillis": 60000
                   },
                   {
-                    "allocation": 25000,
+                    "allocation": 50000,
                     "durationMillis": 60000
                   }
                 ],
@@ -81925,10 +81950,6 @@
         "type": "string"
       },
       "ReleasePolicyStage": {
-        "example": {
-          "allocation": 25000,
-          "durationMillis": 60000
-        },
         "properties": {
           "allocation": {
             "example": 25000,
