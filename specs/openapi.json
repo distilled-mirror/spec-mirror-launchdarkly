@@ -6939,6 +6939,16 @@
               }
             }
           },
+          "405": {
+            "description": "Method not allowed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MethodNotAllowedErrorRep"
+                }
+              }
+            }
+          },
           "429": {
             "description": "Rate limited",
             "content": {
@@ -7158,6 +7168,16 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/NotFoundErrorRep"
+                }
+              }
+            }
+          },
+          "405": {
+            "description": "Method not allowed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MethodNotAllowedErrorRep"
                 }
               }
             }
@@ -70189,11 +70209,11 @@
               "type": "type"
             }
           },
-          "totalCount": 7,
+          "totalCount": 0,
           "items": [
             {
               "metricsExpanded": {
-                "totalCount": 3,
+                "totalCount": 6,
                 "items": [
                   {
                     "_links": {
@@ -70208,14 +70228,14 @@
                     },
                     "kind": "kind",
                     "description": "description",
-                    "creationDate": 8,
+                    "creationDate": 9,
                     "isActive": true,
-                    "lastSeen": 6,
+                    "lastSeen": 3,
                     "eventKey": "eventKey",
                     "_versionId": "_versionId",
                     "isNumeric": true,
                     "name": "name",
-                    "lastModified": 9,
+                    "lastModified": 6,
                     "_id": "_id",
                     "category": "category",
                     "key": "key"
@@ -70233,14 +70253,14 @@
                     },
                     "kind": "kind",
                     "description": "description",
-                    "creationDate": 8,
+                    "creationDate": 9,
                     "isActive": true,
-                    "lastSeen": 6,
+                    "lastSeen": 3,
                     "eventKey": "eventKey",
                     "_versionId": "_versionId",
                     "isNumeric": true,
                     "name": "name",
-                    "lastModified": 9,
+                    "lastModified": 6,
                     "_id": "_id",
                     "category": "category",
                     "key": "key"
@@ -70404,11 +70424,14 @@
               },
               "key": "key",
               "updatedAt": 1,
+              "payloadSummary": {
+                "sdkKeyCount": 6
+              },
               "resourcesExpanded": {
-                "totalCount": 3,
+                "totalCount": 7,
                 "items": {
                   "flags": {
-                    "totalCount": 6,
+                    "totalCount": 5,
                     "items": [
                       {
                         "archived": true,
@@ -70426,8 +70449,8 @@
                         },
                         "name": "name",
                         "description": "description",
-                        "creationDate": 6,
-                        "_version": 7,
+                        "creationDate": 7,
+                        "_version": 1,
                         "key": "key",
                         "maintainer": {
                           "kind": "member",
@@ -70480,8 +70503,8 @@
                         },
                         "name": "name",
                         "description": "description",
-                        "creationDate": 6,
-                        "_version": 7,
+                        "creationDate": 7,
+                        "_version": 1,
                         "key": "key",
                         "maintainer": {
                           "kind": "member",
@@ -70521,10 +70544,10 @@
                     ]
                   },
                   "aiConfigs": {
-                    "totalCount": 6,
+                    "totalCount": 3,
                     "items": [
                       {
-                        "createdAt": 1,
+                        "createdAt": 2,
                         "_links": {
                           "parent": {
                             "href": "href",
@@ -70537,17 +70560,17 @@
                         },
                         "name": "name",
                         "description": "description",
-                        "version": 6,
+                        "version": 1,
                         "key": "key",
                         "flagKey": "flagKey",
                         "tags": [
                           "tags",
                           "tags"
                         ],
-                        "updatedAt": 2
+                        "updatedAt": 6
                       },
                       {
-                        "createdAt": 1,
+                        "createdAt": 2,
                         "_links": {
                           "parent": {
                             "href": "href",
@@ -70560,14 +70583,14 @@
                         },
                         "name": "name",
                         "description": "description",
-                        "version": 6,
+                        "version": 1,
                         "key": "key",
                         "flagKey": "flagKey",
                         "tags": [
                           "tags",
                           "tags"
                         ],
-                        "updatedAt": 2
+                        "updatedAt": 6
                       }
                     ]
                   },
@@ -70587,14 +70610,14 @@
                         },
                         "kind": "kind",
                         "description": "description",
-                        "creationDate": 8,
+                        "creationDate": 9,
                         "isActive": true,
-                        "lastSeen": 6,
+                        "lastSeen": 3,
                         "eventKey": "eventKey",
                         "_versionId": "_versionId",
                         "isNumeric": true,
                         "name": "name",
-                        "lastModified": 9,
+                        "lastModified": 6,
                         "_id": "_id",
                         "category": "category",
                         "key": "key"
@@ -70612,14 +70635,14 @@
                         },
                         "kind": "kind",
                         "description": "description",
-                        "creationDate": 8,
+                        "creationDate": 9,
                         "isActive": true,
-                        "lastSeen": 6,
+                        "lastSeen": 3,
                         "eventKey": "eventKey",
                         "_versionId": "_versionId",
                         "isNumeric": true,
                         "name": "name",
-                        "lastModified": 9,
+                        "lastModified": 6,
                         "_id": "_id",
                         "category": "category",
                         "key": "key"
@@ -70627,11 +70650,11 @@
                     ]
                   },
                   "segments": {
-                    "totalCount": 5,
+                    "totalCount": 6,
                     "items": [
                       {
-                        "generation": 9,
-                        "lastModifiedDate": 5,
+                        "generation": 6,
+                        "lastModifiedDate": 9,
                         "_links": {
                           "parent": {
                             "href": "href",
@@ -70643,7 +70666,7 @@
                           }
                         },
                         "description": "description",
-                        "creationDate": 4,
+                        "creationDate": 5,
                         "version": 9,
                         "environmentKey": "environmentKey",
                         "tags": [
@@ -70657,8 +70680,8 @@
                         "key": "key"
                       },
                       {
-                        "generation": 9,
-                        "lastModifiedDate": 5,
+                        "generation": 6,
+                        "lastModifiedDate": 9,
                         "_links": {
                           "parent": {
                             "href": "href",
@@ -70670,7 +70693,7 @@
                           }
                         },
                         "description": "description",
-                        "creationDate": 4,
+                        "creationDate": 5,
                         "version": 9,
                         "environmentKey": "environmentKey",
                         "tags": [
@@ -70699,6 +70722,9 @@
                 "tags",
                 "tags"
               ],
+              "applicationSummary": {
+                "applicationKey": "applicationKey"
+              },
               "accountId": "accountId",
               "deletedAt": 5,
               "deleted": false,
@@ -70737,7 +70763,7 @@
                 "totalCount": 6,
                 "items": [
                   {
-                    "createdAt": 1,
+                    "createdAt": 2,
                     "_links": {
                       "parent": {
                         "href": "href",
@@ -70750,17 +70776,17 @@
                     },
                     "name": "name",
                     "description": "description",
-                    "version": 6,
+                    "version": 1,
                     "key": "key",
                     "flagKey": "flagKey",
                     "tags": [
                       "tags",
                       "tags"
                     ],
-                    "updatedAt": 2
+                    "updatedAt": 6
                   },
                   {
-                    "createdAt": 1,
+                    "createdAt": 2,
                     "_links": {
                       "parent": {
                         "href": "href",
@@ -70773,23 +70799,23 @@
                     },
                     "name": "name",
                     "description": "description",
-                    "version": 6,
+                    "version": 1,
                     "key": "key",
                     "flagKey": "flagKey",
                     "tags": [
                       "tags",
                       "tags"
                     ],
-                    "updatedAt": 2
+                    "updatedAt": 6
                   }
                 ]
               },
               "segmentsExpanded": {
-                "totalCount": 6,
+                "totalCount": 8,
                 "items": [
                   {
-                    "generation": 9,
-                    "lastModifiedDate": 5,
+                    "generation": 6,
+                    "lastModifiedDate": 9,
                     "_links": {
                       "parent": {
                         "href": "href",
@@ -70801,7 +70827,7 @@
                       }
                     },
                     "description": "description",
-                    "creationDate": 4,
+                    "creationDate": 5,
                     "version": 9,
                     "environmentKey": "environmentKey",
                     "tags": [
@@ -70815,8 +70841,8 @@
                     "key": "key"
                   },
                   {
-                    "generation": 9,
-                    "lastModifiedDate": 5,
+                    "generation": 6,
+                    "lastModifiedDate": 9,
                     "_links": {
                       "parent": {
                         "href": "href",
@@ -70828,7 +70854,7 @@
                       }
                     },
                     "description": "description",
-                    "creationDate": 4,
+                    "creationDate": 5,
                     "version": 9,
                     "environmentKey": "environmentKey",
                     "tags": [
@@ -70846,7 +70872,7 @@
               "_affectsSdkPayload": true,
               "projectId": "projectId",
               "flagsExpanded": {
-                "totalCount": 1,
+                "totalCount": 4,
                 "items": [
                   {
                     "archived": true,
@@ -70864,8 +70890,8 @@
                     },
                     "name": "name",
                     "description": "description",
-                    "creationDate": 6,
-                    "_version": 7,
+                    "creationDate": 7,
+                    "_version": 1,
                     "key": "key",
                     "maintainer": {
                       "kind": "member",
@@ -70918,8 +70944,8 @@
                     },
                     "name": "name",
                     "description": "description",
-                    "creationDate": 6,
-                    "_version": 7,
+                    "creationDate": 7,
+                    "_version": 1,
                     "key": "key",
                     "maintainer": {
                       "kind": "member",
@@ -70961,7 +70987,7 @@
             },
             {
               "metricsExpanded": {
-                "totalCount": 3,
+                "totalCount": 6,
                 "items": [
                   {
                     "_links": {
@@ -70976,14 +71002,14 @@
                     },
                     "kind": "kind",
                     "description": "description",
-                    "creationDate": 8,
+                    "creationDate": 9,
                     "isActive": true,
-                    "lastSeen": 6,
+                    "lastSeen": 3,
                     "eventKey": "eventKey",
                     "_versionId": "_versionId",
                     "isNumeric": true,
                     "name": "name",
-                    "lastModified": 9,
+                    "lastModified": 6,
                     "_id": "_id",
                     "category": "category",
                     "key": "key"
@@ -71001,14 +71027,14 @@
                     },
                     "kind": "kind",
                     "description": "description",
-                    "creationDate": 8,
+                    "creationDate": 9,
                     "isActive": true,
-                    "lastSeen": 6,
+                    "lastSeen": 3,
                     "eventKey": "eventKey",
                     "_versionId": "_versionId",
                     "isNumeric": true,
                     "name": "name",
-                    "lastModified": 9,
+                    "lastModified": 6,
                     "_id": "_id",
                     "category": "category",
                     "key": "key"
@@ -71172,11 +71198,14 @@
               },
               "key": "key",
               "updatedAt": 1,
+              "payloadSummary": {
+                "sdkKeyCount": 6
+              },
               "resourcesExpanded": {
-                "totalCount": 3,
+                "totalCount": 7,
                 "items": {
                   "flags": {
-                    "totalCount": 6,
+                    "totalCount": 5,
                     "items": [
                       {
                         "archived": true,
@@ -71194,8 +71223,8 @@
                         },
                         "name": "name",
                         "description": "description",
-                        "creationDate": 6,
-                        "_version": 7,
+                        "creationDate": 7,
+                        "_version": 1,
                         "key": "key",
                         "maintainer": {
                           "kind": "member",
@@ -71248,8 +71277,8 @@
                         },
                         "name": "name",
                         "description": "description",
-                        "creationDate": 6,
-                        "_version": 7,
+                        "creationDate": 7,
+                        "_version": 1,
                         "key": "key",
                         "maintainer": {
                           "kind": "member",
@@ -71289,10 +71318,10 @@
                     ]
                   },
                   "aiConfigs": {
-                    "totalCount": 6,
+                    "totalCount": 3,
                     "items": [
                       {
-                        "createdAt": 1,
+                        "createdAt": 2,
                         "_links": {
                           "parent": {
                             "href": "href",
@@ -71305,17 +71334,17 @@
                         },
                         "name": "name",
                         "description": "description",
-                        "version": 6,
+                        "version": 1,
                         "key": "key",
                         "flagKey": "flagKey",
                         "tags": [
                           "tags",
                           "tags"
                         ],
-                        "updatedAt": 2
+                        "updatedAt": 6
                       },
                       {
-                        "createdAt": 1,
+                        "createdAt": 2,
                         "_links": {
                           "parent": {
                             "href": "href",
@@ -71328,14 +71357,14 @@
                         },
                         "name": "name",
                         "description": "description",
-                        "version": 6,
+                        "version": 1,
                         "key": "key",
                         "flagKey": "flagKey",
                         "tags": [
                           "tags",
                           "tags"
                         ],
-                        "updatedAt": 2
+                        "updatedAt": 6
                       }
                     ]
                   },
@@ -71355,14 +71384,14 @@
                         },
                         "kind": "kind",
                         "description": "description",
-                        "creationDate": 8,
+                        "creationDate": 9,
                         "isActive": true,
-                        "lastSeen": 6,
+                        "lastSeen": 3,
                         "eventKey": "eventKey",
                         "_versionId": "_versionId",
                         "isNumeric": true,
                         "name": "name",
-                        "lastModified": 9,
+                        "lastModified": 6,
                         "_id": "_id",
                         "category": "category",
                         "key": "key"
@@ -71380,14 +71409,14 @@
                         },
                         "kind": "kind",
                         "description": "description",
-                        "creationDate": 8,
+                        "creationDate": 9,
                         "isActive": true,
-                        "lastSeen": 6,
+                        "lastSeen": 3,
                         "eventKey": "eventKey",
                         "_versionId": "_versionId",
                         "isNumeric": true,
                         "name": "name",
-                        "lastModified": 9,
+                        "lastModified": 6,
                         "_id": "_id",
                         "category": "category",
                         "key": "key"
@@ -71395,11 +71424,11 @@
                     ]
                   },
                   "segments": {
-                    "totalCount": 5,
+                    "totalCount": 6,
                     "items": [
                       {
-                        "generation": 9,
-                        "lastModifiedDate": 5,
+                        "generation": 6,
+                        "lastModifiedDate": 9,
                         "_links": {
                           "parent": {
                             "href": "href",
@@ -71411,7 +71440,7 @@
                           }
                         },
                         "description": "description",
-                        "creationDate": 4,
+                        "creationDate": 5,
                         "version": 9,
                         "environmentKey": "environmentKey",
                         "tags": [
@@ -71425,8 +71454,8 @@
                         "key": "key"
                       },
                       {
-                        "generation": 9,
-                        "lastModifiedDate": 5,
+                        "generation": 6,
+                        "lastModifiedDate": 9,
                         "_links": {
                           "parent": {
                             "href": "href",
@@ -71438,7 +71467,7 @@
                           }
                         },
                         "description": "description",
-                        "creationDate": 4,
+                        "creationDate": 5,
                         "version": 9,
                         "environmentKey": "environmentKey",
                         "tags": [
@@ -71467,6 +71496,9 @@
                 "tags",
                 "tags"
               ],
+              "applicationSummary": {
+                "applicationKey": "applicationKey"
+              },
               "accountId": "accountId",
               "deletedAt": 5,
               "deleted": false,
@@ -71505,7 +71537,7 @@
                 "totalCount": 6,
                 "items": [
                   {
-                    "createdAt": 1,
+                    "createdAt": 2,
                     "_links": {
                       "parent": {
                         "href": "href",
@@ -71518,17 +71550,17 @@
                     },
                     "name": "name",
                     "description": "description",
-                    "version": 6,
+                    "version": 1,
                     "key": "key",
                     "flagKey": "flagKey",
                     "tags": [
                       "tags",
                       "tags"
                     ],
-                    "updatedAt": 2
+                    "updatedAt": 6
                   },
                   {
-                    "createdAt": 1,
+                    "createdAt": 2,
                     "_links": {
                       "parent": {
                         "href": "href",
@@ -71541,23 +71573,23 @@
                     },
                     "name": "name",
                     "description": "description",
-                    "version": 6,
+                    "version": 1,
                     "key": "key",
                     "flagKey": "flagKey",
                     "tags": [
                       "tags",
                       "tags"
                     ],
-                    "updatedAt": 2
+                    "updatedAt": 6
                   }
                 ]
               },
               "segmentsExpanded": {
-                "totalCount": 6,
+                "totalCount": 8,
                 "items": [
                   {
-                    "generation": 9,
-                    "lastModifiedDate": 5,
+                    "generation": 6,
+                    "lastModifiedDate": 9,
                     "_links": {
                       "parent": {
                         "href": "href",
@@ -71569,7 +71601,7 @@
                       }
                     },
                     "description": "description",
-                    "creationDate": 4,
+                    "creationDate": 5,
                     "version": 9,
                     "environmentKey": "environmentKey",
                     "tags": [
@@ -71583,8 +71615,8 @@
                     "key": "key"
                   },
                   {
-                    "generation": 9,
-                    "lastModifiedDate": 5,
+                    "generation": 6,
+                    "lastModifiedDate": 9,
                     "_links": {
                       "parent": {
                         "href": "href",
@@ -71596,7 +71628,7 @@
                       }
                     },
                     "description": "description",
-                    "creationDate": 4,
+                    "creationDate": 5,
                     "version": 9,
                     "environmentKey": "environmentKey",
                     "tags": [
@@ -71614,7 +71646,7 @@
               "_affectsSdkPayload": true,
               "projectId": "projectId",
               "flagsExpanded": {
-                "totalCount": 1,
+                "totalCount": 4,
                 "items": [
                   {
                     "archived": true,
@@ -71632,8 +71664,8 @@
                     },
                     "name": "name",
                     "description": "description",
-                    "creationDate": 6,
-                    "_version": 7,
+                    "creationDate": 7,
+                    "_version": 1,
                     "key": "key",
                     "maintainer": {
                       "kind": "member",
@@ -71686,8 +71718,8 @@
                     },
                     "name": "name",
                     "description": "description",
-                    "creationDate": 6,
-                    "_version": 7,
+                    "creationDate": 7,
+                    "_version": 1,
                     "key": "key",
                     "maintainer": {
                       "kind": "member",
@@ -71752,7 +71784,7 @@
       "View": {
         "example": {
           "metricsExpanded": {
-            "totalCount": 3,
+            "totalCount": 6,
             "items": [
               {
                 "_links": {
@@ -71767,14 +71799,14 @@
                 },
                 "kind": "kind",
                 "description": "description",
-                "creationDate": 8,
+                "creationDate": 9,
                 "isActive": true,
-                "lastSeen": 6,
+                "lastSeen": 3,
                 "eventKey": "eventKey",
                 "_versionId": "_versionId",
                 "isNumeric": true,
                 "name": "name",
-                "lastModified": 9,
+                "lastModified": 6,
                 "_id": "_id",
                 "category": "category",
                 "key": "key"
@@ -71792,14 +71824,14 @@
                 },
                 "kind": "kind",
                 "description": "description",
-                "creationDate": 8,
+                "creationDate": 9,
                 "isActive": true,
-                "lastSeen": 6,
+                "lastSeen": 3,
                 "eventKey": "eventKey",
                 "_versionId": "_versionId",
                 "isNumeric": true,
                 "name": "name",
-                "lastModified": 9,
+                "lastModified": 6,
                 "_id": "_id",
                 "category": "category",
                 "key": "key"
@@ -71963,11 +71995,14 @@
           },
           "key": "key",
           "updatedAt": 1,
+          "payloadSummary": {
+            "sdkKeyCount": 6
+          },
           "resourcesExpanded": {
-            "totalCount": 3,
+            "totalCount": 7,
             "items": {
               "flags": {
-                "totalCount": 6,
+                "totalCount": 5,
                 "items": [
                   {
                     "archived": true,
@@ -71985,8 +72020,8 @@
                     },
                     "name": "name",
                     "description": "description",
-                    "creationDate": 6,
-                    "_version": 7,
+                    "creationDate": 7,
+                    "_version": 1,
                     "key": "key",
                     "maintainer": {
                       "kind": "member",
@@ -72039,8 +72074,8 @@
                     },
                     "name": "name",
                     "description": "description",
-                    "creationDate": 6,
-                    "_version": 7,
+                    "creationDate": 7,
+                    "_version": 1,
                     "key": "key",
                     "maintainer": {
                       "kind": "member",
@@ -72080,10 +72115,10 @@
                 ]
               },
               "aiConfigs": {
-                "totalCount": 6,
+                "totalCount": 3,
                 "items": [
                   {
-                    "createdAt": 1,
+                    "createdAt": 2,
                     "_links": {
                       "parent": {
                         "href": "href",
@@ -72096,17 +72131,17 @@
                     },
                     "name": "name",
                     "description": "description",
-                    "version": 6,
+                    "version": 1,
                     "key": "key",
                     "flagKey": "flagKey",
                     "tags": [
                       "tags",
                       "tags"
                     ],
-                    "updatedAt": 2
+                    "updatedAt": 6
                   },
                   {
-                    "createdAt": 1,
+                    "createdAt": 2,
                     "_links": {
                       "parent": {
                         "href": "href",
@@ -72119,14 +72154,14 @@
                     },
                     "name": "name",
                     "description": "description",
-                    "version": 6,
+                    "version": 1,
                     "key": "key",
                     "flagKey": "flagKey",
                     "tags": [
                       "tags",
                       "tags"
                     ],
-                    "updatedAt": 2
+                    "updatedAt": 6
                   }
                 ]
               },
@@ -72146,14 +72181,14 @@
                     },
                     "kind": "kind",
                     "description": "description",
-                    "creationDate": 8,
+                    "creationDate": 9,
                     "isActive": true,
-                    "lastSeen": 6,
+                    "lastSeen": 3,
                     "eventKey": "eventKey",
                     "_versionId": "_versionId",
                     "isNumeric": true,
                     "name": "name",
-                    "lastModified": 9,
+                    "lastModified": 6,
                     "_id": "_id",
                     "category": "category",
                     "key": "key"
@@ -72171,14 +72206,14 @@
                     },
                     "kind": "kind",
                     "description": "description",
-                    "creationDate": 8,
+                    "creationDate": 9,
                     "isActive": true,
-                    "lastSeen": 6,
+                    "lastSeen": 3,
                     "eventKey": "eventKey",
                     "_versionId": "_versionId",
                     "isNumeric": true,
                     "name": "name",
-                    "lastModified": 9,
+                    "lastModified": 6,
                     "_id": "_id",
                     "category": "category",
                     "key": "key"
@@ -72186,11 +72221,11 @@
                 ]
               },
               "segments": {
-                "totalCount": 5,
+                "totalCount": 6,
                 "items": [
                   {
-                    "generation": 9,
-                    "lastModifiedDate": 5,
+                    "generation": 6,
+                    "lastModifiedDate": 9,
                     "_links": {
                       "parent": {
                         "href": "href",
@@ -72202,7 +72237,7 @@
                       }
                     },
                     "description": "description",
-                    "creationDate": 4,
+                    "creationDate": 5,
                     "version": 9,
                     "environmentKey": "environmentKey",
                     "tags": [
@@ -72216,8 +72251,8 @@
                     "key": "key"
                   },
                   {
-                    "generation": 9,
-                    "lastModifiedDate": 5,
+                    "generation": 6,
+                    "lastModifiedDate": 9,
                     "_links": {
                       "parent": {
                         "href": "href",
@@ -72229,7 +72264,7 @@
                       }
                     },
                     "description": "description",
-                    "creationDate": 4,
+                    "creationDate": 5,
                     "version": 9,
                     "environmentKey": "environmentKey",
                     "tags": [
@@ -72258,6 +72293,9 @@
             "tags",
             "tags"
           ],
+          "applicationSummary": {
+            "applicationKey": "applicationKey"
+          },
           "accountId": "accountId",
           "deletedAt": 5,
           "deleted": false,
@@ -72296,7 +72334,7 @@
             "totalCount": 6,
             "items": [
               {
-                "createdAt": 1,
+                "createdAt": 2,
                 "_links": {
                   "parent": {
                     "href": "href",
@@ -72309,17 +72347,17 @@
                 },
                 "name": "name",
                 "description": "description",
-                "version": 6,
+                "version": 1,
                 "key": "key",
                 "flagKey": "flagKey",
                 "tags": [
                   "tags",
                   "tags"
                 ],
-                "updatedAt": 2
+                "updatedAt": 6
               },
               {
-                "createdAt": 1,
+                "createdAt": 2,
                 "_links": {
                   "parent": {
                     "href": "href",
@@ -72332,23 +72370,23 @@
                 },
                 "name": "name",
                 "description": "description",
-                "version": 6,
+                "version": 1,
                 "key": "key",
                 "flagKey": "flagKey",
                 "tags": [
                   "tags",
                   "tags"
                 ],
-                "updatedAt": 2
+                "updatedAt": 6
               }
             ]
           },
           "segmentsExpanded": {
-            "totalCount": 6,
+            "totalCount": 8,
             "items": [
               {
-                "generation": 9,
-                "lastModifiedDate": 5,
+                "generation": 6,
+                "lastModifiedDate": 9,
                 "_links": {
                   "parent": {
                     "href": "href",
@@ -72360,7 +72398,7 @@
                   }
                 },
                 "description": "description",
-                "creationDate": 4,
+                "creationDate": 5,
                 "version": 9,
                 "environmentKey": "environmentKey",
                 "tags": [
@@ -72374,8 +72412,8 @@
                 "key": "key"
               },
               {
-                "generation": 9,
-                "lastModifiedDate": 5,
+                "generation": 6,
+                "lastModifiedDate": 9,
                 "_links": {
                   "parent": {
                     "href": "href",
@@ -72387,7 +72425,7 @@
                   }
                 },
                 "description": "description",
-                "creationDate": 4,
+                "creationDate": 5,
                 "version": 9,
                 "environmentKey": "environmentKey",
                 "tags": [
@@ -72405,7 +72443,7 @@
           "_affectsSdkPayload": true,
           "projectId": "projectId",
           "flagsExpanded": {
-            "totalCount": 1,
+            "totalCount": 4,
             "items": [
               {
                 "archived": true,
@@ -72423,8 +72461,8 @@
                 },
                 "name": "name",
                 "description": "description",
-                "creationDate": 6,
-                "_version": 7,
+                "creationDate": 7,
+                "_version": 1,
                 "key": "key",
                 "maintainer": {
                   "kind": "member",
@@ -72477,8 +72515,8 @@
                 },
                 "name": "name",
                 "description": "description",
-                "creationDate": 6,
-                "_version": 7,
+                "creationDate": 7,
+                "_version": 1,
                 "key": "key",
                 "maintainer": {
                   "kind": "member",
@@ -72864,7 +72902,7 @@
               "resourceDetails": {
                 "view": {
                   "metricsExpanded": {
-                    "totalCount": 3,
+                    "totalCount": 6,
                     "items": [
                       {
                         "_links": {
@@ -72879,14 +72917,14 @@
                         },
                         "kind": "kind",
                         "description": "description",
-                        "creationDate": 8,
+                        "creationDate": 9,
                         "isActive": true,
-                        "lastSeen": 6,
+                        "lastSeen": 3,
                         "eventKey": "eventKey",
                         "_versionId": "_versionId",
                         "isNumeric": true,
                         "name": "name",
-                        "lastModified": 9,
+                        "lastModified": 6,
                         "_id": "_id",
                         "category": "category",
                         "key": "key"
@@ -72904,14 +72942,14 @@
                         },
                         "kind": "kind",
                         "description": "description",
-                        "creationDate": 8,
+                        "creationDate": 9,
                         "isActive": true,
-                        "lastSeen": 6,
+                        "lastSeen": 3,
                         "eventKey": "eventKey",
                         "_versionId": "_versionId",
                         "isNumeric": true,
                         "name": "name",
-                        "lastModified": 9,
+                        "lastModified": 6,
                         "_id": "_id",
                         "category": "category",
                         "key": "key"
@@ -73075,11 +73113,14 @@
                   },
                   "key": "key",
                   "updatedAt": 1,
+                  "payloadSummary": {
+                    "sdkKeyCount": 6
+                  },
                   "resourcesExpanded": {
-                    "totalCount": 3,
+                    "totalCount": 7,
                     "items": {
                       "flags": {
-                        "totalCount": 6,
+                        "totalCount": 5,
                         "items": [
                           {
                             "archived": true,
@@ -73097,8 +73138,8 @@
                             },
                             "name": "name",
                             "description": "description",
-                            "creationDate": 6,
-                            "_version": 7,
+                            "creationDate": 7,
+                            "_version": 1,
                             "key": "key",
                             "maintainer": {
                               "kind": "member",
@@ -73151,8 +73192,8 @@
                             },
                             "name": "name",
                             "description": "description",
-                            "creationDate": 6,
-                            "_version": 7,
+                            "creationDate": 7,
+                            "_version": 1,
                             "key": "key",
                             "maintainer": {
                               "kind": "member",
@@ -73192,10 +73233,10 @@
                         ]
                       },
                       "aiConfigs": {
-                        "totalCount": 6,
+                        "totalCount": 3,
                         "items": [
                           {
-                            "createdAt": 1,
+                            "createdAt": 2,
                             "_links": {
                               "parent": {
                                 "href": "href",
@@ -73208,17 +73249,17 @@
                             },
                             "name": "name",
                             "description": "description",
-                            "version": 6,
+                            "version": 1,
                             "key": "key",
                             "flagKey": "flagKey",
                             "tags": [
                               "tags",
                               "tags"
                             ],
-                            "updatedAt": 2
+                            "updatedAt": 6
                           },
                           {
-                            "createdAt": 1,
+                            "createdAt": 2,
                             "_links": {
                               "parent": {
                                 "href": "href",
@@ -73231,14 +73272,14 @@
                             },
                             "name": "name",
                             "description": "description",
-                            "version": 6,
+                            "version": 1,
                             "key": "key",
                             "flagKey": "flagKey",
                             "tags": [
                               "tags",
                               "tags"
                             ],
-                            "updatedAt": 2
+                            "updatedAt": 6
                           }
                         ]
                       },
@@ -73258,14 +73299,14 @@
                             },
                             "kind": "kind",
                             "description": "description",
-                            "creationDate": 8,
+                            "creationDate": 9,
                             "isActive": true,
-                            "lastSeen": 6,
+                            "lastSeen": 3,
                             "eventKey": "eventKey",
                             "_versionId": "_versionId",
                             "isNumeric": true,
                             "name": "name",
-                            "lastModified": 9,
+                            "lastModified": 6,
                             "_id": "_id",
                             "category": "category",
                             "key": "key"
@@ -73283,14 +73324,14 @@
                             },
                             "kind": "kind",
                             "description": "description",
-                            "creationDate": 8,
+                            "creationDate": 9,
                             "isActive": true,
-                            "lastSeen": 6,
+                            "lastSeen": 3,
                             "eventKey": "eventKey",
                             "_versionId": "_versionId",
                             "isNumeric": true,
                             "name": "name",
-                            "lastModified": 9,
+                            "lastModified": 6,
                             "_id": "_id",
                             "category": "category",
                             "key": "key"
@@ -73298,11 +73339,11 @@
                         ]
                       },
                       "segments": {
-                        "totalCount": 5,
+                        "totalCount": 6,
                         "items": [
                           {
-                            "generation": 9,
-                            "lastModifiedDate": 5,
+                            "generation": 6,
+                            "lastModifiedDate": 9,
                             "_links": {
                               "parent": {
                                 "href": "href",
@@ -73314,7 +73355,7 @@
                               }
                             },
                             "description": "description",
-                            "creationDate": 4,
+                            "creationDate": 5,
                             "version": 9,
                             "environmentKey": "environmentKey",
                             "tags": [
@@ -73328,8 +73369,8 @@
                             "key": "key"
                           },
                           {
-                            "generation": 9,
-                            "lastModifiedDate": 5,
+                            "generation": 6,
+                            "lastModifiedDate": 9,
                             "_links": {
                               "parent": {
                                 "href": "href",
@@ -73341,7 +73382,7 @@
                               }
                             },
                             "description": "description",
-                            "creationDate": 4,
+                            "creationDate": 5,
                             "version": 9,
                             "environmentKey": "environmentKey",
                             "tags": [
@@ -73370,6 +73411,9 @@
                     "tags",
                     "tags"
                   ],
+                  "applicationSummary": {
+                    "applicationKey": "applicationKey"
+                  },
                   "accountId": "accountId",
                   "deletedAt": 5,
                   "deleted": false,
@@ -73408,7 +73452,7 @@
                     "totalCount": 6,
                     "items": [
                       {
-                        "createdAt": 1,
+                        "createdAt": 2,
                         "_links": {
                           "parent": {
                             "href": "href",
@@ -73421,17 +73465,17 @@
                         },
                         "name": "name",
                         "description": "description",
-                        "version": 6,
+                        "version": 1,
                         "key": "key",
                         "flagKey": "flagKey",
                         "tags": [
                           "tags",
                           "tags"
                         ],
-                        "updatedAt": 2
+                        "updatedAt": 6
                       },
                       {
-                        "createdAt": 1,
+                        "createdAt": 2,
                         "_links": {
                           "parent": {
                             "href": "href",
@@ -73444,23 +73488,23 @@
                         },
                         "name": "name",
                         "description": "description",
-                        "version": 6,
+                        "version": 1,
                         "key": "key",
                         "flagKey": "flagKey",
                         "tags": [
                           "tags",
                           "tags"
                         ],
-                        "updatedAt": 2
+                        "updatedAt": 6
                       }
                     ]
                   },
                   "segmentsExpanded": {
-                    "totalCount": 6,
+                    "totalCount": 8,
                     "items": [
                       {
-                        "generation": 9,
-                        "lastModifiedDate": 5,
+                        "generation": 6,
+                        "lastModifiedDate": 9,
                         "_links": {
                           "parent": {
                             "href": "href",
@@ -73472,7 +73516,7 @@
                           }
                         },
                         "description": "description",
-                        "creationDate": 4,
+                        "creationDate": 5,
                         "version": 9,
                         "environmentKey": "environmentKey",
                         "tags": [
@@ -73486,8 +73530,8 @@
                         "key": "key"
                       },
                       {
-                        "generation": 9,
-                        "lastModifiedDate": 5,
+                        "generation": 6,
+                        "lastModifiedDate": 9,
                         "_links": {
                           "parent": {
                             "href": "href",
@@ -73499,7 +73543,7 @@
                           }
                         },
                         "description": "description",
-                        "creationDate": 4,
+                        "creationDate": 5,
                         "version": 9,
                         "environmentKey": "environmentKey",
                         "tags": [
@@ -73517,7 +73561,7 @@
                   "_affectsSdkPayload": true,
                   "projectId": "projectId",
                   "flagsExpanded": {
-                    "totalCount": 1,
+                    "totalCount": 4,
                     "items": [
                       {
                         "archived": true,
@@ -73535,8 +73579,8 @@
                         },
                         "name": "name",
                         "description": "description",
-                        "creationDate": 6,
-                        "_version": 7,
+                        "creationDate": 7,
+                        "_version": 1,
                         "key": "key",
                         "maintainer": {
                           "kind": "member",
@@ -73589,8 +73633,8 @@
                         },
                         "name": "name",
                         "description": "description",
-                        "creationDate": 6,
-                        "_version": 7,
+                        "creationDate": 7,
+                        "_version": 1,
                         "key": "key",
                         "maintainer": {
                           "kind": "member",
@@ -73646,8 +73690,8 @@
                   },
                   "name": "name",
                   "description": "description",
-                  "creationDate": 6,
-                  "_version": 7,
+                  "creationDate": 7,
+                  "_version": 1,
                   "key": "key",
                   "maintainer": {
                     "kind": "member",
@@ -73697,21 +73741,21 @@
                   },
                   "kind": "kind",
                   "description": "description",
-                  "creationDate": 8,
+                  "creationDate": 9,
                   "isActive": true,
-                  "lastSeen": 6,
+                  "lastSeen": 3,
                   "eventKey": "eventKey",
                   "_versionId": "_versionId",
                   "isNumeric": true,
                   "name": "name",
-                  "lastModified": 9,
+                  "lastModified": 6,
                   "_id": "_id",
                   "category": "category",
                   "key": "key"
                 },
                 "segment": {
-                  "generation": 9,
-                  "lastModifiedDate": 5,
+                  "generation": 6,
+                  "lastModifiedDate": 9,
                   "_links": {
                     "parent": {
                       "href": "href",
@@ -73723,7 +73767,7 @@
                     }
                   },
                   "description": "description",
-                  "creationDate": 4,
+                  "creationDate": 5,
                   "version": 9,
                   "environmentKey": "environmentKey",
                   "tags": [
@@ -73737,7 +73781,7 @@
                   "key": "key"
                 },
                 "aiConfig": {
-                  "createdAt": 1,
+                  "createdAt": 2,
                   "_links": {
                     "parent": {
                       "href": "href",
@@ -73750,14 +73794,14 @@
                   },
                   "name": "name",
                   "description": "description",
-                  "version": 6,
+                  "version": 1,
                   "key": "key",
                   "flagKey": "flagKey",
                   "tags": [
                     "tags",
                     "tags"
                   ],
-                  "updatedAt": 2
+                  "updatedAt": 6
                 }
               },
               "linkedAt": 1,
@@ -73780,7 +73824,7 @@
               "resourceDetails": {
                 "view": {
                   "metricsExpanded": {
-                    "totalCount": 3,
+                    "totalCount": 6,
                     "items": [
                       {
                         "_links": {
@@ -73795,14 +73839,14 @@
                         },
                         "kind": "kind",
                         "description": "description",
-                        "creationDate": 8,
+                        "creationDate": 9,
                         "isActive": true,
-                        "lastSeen": 6,
+                        "lastSeen": 3,
                         "eventKey": "eventKey",
                         "_versionId": "_versionId",
                         "isNumeric": true,
                         "name": "name",
-                        "lastModified": 9,
+                        "lastModified": 6,
                         "_id": "_id",
                         "category": "category",
                         "key": "key"
@@ -73820,14 +73864,14 @@
                         },
                         "kind": "kind",
                         "description": "description",
-                        "creationDate": 8,
+                        "creationDate": 9,
                         "isActive": true,
-                        "lastSeen": 6,
+                        "lastSeen": 3,
                         "eventKey": "eventKey",
                         "_versionId": "_versionId",
                         "isNumeric": true,
                         "name": "name",
-                        "lastModified": 9,
+                        "lastModified": 6,
                         "_id": "_id",
                         "category": "category",
                         "key": "key"
@@ -73991,11 +74035,14 @@
                   },
                   "key": "key",
                   "updatedAt": 1,
+                  "payloadSummary": {
+                    "sdkKeyCount": 6
+                  },
                   "resourcesExpanded": {
-                    "totalCount": 3,
+                    "totalCount": 7,
                     "items": {
                       "flags": {
-                        "totalCount": 6,
+                        "totalCount": 5,
                         "items": [
                           {
                             "archived": true,
@@ -74013,8 +74060,8 @@
                             },
                             "name": "name",
                             "description": "description",
-                            "creationDate": 6,
-                            "_version": 7,
+                            "creationDate": 7,
+                            "_version": 1,
                             "key": "key",
                             "maintainer": {
                               "kind": "member",
@@ -74067,8 +74114,8 @@
                             },
                             "name": "name",
                             "description": "description",
-                            "creationDate": 6,
-                            "_version": 7,
+                            "creationDate": 7,
+                            "_version": 1,
                             "key": "key",
                             "maintainer": {
                               "kind": "member",
@@ -74108,10 +74155,10 @@
                         ]
                       },
                       "aiConfigs": {
-                        "totalCount": 6,
+                        "totalCount": 3,
                         "items": [
                           {
-                            "createdAt": 1,
+                            "createdAt": 2,
                             "_links": {
                               "parent": {
                                 "href": "href",
@@ -74124,17 +74171,17 @@
                             },
                             "name": "name",
                             "description": "description",
-                            "version": 6,
+                            "version": 1,
                             "key": "key",
                             "flagKey": "flagKey",
                             "tags": [
                               "tags",
                               "tags"
                             ],
-                            "updatedAt": 2
+                            "updatedAt": 6
                           },
                           {
-                            "createdAt": 1,
+                            "createdAt": 2,
                             "_links": {
                               "parent": {
                                 "href": "href",
@@ -74147,14 +74194,14 @@
                             },
                             "name": "name",
                             "description": "description",
-                            "version": 6,
+                            "version": 1,
                             "key": "key",
                             "flagKey": "flagKey",
                             "tags": [
                               "tags",
                               "tags"
                             ],
-                            "updatedAt": 2
+                            "updatedAt": 6
                           }
                         ]
                       },
@@ -74174,14 +74221,14 @@
                             },
                             "kind": "kind",
                             "description": "description",
-                            "creationDate": 8,
+                            "creationDate": 9,
                             "isActive": true,
-                            "lastSeen": 6,
+                            "lastSeen": 3,
                             "eventKey": "eventKey",
                             "_versionId": "_versionId",
                             "isNumeric": true,
                             "name": "name",
-                            "lastModified": 9,
+                            "lastModified": 6,
                             "_id": "_id",
                             "category": "category",
                             "key": "key"
@@ -74199,14 +74246,14 @@
                             },
                             "kind": "kind",
                             "description": "description",
-                            "creationDate": 8,
+                            "creationDate": 9,
                             "isActive": true,
-                            "lastSeen": 6,
+                            "lastSeen": 3,
                             "eventKey": "eventKey",
                             "_versionId": "_versionId",
                             "isNumeric": true,
                             "name": "name",
-                            "lastModified": 9,
+                            "lastModified": 6,
                             "_id": "_id",
                             "category": "category",
                             "key": "key"
@@ -74214,11 +74261,11 @@
                         ]
                       },
                       "segments": {
-                        "totalCount": 5,
+                        "totalCount": 6,
                         "items": [
                           {
-                            "generation": 9,
-                            "lastModifiedDate": 5,
+                            "generation": 6,
+                            "lastModifiedDate": 9,
                             "_links": {
                               "parent": {
                                 "href": "href",
@@ -74230,7 +74277,7 @@
                               }
                             },
                             "description": "description",
-                            "creationDate": 4,
+                            "creationDate": 5,
                             "version": 9,
                             "environmentKey": "environmentKey",
                             "tags": [
@@ -74244,8 +74291,8 @@
                             "key": "key"
                           },
                           {
-                            "generation": 9,
-                            "lastModifiedDate": 5,
+                            "generation": 6,
+                            "lastModifiedDate": 9,
                             "_links": {
                               "parent": {
                                 "href": "href",
@@ -74257,7 +74304,7 @@
                               }
                             },
                             "description": "description",
-                            "creationDate": 4,
+                            "creationDate": 5,
                             "version": 9,
                             "environmentKey": "environmentKey",
                             "tags": [
@@ -74286,6 +74333,9 @@
                     "tags",
                     "tags"
                   ],
+                  "applicationSummary": {
+                    "applicationKey": "applicationKey"
+                  },
                   "accountId": "accountId",
                   "deletedAt": 5,
                   "deleted": false,
@@ -74324,7 +74374,7 @@
                     "totalCount": 6,
                     "items": [
                       {
-                        "createdAt": 1,
+                        "createdAt": 2,
                         "_links": {
                           "parent": {
                             "href": "href",
@@ -74337,17 +74387,17 @@
                         },
                         "name": "name",
                         "description": "description",
-                        "version": 6,
+                        "version": 1,
                         "key": "key",
                         "flagKey": "flagKey",
                         "tags": [
                           "tags",
                           "tags"
                         ],
-                        "updatedAt": 2
+                        "updatedAt": 6
                       },
                       {
-                        "createdAt": 1,
+                        "createdAt": 2,
                         "_links": {
                           "parent": {
                             "href": "href",
@@ -74360,23 +74410,23 @@
                         },
                         "name": "name",
                         "description": "description",
-                        "version": 6,
+                        "version": 1,
                         "key": "key",
                         "flagKey": "flagKey",
                         "tags": [
                           "tags",
                           "tags"
                         ],
-                        "updatedAt": 2
+                        "updatedAt": 6
                       }
                     ]
                   },
                   "segmentsExpanded": {
-                    "totalCount": 6,
+                    "totalCount": 8,
                     "items": [
                       {
-                        "generation": 9,
-                        "lastModifiedDate": 5,
+                        "generation": 6,
+                        "lastModifiedDate": 9,
                         "_links": {
                           "parent": {
                             "href": "href",
@@ -74388,7 +74438,7 @@
                           }
                         },
                         "description": "description",
-                        "creationDate": 4,
+                        "creationDate": 5,
                         "version": 9,
                         "environmentKey": "environmentKey",
                         "tags": [
@@ -74402,8 +74452,8 @@
                         "key": "key"
                       },
                       {
-                        "generation": 9,
-                        "lastModifiedDate": 5,
+                        "generation": 6,
+                        "lastModifiedDate": 9,
                         "_links": {
                           "parent": {
                             "href": "href",
@@ -74415,7 +74465,7 @@
                           }
                         },
                         "description": "description",
-                        "creationDate": 4,
+                        "creationDate": 5,
                         "version": 9,
                         "environmentKey": "environmentKey",
                         "tags": [
@@ -74433,7 +74483,7 @@
                   "_affectsSdkPayload": true,
                   "projectId": "projectId",
                   "flagsExpanded": {
-                    "totalCount": 1,
+                    "totalCount": 4,
                     "items": [
                       {
                         "archived": true,
@@ -74451,8 +74501,8 @@
                         },
                         "name": "name",
                         "description": "description",
-                        "creationDate": 6,
-                        "_version": 7,
+                        "creationDate": 7,
+                        "_version": 1,
                         "key": "key",
                         "maintainer": {
                           "kind": "member",
@@ -74505,8 +74555,8 @@
                         },
                         "name": "name",
                         "description": "description",
-                        "creationDate": 6,
-                        "_version": 7,
+                        "creationDate": 7,
+                        "_version": 1,
                         "key": "key",
                         "maintainer": {
                           "kind": "member",
@@ -74562,8 +74612,8 @@
                   },
                   "name": "name",
                   "description": "description",
-                  "creationDate": 6,
-                  "_version": 7,
+                  "creationDate": 7,
+                  "_version": 1,
                   "key": "key",
                   "maintainer": {
                     "kind": "member",
@@ -74613,21 +74663,21 @@
                   },
                   "kind": "kind",
                   "description": "description",
-                  "creationDate": 8,
+                  "creationDate": 9,
                   "isActive": true,
-                  "lastSeen": 6,
+                  "lastSeen": 3,
                   "eventKey": "eventKey",
                   "_versionId": "_versionId",
                   "isNumeric": true,
                   "name": "name",
-                  "lastModified": 9,
+                  "lastModified": 6,
                   "_id": "_id",
                   "category": "category",
                   "key": "key"
                 },
                 "segment": {
-                  "generation": 9,
-                  "lastModifiedDate": 5,
+                  "generation": 6,
+                  "lastModifiedDate": 9,
                   "_links": {
                     "parent": {
                       "href": "href",
@@ -74639,7 +74689,7 @@
                     }
                   },
                   "description": "description",
-                  "creationDate": 4,
+                  "creationDate": 5,
                   "version": 9,
                   "environmentKey": "environmentKey",
                   "tags": [
@@ -74653,7 +74703,7 @@
                   "key": "key"
                 },
                 "aiConfig": {
-                  "createdAt": 1,
+                  "createdAt": 2,
                   "_links": {
                     "parent": {
                       "href": "href",
@@ -74666,14 +74716,14 @@
                   },
                   "name": "name",
                   "description": "description",
-                  "version": 6,
+                  "version": 1,
                   "key": "key",
                   "flagKey": "flagKey",
                   "tags": [
                     "tags",
                     "tags"
                   ],
-                  "updatedAt": 2
+                  "updatedAt": 6
                 }
               },
               "linkedAt": 1,
@@ -74719,7 +74769,7 @@
           "resourceDetails": {
             "view": {
               "metricsExpanded": {
-                "totalCount": 3,
+                "totalCount": 6,
                 "items": [
                   {
                     "_links": {
@@ -74734,14 +74784,14 @@
                     },
                     "kind": "kind",
                     "description": "description",
-                    "creationDate": 8,
+                    "creationDate": 9,
                     "isActive": true,
-                    "lastSeen": 6,
+                    "lastSeen": 3,
                     "eventKey": "eventKey",
                     "_versionId": "_versionId",
                     "isNumeric": true,
                     "name": "name",
-                    "lastModified": 9,
+                    "lastModified": 6,
                     "_id": "_id",
                     "category": "category",
                     "key": "key"
@@ -74759,14 +74809,14 @@
                     },
                     "kind": "kind",
                     "description": "description",
-                    "creationDate": 8,
+                    "creationDate": 9,
                     "isActive": true,
-                    "lastSeen": 6,
+                    "lastSeen": 3,
                     "eventKey": "eventKey",
                     "_versionId": "_versionId",
                     "isNumeric": true,
                     "name": "name",
-                    "lastModified": 9,
+                    "lastModified": 6,
                     "_id": "_id",
                     "category": "category",
                     "key": "key"
@@ -74930,11 +74980,14 @@
               },
               "key": "key",
               "updatedAt": 1,
+              "payloadSummary": {
+                "sdkKeyCount": 6
+              },
               "resourcesExpanded": {
-                "totalCount": 3,
+                "totalCount": 7,
                 "items": {
                   "flags": {
-                    "totalCount": 6,
+                    "totalCount": 5,
                     "items": [
                       {
                         "archived": true,
@@ -74952,8 +75005,8 @@
                         },
                         "name": "name",
                         "description": "description",
-                        "creationDate": 6,
-                        "_version": 7,
+                        "creationDate": 7,
+                        "_version": 1,
                         "key": "key",
                         "maintainer": {
                           "kind": "member",
@@ -75006,8 +75059,8 @@
                         },
                         "name": "name",
                         "description": "description",
-                        "creationDate": 6,
-                        "_version": 7,
+                        "creationDate": 7,
+                        "_version": 1,
                         "key": "key",
                         "maintainer": {
                           "kind": "member",
@@ -75047,10 +75100,10 @@
                     ]
                   },
                   "aiConfigs": {
-                    "totalCount": 6,
+                    "totalCount": 3,
                     "items": [
                       {
-                        "createdAt": 1,
+                        "createdAt": 2,
                         "_links": {
                           "parent": {
                             "href": "href",
@@ -75063,17 +75116,17 @@
                         },
                         "name": "name",
                         "description": "description",
-                        "version": 6,
+                        "version": 1,
                         "key": "key",
                         "flagKey": "flagKey",
                         "tags": [
                           "tags",
                           "tags"
                         ],
-                        "updatedAt": 2
+                        "updatedAt": 6
                       },
                       {
-                        "createdAt": 1,
+                        "createdAt": 2,
                         "_links": {
                           "parent": {
                             "href": "href",
@@ -75086,14 +75139,14 @@
                         },
                         "name": "name",
                         "description": "description",
-                        "version": 6,
+                        "version": 1,
                         "key": "key",
                         "flagKey": "flagKey",
                         "tags": [
                           "tags",
                           "tags"
                         ],
-                        "updatedAt": 2
+                        "updatedAt": 6
                       }
                     ]
                   },
@@ -75113,14 +75166,14 @@
                         },
                         "kind": "kind",
                         "description": "description",
-                        "creationDate": 8,
+                        "creationDate": 9,
                         "isActive": true,
-                        "lastSeen": 6,
+                        "lastSeen": 3,
                         "eventKey": "eventKey",
                         "_versionId": "_versionId",
                         "isNumeric": true,
                         "name": "name",
-                        "lastModified": 9,
+                        "lastModified": 6,
                         "_id": "_id",
                         "category": "category",
                         "key": "key"
@@ -75138,14 +75191,14 @@
                         },
                         "kind": "kind",
                         "description": "description",
-                        "creationDate": 8,
+                        "creationDate": 9,
                         "isActive": true,
-                        "lastSeen": 6,
+                        "lastSeen": 3,
                         "eventKey": "eventKey",
                         "_versionId": "_versionId",
                         "isNumeric": true,
                         "name": "name",
-                        "lastModified": 9,
+                        "lastModified": 6,
                         "_id": "_id",
                         "category": "category",
                         "key": "key"
@@ -75153,11 +75206,11 @@
                     ]
                   },
                   "segments": {
-                    "totalCount": 5,
+                    "totalCount": 6,
                     "items": [
                       {
-                        "generation": 9,
-                        "lastModifiedDate": 5,
+                        "generation": 6,
+                        "lastModifiedDate": 9,
                         "_links": {
                           "parent": {
                             "href": "href",
@@ -75169,7 +75222,7 @@
                           }
                         },
                         "description": "description",
-                        "creationDate": 4,
+                        "creationDate": 5,
                         "version": 9,
                         "environmentKey": "environmentKey",
                         "tags": [
@@ -75183,8 +75236,8 @@
                         "key": "key"
                       },
                       {
-                        "generation": 9,
-                        "lastModifiedDate": 5,
+                        "generation": 6,
+                        "lastModifiedDate": 9,
                         "_links": {
                           "parent": {
                             "href": "href",
@@ -75196,7 +75249,7 @@
                           }
                         },
                         "description": "description",
-                        "creationDate": 4,
+                        "creationDate": 5,
                         "version": 9,
                         "environmentKey": "environmentKey",
                         "tags": [
@@ -75225,6 +75278,9 @@
                 "tags",
                 "tags"
               ],
+              "applicationSummary": {
+                "applicationKey": "applicationKey"
+              },
               "accountId": "accountId",
               "deletedAt": 5,
               "deleted": false,
@@ -75263,7 +75319,7 @@
                 "totalCount": 6,
                 "items": [
                   {
-                    "createdAt": 1,
+                    "createdAt": 2,
                     "_links": {
                       "parent": {
                         "href": "href",
@@ -75276,17 +75332,17 @@
                     },
                     "name": "name",
                     "description": "description",
-                    "version": 6,
+                    "version": 1,
                     "key": "key",
                     "flagKey": "flagKey",
                     "tags": [
                       "tags",
                       "tags"
                     ],
-                    "updatedAt": 2
+                    "updatedAt": 6
                   },
                   {
-                    "createdAt": 1,
+                    "createdAt": 2,
                     "_links": {
                       "parent": {
                         "href": "href",
@@ -75299,23 +75355,23 @@
                     },
                     "name": "name",
                     "description": "description",
-                    "version": 6,
+                    "version": 1,
                     "key": "key",
                     "flagKey": "flagKey",
                     "tags": [
                       "tags",
                       "tags"
                     ],
-                    "updatedAt": 2
+                    "updatedAt": 6
                   }
                 ]
               },
               "segmentsExpanded": {
-                "totalCount": 6,
+                "totalCount": 8,
                 "items": [
                   {
-                    "generation": 9,
-                    "lastModifiedDate": 5,
+                    "generation": 6,
+                    "lastModifiedDate": 9,
                     "_links": {
                       "parent": {
                         "href": "href",
@@ -75327,7 +75383,7 @@
                       }
                     },
                     "description": "description",
-                    "creationDate": 4,
+                    "creationDate": 5,
                     "version": 9,
                     "environmentKey": "environmentKey",
                     "tags": [
@@ -75341,8 +75397,8 @@
                     "key": "key"
                   },
                   {
-                    "generation": 9,
-                    "lastModifiedDate": 5,
+                    "generation": 6,
+                    "lastModifiedDate": 9,
                     "_links": {
                       "parent": {
                         "href": "href",
@@ -75354,7 +75410,7 @@
                       }
                     },
                     "description": "description",
-                    "creationDate": 4,
+                    "creationDate": 5,
                     "version": 9,
                     "environmentKey": "environmentKey",
                     "tags": [
@@ -75372,7 +75428,7 @@
               "_affectsSdkPayload": true,
               "projectId": "projectId",
               "flagsExpanded": {
-                "totalCount": 1,
+                "totalCount": 4,
                 "items": [
                   {
                     "archived": true,
@@ -75390,8 +75446,8 @@
                     },
                     "name": "name",
                     "description": "description",
-                    "creationDate": 6,
-                    "_version": 7,
+                    "creationDate": 7,
+                    "_version": 1,
                     "key": "key",
                     "maintainer": {
                       "kind": "member",
@@ -75444,8 +75500,8 @@
                     },
                     "name": "name",
                     "description": "description",
-                    "creationDate": 6,
-                    "_version": 7,
+                    "creationDate": 7,
+                    "_version": 1,
                     "key": "key",
                     "maintainer": {
                       "kind": "member",
@@ -75501,8 +75557,8 @@
               },
               "name": "name",
               "description": "description",
-              "creationDate": 6,
-              "_version": 7,
+              "creationDate": 7,
+              "_version": 1,
               "key": "key",
               "maintainer": {
                 "kind": "member",
@@ -75552,21 +75608,21 @@
               },
               "kind": "kind",
               "description": "description",
-              "creationDate": 8,
+              "creationDate": 9,
               "isActive": true,
-              "lastSeen": 6,
+              "lastSeen": 3,
               "eventKey": "eventKey",
               "_versionId": "_versionId",
               "isNumeric": true,
               "name": "name",
-              "lastModified": 9,
+              "lastModified": 6,
               "_id": "_id",
               "category": "category",
               "key": "key"
             },
             "segment": {
-              "generation": 9,
-              "lastModifiedDate": 5,
+              "generation": 6,
+              "lastModifiedDate": 9,
               "_links": {
                 "parent": {
                   "href": "href",
@@ -75578,7 +75634,7 @@
                 }
               },
               "description": "description",
-              "creationDate": 4,
+              "creationDate": 5,
               "version": 9,
               "environmentKey": "environmentKey",
               "tags": [
@@ -75592,7 +75648,7 @@
               "key": "key"
             },
             "aiConfig": {
-              "createdAt": 1,
+              "createdAt": 2,
               "_links": {
                 "parent": {
                   "href": "href",
@@ -75605,14 +75661,14 @@
               },
               "name": "name",
               "description": "description",
-              "version": 6,
+              "version": 1,
               "key": "key",
               "flagKey": "flagKey",
               "tags": [
                 "tags",
                 "tags"
               ],
-              "updatedAt": 2
+              "updatedAt": 6
             }
           },
           "linkedAt": 1,
@@ -75753,7 +75809,7 @@
                 "resourceDetails": {
                   "view": {
                     "metricsExpanded": {
-                      "totalCount": 3,
+                      "totalCount": 6,
                       "items": [
                         {
                           "_links": {
@@ -75768,14 +75824,14 @@
                           },
                           "kind": "kind",
                           "description": "description",
-                          "creationDate": 8,
+                          "creationDate": 9,
                           "isActive": true,
-                          "lastSeen": 6,
+                          "lastSeen": 3,
                           "eventKey": "eventKey",
                           "_versionId": "_versionId",
                           "isNumeric": true,
                           "name": "name",
-                          "lastModified": 9,
+                          "lastModified": 6,
                           "_id": "_id",
                           "category": "category",
                           "key": "key"
@@ -75793,14 +75849,14 @@
                           },
                           "kind": "kind",
                           "description": "description",
-                          "creationDate": 8,
+                          "creationDate": 9,
                           "isActive": true,
-                          "lastSeen": 6,
+                          "lastSeen": 3,
                           "eventKey": "eventKey",
                           "_versionId": "_versionId",
                           "isNumeric": true,
                           "name": "name",
-                          "lastModified": 9,
+                          "lastModified": 6,
                           "_id": "_id",
                           "category": "category",
                           "key": "key"
@@ -75964,11 +76020,14 @@
                     },
                     "key": "key",
                     "updatedAt": 1,
+                    "payloadSummary": {
+                      "sdkKeyCount": 6
+                    },
                     "resourcesExpanded": {
-                      "totalCount": 3,
+                      "totalCount": 7,
                       "items": {
                         "flags": {
-                          "totalCount": 6,
+                          "totalCount": 5,
                           "items": [
                             {
                               "archived": true,
@@ -75986,8 +76045,8 @@
                               },
                               "name": "name",
                               "description": "description",
-                              "creationDate": 6,
-                              "_version": 7,
+                              "creationDate": 7,
+                              "_version": 1,
                               "key": "key",
                               "maintainer": {
                                 "kind": "member",
@@ -76040,8 +76099,8 @@
                               },
                               "name": "name",
                               "description": "description",
-                              "creationDate": 6,
-                              "_version": 7,
+                              "creationDate": 7,
+                              "_version": 1,
                               "key": "key",
                               "maintainer": {
                                 "kind": "member",
@@ -76081,10 +76140,10 @@
                           ]
                         },
                         "aiConfigs": {
-                          "totalCount": 6,
+                          "totalCount": 3,
                           "items": [
                             {
-                              "createdAt": 1,
+                              "createdAt": 2,
                               "_links": {
                                 "parent": {
                                   "href": "href",
@@ -76097,17 +76156,17 @@
                               },
                               "name": "name",
                               "description": "description",
-                              "version": 6,
+                              "version": 1,
                               "key": "key",
                               "flagKey": "flagKey",
                               "tags": [
                                 "tags",
                                 "tags"
                               ],
-                              "updatedAt": 2
+                              "updatedAt": 6
                             },
                             {
-                              "createdAt": 1,
+                              "createdAt": 2,
                               "_links": {
                                 "parent": {
                                   "href": "href",
@@ -76120,14 +76179,14 @@
                               },
                               "name": "name",
                               "description": "description",
-                              "version": 6,
+                              "version": 1,
                               "key": "key",
                               "flagKey": "flagKey",
                               "tags": [
                                 "tags",
                                 "tags"
                               ],
-                              "updatedAt": 2
+                              "updatedAt": 6
                             }
                           ]
                         },
@@ -76147,14 +76206,14 @@
                               },
                               "kind": "kind",
                               "description": "description",
-                              "creationDate": 8,
+                              "creationDate": 9,
                               "isActive": true,
-                              "lastSeen": 6,
+                              "lastSeen": 3,
                               "eventKey": "eventKey",
                               "_versionId": "_versionId",
                               "isNumeric": true,
                               "name": "name",
-                              "lastModified": 9,
+                              "lastModified": 6,
                               "_id": "_id",
                               "category": "category",
                               "key": "key"
@@ -76172,14 +76231,14 @@
                               },
                               "kind": "kind",
                               "description": "description",
-                              "creationDate": 8,
+                              "creationDate": 9,
                               "isActive": true,
-                              "lastSeen": 6,
+                              "lastSeen": 3,
                               "eventKey": "eventKey",
                               "_versionId": "_versionId",
                               "isNumeric": true,
                               "name": "name",
-                              "lastModified": 9,
+                              "lastModified": 6,
                               "_id": "_id",
                               "category": "category",
                               "key": "key"
@@ -76187,11 +76246,11 @@
                           ]
                         },
                         "segments": {
-                          "totalCount": 5,
+                          "totalCount": 6,
                           "items": [
                             {
-                              "generation": 9,
-                              "lastModifiedDate": 5,
+                              "generation": 6,
+                              "lastModifiedDate": 9,
                               "_links": {
                                 "parent": {
                                   "href": "href",
@@ -76203,7 +76262,7 @@
                                 }
                               },
                               "description": "description",
-                              "creationDate": 4,
+                              "creationDate": 5,
                               "version": 9,
                               "environmentKey": "environmentKey",
                               "tags": [
@@ -76217,8 +76276,8 @@
                               "key": "key"
                             },
                             {
-                              "generation": 9,
-                              "lastModifiedDate": 5,
+                              "generation": 6,
+                              "lastModifiedDate": 9,
                               "_links": {
                                 "parent": {
                                   "href": "href",
@@ -76230,7 +76289,7 @@
                                 }
                               },
                               "description": "description",
-                              "creationDate": 4,
+                              "creationDate": 5,
                               "version": 9,
                               "environmentKey": "environmentKey",
                               "tags": [
@@ -76259,6 +76318,9 @@
                       "tags",
                       "tags"
                     ],
+                    "applicationSummary": {
+                      "applicationKey": "applicationKey"
+                    },
                     "accountId": "accountId",
                     "deletedAt": 5,
                     "deleted": false,
@@ -76297,7 +76359,7 @@
                       "totalCount": 6,
                       "items": [
                         {
-                          "createdAt": 1,
+                          "createdAt": 2,
                           "_links": {
                             "parent": {
                               "href": "href",
@@ -76310,17 +76372,17 @@
                           },
                           "name": "name",
                           "description": "description",
-                          "version": 6,
+                          "version": 1,
                           "key": "key",
                           "flagKey": "flagKey",
                           "tags": [
                             "tags",
                             "tags"
                           ],
-                          "updatedAt": 2
+                          "updatedAt": 6
                         },
                         {
-                          "createdAt": 1,
+                          "createdAt": 2,
                           "_links": {
                             "parent": {
                               "href": "href",
@@ -76333,23 +76395,23 @@
                           },
                           "name": "name",
                           "description": "description",
-                          "version": 6,
+                          "version": 1,
                           "key": "key",
                           "flagKey": "flagKey",
                           "tags": [
                             "tags",
                             "tags"
                           ],
-                          "updatedAt": 2
+                          "updatedAt": 6
                         }
                       ]
                     },
                     "segmentsExpanded": {
-                      "totalCount": 6,
+                      "totalCount": 8,
                       "items": [
                         {
-                          "generation": 9,
-                          "lastModifiedDate": 5,
+                          "generation": 6,
+                          "lastModifiedDate": 9,
                           "_links": {
                             "parent": {
                               "href": "href",
@@ -76361,7 +76423,7 @@
                             }
                           },
                           "description": "description",
-                          "creationDate": 4,
+                          "creationDate": 5,
                           "version": 9,
                           "environmentKey": "environmentKey",
                           "tags": [
@@ -76375,8 +76437,8 @@
                           "key": "key"
                         },
                         {
-                          "generation": 9,
-                          "lastModifiedDate": 5,
+                          "generation": 6,
+                          "lastModifiedDate": 9,
                           "_links": {
                             "parent": {
                               "href": "href",
@@ -76388,7 +76450,7 @@
                             }
                           },
                           "description": "description",
-                          "creationDate": 4,
+                          "creationDate": 5,
                           "version": 9,
                           "environmentKey": "environmentKey",
                           "tags": [
@@ -76406,7 +76468,7 @@
                     "_affectsSdkPayload": true,
                     "projectId": "projectId",
                     "flagsExpanded": {
-                      "totalCount": 1,
+                      "totalCount": 4,
                       "items": [
                         {
                           "archived": true,
@@ -76424,8 +76486,8 @@
                           },
                           "name": "name",
                           "description": "description",
-                          "creationDate": 6,
-                          "_version": 7,
+                          "creationDate": 7,
+                          "_version": 1,
                           "key": "key",
                           "maintainer": {
                             "kind": "member",
@@ -76478,8 +76540,8 @@
                           },
                           "name": "name",
                           "description": "description",
-                          "creationDate": 6,
-                          "_version": 7,
+                          "creationDate": 7,
+                          "_version": 1,
                           "key": "key",
                           "maintainer": {
                             "kind": "member",
@@ -76535,8 +76597,8 @@
                     },
                     "name": "name",
                     "description": "description",
-                    "creationDate": 6,
-                    "_version": 7,
+                    "creationDate": 7,
+                    "_version": 1,
                     "key": "key",
                     "maintainer": {
                       "kind": "member",
@@ -76586,21 +76648,21 @@
                     },
                     "kind": "kind",
                     "description": "description",
-                    "creationDate": 8,
+                    "creationDate": 9,
                     "isActive": true,
-                    "lastSeen": 6,
+                    "lastSeen": 3,
                     "eventKey": "eventKey",
                     "_versionId": "_versionId",
                     "isNumeric": true,
                     "name": "name",
-                    "lastModified": 9,
+                    "lastModified": 6,
                     "_id": "_id",
                     "category": "category",
                     "key": "key"
                   },
                   "segment": {
-                    "generation": 9,
-                    "lastModifiedDate": 5,
+                    "generation": 6,
+                    "lastModifiedDate": 9,
                     "_links": {
                       "parent": {
                         "href": "href",
@@ -76612,7 +76674,7 @@
                       }
                     },
                     "description": "description",
-                    "creationDate": 4,
+                    "creationDate": 5,
                     "version": 9,
                     "environmentKey": "environmentKey",
                     "tags": [
@@ -76626,7 +76688,7 @@
                     "key": "key"
                   },
                   "aiConfig": {
-                    "createdAt": 1,
+                    "createdAt": 2,
                     "_links": {
                       "parent": {
                         "href": "href",
@@ -76639,14 +76701,14 @@
                     },
                     "name": "name",
                     "description": "description",
-                    "version": 6,
+                    "version": 1,
                     "key": "key",
                     "flagKey": "flagKey",
                     "tags": [
                       "tags",
                       "tags"
                     ],
-                    "updatedAt": 2
+                    "updatedAt": 6
                   }
                 },
                 "linkedAt": 1,
@@ -76669,7 +76731,7 @@
                 "resourceDetails": {
                   "view": {
                     "metricsExpanded": {
-                      "totalCount": 3,
+                      "totalCount": 6,
                       "items": [
                         {
                           "_links": {
@@ -76684,14 +76746,14 @@
                           },
                           "kind": "kind",
                           "description": "description",
-                          "creationDate": 8,
+                          "creationDate": 9,
                           "isActive": true,
-                          "lastSeen": 6,
+                          "lastSeen": 3,
                           "eventKey": "eventKey",
                           "_versionId": "_versionId",
                           "isNumeric": true,
                           "name": "name",
-                          "lastModified": 9,
+                          "lastModified": 6,
                           "_id": "_id",
                           "category": "category",
                           "key": "key"
@@ -76709,14 +76771,14 @@
                           },
                           "kind": "kind",
                           "description": "description",
-                          "creationDate": 8,
+                          "creationDate": 9,
                           "isActive": true,
-                          "lastSeen": 6,
+                          "lastSeen": 3,
                           "eventKey": "eventKey",
                           "_versionId": "_versionId",
                           "isNumeric": true,
                           "name": "name",
-                          "lastModified": 9,
+                          "lastModified": 6,
                           "_id": "_id",
                           "category": "category",
                           "key": "key"
@@ -76880,11 +76942,14 @@
                     },
                     "key": "key",
                     "updatedAt": 1,
+                    "payloadSummary": {
+                      "sdkKeyCount": 6
+                    },
                     "resourcesExpanded": {
-                      "totalCount": 3,
+                      "totalCount": 7,
                       "items": {
                         "flags": {
-                          "totalCount": 6,
+                          "totalCount": 5,
                           "items": [
                             {
                               "archived": true,
@@ -76902,8 +76967,8 @@
                               },
                               "name": "name",
                               "description": "description",
-                              "creationDate": 6,
-                              "_version": 7,
+                              "creationDate": 7,
+                              "_version": 1,
                               "key": "key",
                               "maintainer": {
                                 "kind": "member",
@@ -76956,8 +77021,8 @@
                               },
                               "name": "name",
                               "description": "description",
-                              "creationDate": 6,
-                              "_version": 7,
+                              "creationDate": 7,
+                              "_version": 1,
                               "key": "key",
                               "maintainer": {
                                 "kind": "member",
@@ -76997,10 +77062,10 @@
                           ]
                         },
                         "aiConfigs": {
-                          "totalCount": 6,
+                          "totalCount": 3,
                           "items": [
                             {
-                              "createdAt": 1,
+                              "createdAt": 2,
                               "_links": {
                                 "parent": {
                                   "href": "href",
@@ -77013,17 +77078,17 @@
                               },
                               "name": "name",
                               "description": "description",
-                              "version": 6,
+                              "version": 1,
                               "key": "key",
                               "flagKey": "flagKey",
                               "tags": [
                                 "tags",
                                 "tags"
                               ],
-                              "updatedAt": 2
+                              "updatedAt": 6
                             },
                             {
-                              "createdAt": 1,
+                              "createdAt": 2,
                               "_links": {
                                 "parent": {
                                   "href": "href",
@@ -77036,14 +77101,14 @@
                               },
                               "name": "name",
                               "description": "description",
-                              "version": 6,
+                              "version": 1,
                               "key": "key",
                               "flagKey": "flagKey",
                               "tags": [
                                 "tags",
                                 "tags"
                               ],
-                              "updatedAt": 2
+                              "updatedAt": 6
                             }
                           ]
                         },
@@ -77063,14 +77128,14 @@
                               },
                               "kind": "kind",
                               "description": "description",
-                              "creationDate": 8,
+                              "creationDate": 9,
                               "isActive": true,
-                              "lastSeen": 6,
+                              "lastSeen": 3,
                               "eventKey": "eventKey",
                               "_versionId": "_versionId",
                               "isNumeric": true,
                               "name": "name",
-                              "lastModified": 9,
+                              "lastModified": 6,
                               "_id": "_id",
                               "category": "category",
                               "key": "key"
@@ -77088,14 +77153,14 @@
                               },
                               "kind": "kind",
                               "description": "description",
-                              "creationDate": 8,
+                              "creationDate": 9,
                               "isActive": true,
-                              "lastSeen": 6,
+                              "lastSeen": 3,
                               "eventKey": "eventKey",
                               "_versionId": "_versionId",
                               "isNumeric": true,
                               "name": "name",
-                              "lastModified": 9,
+                              "lastModified": 6,
                               "_id": "_id",
                               "category": "category",
                               "key": "key"
@@ -77103,11 +77168,11 @@
                           ]
                         },
                         "segments": {
-                          "totalCount": 5,
+                          "totalCount": 6,
                           "items": [
                             {
-                              "generation": 9,
-                              "lastModifiedDate": 5,
+                              "generation": 6,
+                              "lastModifiedDate": 9,
                               "_links": {
                                 "parent": {
                                   "href": "href",
@@ -77119,7 +77184,7 @@
                                 }
                               },
                               "description": "description",
-                              "creationDate": 4,
+                              "creationDate": 5,
                               "version": 9,
                               "environmentKey": "environmentKey",
                               "tags": [
@@ -77133,8 +77198,8 @@
                               "key": "key"
                             },
                             {
-                              "generation": 9,
-                              "lastModifiedDate": 5,
+                              "generation": 6,
+                              "lastModifiedDate": 9,
                               "_links": {
                                 "parent": {
                                   "href": "href",
@@ -77146,7 +77211,7 @@
                                 }
                               },
                               "description": "description",
-                              "creationDate": 4,
+                              "creationDate": 5,
                               "version": 9,
                               "environmentKey": "environmentKey",
                               "tags": [
@@ -77175,6 +77240,9 @@
                       "tags",
                       "tags"
                     ],
+                    "applicationSummary": {
+                      "applicationKey": "applicationKey"
+                    },
                     "accountId": "accountId",
                     "deletedAt": 5,
                     "deleted": false,
@@ -77213,7 +77281,7 @@
                       "totalCount": 6,
                       "items": [
                         {
-                          "createdAt": 1,
+                          "createdAt": 2,
                           "_links": {
                             "parent": {
                               "href": "href",
@@ -77226,17 +77294,17 @@
                           },
                           "name": "name",
                           "description": "description",
-                          "version": 6,
+                          "version": 1,
                           "key": "key",
                           "flagKey": "flagKey",
                           "tags": [
                             "tags",
                             "tags"
                           ],
-                          "updatedAt": 2
+                          "updatedAt": 6
                         },
                         {
-                          "createdAt": 1,
+                          "createdAt": 2,
                           "_links": {
                             "parent": {
                               "href": "href",
@@ -77249,23 +77317,23 @@
                           },
                           "name": "name",
                           "description": "description",
-                          "version": 6,
+                          "version": 1,
                           "key": "key",
                           "flagKey": "flagKey",
                           "tags": [
                             "tags",
                             "tags"
                           ],
-                          "updatedAt": 2
+                          "updatedAt": 6
                         }
                       ]
                     },
                     "segmentsExpanded": {
-                      "totalCount": 6,
+                      "totalCount": 8,
                       "items": [
                         {
-                          "generation": 9,
-                          "lastModifiedDate": 5,
+                          "generation": 6,
+                          "lastModifiedDate": 9,
                           "_links": {
                             "parent": {
                               "href": "href",
@@ -77277,7 +77345,7 @@
                             }
                           },
                           "description": "description",
-                          "creationDate": 4,
+                          "creationDate": 5,
                           "version": 9,
                           "environmentKey": "environmentKey",
                           "tags": [
@@ -77291,8 +77359,8 @@
                           "key": "key"
                         },
                         {
-                          "generation": 9,
-                          "lastModifiedDate": 5,
+                          "generation": 6,
+                          "lastModifiedDate": 9,
                           "_links": {
                             "parent": {
                               "href": "href",
@@ -77304,7 +77372,7 @@
                             }
                           },
                           "description": "description",
-                          "creationDate": 4,
+                          "creationDate": 5,
                           "version": 9,
                           "environmentKey": "environmentKey",
                           "tags": [
@@ -77322,7 +77390,7 @@
                     "_affectsSdkPayload": true,
                     "projectId": "projectId",
                     "flagsExpanded": {
-                      "totalCount": 1,
+                      "totalCount": 4,
                       "items": [
                         {
                           "archived": true,
@@ -77340,8 +77408,8 @@
                           },
                           "name": "name",
                           "description": "description",
-                          "creationDate": 6,
-                          "_version": 7,
+                          "creationDate": 7,
+                          "_version": 1,
                           "key": "key",
                           "maintainer": {
                             "kind": "member",
@@ -77394,8 +77462,8 @@
                           },
                           "name": "name",
                           "description": "description",
-                          "creationDate": 6,
-                          "_version": 7,
+                          "creationDate": 7,
+                          "_version": 1,
                           "key": "key",
                           "maintainer": {
                             "kind": "member",
@@ -77451,8 +77519,8 @@
                     },
                     "name": "name",
                     "description": "description",
-                    "creationDate": 6,
-                    "_version": 7,
+                    "creationDate": 7,
+                    "_version": 1,
                     "key": "key",
                     "maintainer": {
                       "kind": "member",
@@ -77502,21 +77570,21 @@
                     },
                     "kind": "kind",
                     "description": "description",
-                    "creationDate": 8,
+                    "creationDate": 9,
                     "isActive": true,
-                    "lastSeen": 6,
+                    "lastSeen": 3,
                     "eventKey": "eventKey",
                     "_versionId": "_versionId",
                     "isNumeric": true,
                     "name": "name",
-                    "lastModified": 9,
+                    "lastModified": 6,
                     "_id": "_id",
                     "category": "category",
                     "key": "key"
                   },
                   "segment": {
-                    "generation": 9,
-                    "lastModifiedDate": 5,
+                    "generation": 6,
+                    "lastModifiedDate": 9,
                     "_links": {
                       "parent": {
                         "href": "href",
@@ -77528,7 +77596,7 @@
                       }
                     },
                     "description": "description",
-                    "creationDate": 4,
+                    "creationDate": 5,
                     "version": 9,
                     "environmentKey": "environmentKey",
                     "tags": [
@@ -77542,7 +77610,7 @@
                     "key": "key"
                   },
                   "aiConfig": {
-                    "createdAt": 1,
+                    "createdAt": 2,
                     "_links": {
                       "parent": {
                         "href": "href",
@@ -77555,14 +77623,14 @@
                     },
                     "name": "name",
                     "description": "description",
-                    "version": 6,
+                    "version": 1,
                     "key": "key",
                     "flagKey": "flagKey",
                     "tags": [
                       "tags",
                       "tags"
                     ],
-                    "updatedAt": 2
+                    "updatedAt": 6
                   }
                 },
                 "linkedAt": 1,
@@ -77948,7 +78016,7 @@
       "ExpandedLinkedFlags": {
         "description": "Details on linked flags for a view - requires passing the 'allFlags' expand field",
         "example": {
-          "totalCount": 1,
+          "totalCount": 4,
           "items": [
             {
               "archived": true,
@@ -77966,8 +78034,8 @@
               },
               "name": "name",
               "description": "description",
-              "creationDate": 6,
-              "_version": 7,
+              "creationDate": 7,
+              "_version": 1,
               "key": "key",
               "maintainer": {
                 "kind": "member",
@@ -78020,8 +78088,8 @@
               },
               "name": "name",
               "description": "description",
-              "creationDate": 6,
-              "_version": 7,
+              "creationDate": 7,
+              "_version": 1,
               "key": "key",
               "maintainer": {
                 "kind": "member",
@@ -78080,11 +78148,11 @@
       "ExpandedLinkedSegments": {
         "description": "Details on linked segments for a view - requires passing the 'allSegments' expand field",
         "example": {
-          "totalCount": 6,
+          "totalCount": 8,
           "items": [
             {
-              "generation": 9,
-              "lastModifiedDate": 5,
+              "generation": 6,
+              "lastModifiedDate": 9,
               "_links": {
                 "parent": {
                   "href": "href",
@@ -78096,7 +78164,7 @@
                 }
               },
               "description": "description",
-              "creationDate": 4,
+              "creationDate": 5,
               "version": 9,
               "environmentKey": "environmentKey",
               "tags": [
@@ -78110,8 +78178,8 @@
               "key": "key"
             },
             {
-              "generation": 9,
-              "lastModifiedDate": 5,
+              "generation": 6,
+              "lastModifiedDate": 9,
               "_links": {
                 "parent": {
                   "href": "href",
@@ -78123,7 +78191,7 @@
                 }
               },
               "description": "description",
-              "creationDate": 4,
+              "creationDate": 5,
               "version": 9,
               "environmentKey": "environmentKey",
               "tags": [
@@ -78160,7 +78228,7 @@
           "totalCount": 6,
           "items": [
             {
-              "createdAt": 1,
+              "createdAt": 2,
               "_links": {
                 "parent": {
                   "href": "href",
@@ -78173,17 +78241,17 @@
               },
               "name": "name",
               "description": "description",
-              "version": 6,
+              "version": 1,
               "key": "key",
               "flagKey": "flagKey",
               "tags": [
                 "tags",
                 "tags"
               ],
-              "updatedAt": 2
+              "updatedAt": 6
             },
             {
-              "createdAt": 1,
+              "createdAt": 2,
               "_links": {
                 "parent": {
                   "href": "href",
@@ -78196,14 +78264,14 @@
               },
               "name": "name",
               "description": "description",
-              "version": 6,
+              "version": 1,
               "key": "key",
               "flagKey": "flagKey",
               "tags": [
                 "tags",
                 "tags"
               ],
-              "updatedAt": 2
+              "updatedAt": 6
             }
           ]
         },
@@ -78226,7 +78294,7 @@
       },
       "ExpandedLinkedMetrics": {
         "example": {
-          "totalCount": 3,
+          "totalCount": 6,
           "items": [
             {
               "_links": {
@@ -78241,14 +78309,14 @@
               },
               "kind": "kind",
               "description": "description",
-              "creationDate": 8,
+              "creationDate": 9,
               "isActive": true,
-              "lastSeen": 6,
+              "lastSeen": 3,
               "eventKey": "eventKey",
               "_versionId": "_versionId",
               "isNumeric": true,
               "name": "name",
-              "lastModified": 9,
+              "lastModified": 6,
               "_id": "_id",
               "category": "category",
               "key": "key"
@@ -78266,14 +78334,14 @@
               },
               "kind": "kind",
               "description": "description",
-              "creationDate": 8,
+              "creationDate": 9,
               "isActive": true,
-              "lastSeen": 6,
+              "lastSeen": 3,
               "eventKey": "eventKey",
               "_versionId": "_versionId",
               "isNumeric": true,
               "name": "name",
-              "lastModified": 9,
+              "lastModified": 6,
               "_id": "_id",
               "category": "category",
               "key": "key"
@@ -78300,10 +78368,10 @@
       "ExpandedLinkedResources": {
         "description": "Details on linked resources for a view - requires passing the 'allResources' expand field",
         "example": {
-          "totalCount": 3,
+          "totalCount": 7,
           "items": {
             "flags": {
-              "totalCount": 6,
+              "totalCount": 5,
               "items": [
                 {
                   "archived": true,
@@ -78321,8 +78389,8 @@
                   },
                   "name": "name",
                   "description": "description",
-                  "creationDate": 6,
-                  "_version": 7,
+                  "creationDate": 7,
+                  "_version": 1,
                   "key": "key",
                   "maintainer": {
                     "kind": "member",
@@ -78375,8 +78443,8 @@
                   },
                   "name": "name",
                   "description": "description",
-                  "creationDate": 6,
-                  "_version": 7,
+                  "creationDate": 7,
+                  "_version": 1,
                   "key": "key",
                   "maintainer": {
                     "kind": "member",
@@ -78416,10 +78484,10 @@
               ]
             },
             "aiConfigs": {
-              "totalCount": 6,
+              "totalCount": 3,
               "items": [
                 {
-                  "createdAt": 1,
+                  "createdAt": 2,
                   "_links": {
                     "parent": {
                       "href": "href",
@@ -78432,17 +78500,17 @@
                   },
                   "name": "name",
                   "description": "description",
-                  "version": 6,
+                  "version": 1,
                   "key": "key",
                   "flagKey": "flagKey",
                   "tags": [
                     "tags",
                     "tags"
                   ],
-                  "updatedAt": 2
+                  "updatedAt": 6
                 },
                 {
-                  "createdAt": 1,
+                  "createdAt": 2,
                   "_links": {
                     "parent": {
                       "href": "href",
@@ -78455,14 +78523,14 @@
                   },
                   "name": "name",
                   "description": "description",
-                  "version": 6,
+                  "version": 1,
                   "key": "key",
                   "flagKey": "flagKey",
                   "tags": [
                     "tags",
                     "tags"
                   ],
-                  "updatedAt": 2
+                  "updatedAt": 6
                 }
               ]
             },
@@ -78482,14 +78550,14 @@
                   },
                   "kind": "kind",
                   "description": "description",
-                  "creationDate": 8,
+                  "creationDate": 9,
                   "isActive": true,
-                  "lastSeen": 6,
+                  "lastSeen": 3,
                   "eventKey": "eventKey",
                   "_versionId": "_versionId",
                   "isNumeric": true,
                   "name": "name",
-                  "lastModified": 9,
+                  "lastModified": 6,
                   "_id": "_id",
                   "category": "category",
                   "key": "key"
@@ -78507,14 +78575,14 @@
                   },
                   "kind": "kind",
                   "description": "description",
-                  "creationDate": 8,
+                  "creationDate": 9,
                   "isActive": true,
-                  "lastSeen": 6,
+                  "lastSeen": 3,
                   "eventKey": "eventKey",
                   "_versionId": "_versionId",
                   "isNumeric": true,
                   "name": "name",
-                  "lastModified": 9,
+                  "lastModified": 6,
                   "_id": "_id",
                   "category": "category",
                   "key": "key"
@@ -78522,11 +78590,11 @@
               ]
             },
             "segments": {
-              "totalCount": 5,
+              "totalCount": 6,
               "items": [
                 {
-                  "generation": 9,
-                  "lastModifiedDate": 5,
+                  "generation": 6,
+                  "lastModifiedDate": 9,
                   "_links": {
                     "parent": {
                       "href": "href",
@@ -78538,7 +78606,7 @@
                     }
                   },
                   "description": "description",
-                  "creationDate": 4,
+                  "creationDate": 5,
                   "version": 9,
                   "environmentKey": "environmentKey",
                   "tags": [
@@ -78552,8 +78620,8 @@
                   "key": "key"
                 },
                 {
-                  "generation": 9,
-                  "lastModifiedDate": 5,
+                  "generation": 6,
+                  "lastModifiedDate": 9,
                   "_links": {
                     "parent": {
                       "href": "href",
@@ -78565,7 +78633,7 @@
                     }
                   },
                   "description": "description",
-                  "creationDate": 4,
+                  "creationDate": 5,
                   "version": 9,
                   "environmentKey": "environmentKey",
                   "tags": [
@@ -78677,8 +78745,8 @@
           },
           "name": "name",
           "description": "description",
-          "creationDate": 6,
-          "_version": 7,
+          "creationDate": 7,
+          "_version": 1,
           "key": "key",
           "maintainer": {
             "kind": "member",
@@ -78834,7 +78902,7 @@
       "ExpandedAIConfig": {
         "description": "AI Config representation for Views API - contains only fields actually used by the Views service",
         "example": {
-          "createdAt": 1,
+          "createdAt": 2,
           "_links": {
             "parent": {
               "href": "href",
@@ -78847,14 +78915,14 @@
           },
           "name": "name",
           "description": "description",
-          "version": 6,
+          "version": 1,
           "key": "key",
           "flagKey": "flagKey",
           "tags": [
             "tags",
             "tags"
           ],
-          "updatedAt": 2
+          "updatedAt": 6
         },
         "properties": {
           "key": {
@@ -78908,8 +78976,8 @@
       "ExpandedSegment": {
         "description": "Segment representation for Views API - contains only fields actually used by the Views service",
         "example": {
-          "generation": 9,
-          "lastModifiedDate": 5,
+          "generation": 6,
+          "lastModifiedDate": 9,
           "_links": {
             "parent": {
               "href": "href",
@@ -78921,7 +78989,7 @@
             }
           },
           "description": "description",
-          "creationDate": 4,
+          "creationDate": 5,
           "version": 9,
           "environmentKey": "environmentKey",
           "tags": [
@@ -79013,14 +79081,14 @@
           },
           "kind": "kind",
           "description": "description",
-          "creationDate": 8,
+          "creationDate": 9,
           "isActive": true,
-          "lastSeen": 6,
+          "lastSeen": 3,
           "eventKey": "eventKey",
           "_versionId": "_versionId",
           "isNumeric": true,
           "name": "name",
-          "lastModified": 9,
+          "lastModified": 6,
           "_id": "_id",
           "category": "category",
           "key": "key"
@@ -79555,7 +79623,7 @@
         "example": {
           "view": {
             "metricsExpanded": {
-              "totalCount": 3,
+              "totalCount": 6,
               "items": [
                 {
                   "_links": {
@@ -79570,14 +79638,14 @@
                   },
                   "kind": "kind",
                   "description": "description",
-                  "creationDate": 8,
+                  "creationDate": 9,
                   "isActive": true,
-                  "lastSeen": 6,
+                  "lastSeen": 3,
                   "eventKey": "eventKey",
                   "_versionId": "_versionId",
                   "isNumeric": true,
                   "name": "name",
-                  "lastModified": 9,
+                  "lastModified": 6,
                   "_id": "_id",
                   "category": "category",
                   "key": "key"
@@ -79595,14 +79663,14 @@
                   },
                   "kind": "kind",
                   "description": "description",
-                  "creationDate": 8,
+                  "creationDate": 9,
                   "isActive": true,
-                  "lastSeen": 6,
+                  "lastSeen": 3,
                   "eventKey": "eventKey",
                   "_versionId": "_versionId",
                   "isNumeric": true,
                   "name": "name",
-                  "lastModified": 9,
+                  "lastModified": 6,
                   "_id": "_id",
                   "category": "category",
                   "key": "key"
@@ -79766,11 +79834,14 @@
             },
             "key": "key",
             "updatedAt": 1,
+            "payloadSummary": {
+              "sdkKeyCount": 6
+            },
             "resourcesExpanded": {
-              "totalCount": 3,
+              "totalCount": 7,
               "items": {
                 "flags": {
-                  "totalCount": 6,
+                  "totalCount": 5,
                   "items": [
                     {
                       "archived": true,
@@ -79788,8 +79859,8 @@
                       },
                       "name": "name",
                       "description": "description",
-                      "creationDate": 6,
-                      "_version": 7,
+                      "creationDate": 7,
+                      "_version": 1,
                       "key": "key",
                       "maintainer": {
                         "kind": "member",
@@ -79842,8 +79913,8 @@
                       },
                       "name": "name",
                       "description": "description",
-                      "creationDate": 6,
-                      "_version": 7,
+                      "creationDate": 7,
+                      "_version": 1,
                       "key": "key",
                       "maintainer": {
                         "kind": "member",
@@ -79883,10 +79954,10 @@
                   ]
                 },
                 "aiConfigs": {
-                  "totalCount": 6,
+                  "totalCount": 3,
                   "items": [
                     {
-                      "createdAt": 1,
+                      "createdAt": 2,
                       "_links": {
                         "parent": {
                           "href": "href",
@@ -79899,17 +79970,17 @@
                       },
                       "name": "name",
                       "description": "description",
-                      "version": 6,
+                      "version": 1,
                       "key": "key",
                       "flagKey": "flagKey",
                       "tags": [
                         "tags",
                         "tags"
                       ],
-                      "updatedAt": 2
+                      "updatedAt": 6
                     },
                     {
-                      "createdAt": 1,
+                      "createdAt": 2,
                       "_links": {
                         "parent": {
                           "href": "href",
@@ -79922,14 +79993,14 @@
                       },
                       "name": "name",
                       "description": "description",
-                      "version": 6,
+                      "version": 1,
                       "key": "key",
                       "flagKey": "flagKey",
                       "tags": [
                         "tags",
                         "tags"
                       ],
-                      "updatedAt": 2
+                      "updatedAt": 6
                     }
                   ]
                 },
@@ -79949,14 +80020,14 @@
                       },
                       "kind": "kind",
                       "description": "description",
-                      "creationDate": 8,
+                      "creationDate": 9,
                       "isActive": true,
-                      "lastSeen": 6,
+                      "lastSeen": 3,
                       "eventKey": "eventKey",
                       "_versionId": "_versionId",
                       "isNumeric": true,
                       "name": "name",
-                      "lastModified": 9,
+                      "lastModified": 6,
                       "_id": "_id",
                       "category": "category",
                       "key": "key"
@@ -79974,14 +80045,14 @@
                       },
                       "kind": "kind",
                       "description": "description",
-                      "creationDate": 8,
+                      "creationDate": 9,
                       "isActive": true,
-                      "lastSeen": 6,
+                      "lastSeen": 3,
                       "eventKey": "eventKey",
                       "_versionId": "_versionId",
                       "isNumeric": true,
                       "name": "name",
-                      "lastModified": 9,
+                      "lastModified": 6,
                       "_id": "_id",
                       "category": "category",
                       "key": "key"
@@ -79989,11 +80060,11 @@
                   ]
                 },
                 "segments": {
-                  "totalCount": 5,
+                  "totalCount": 6,
                   "items": [
                     {
-                      "generation": 9,
-                      "lastModifiedDate": 5,
+                      "generation": 6,
+                      "lastModifiedDate": 9,
                       "_links": {
                         "parent": {
                           "href": "href",
@@ -80005,7 +80076,7 @@
                         }
                       },
                       "description": "description",
-                      "creationDate": 4,
+                      "creationDate": 5,
                       "version": 9,
                       "environmentKey": "environmentKey",
                       "tags": [
@@ -80019,8 +80090,8 @@
                       "key": "key"
                     },
                     {
-                      "generation": 9,
-                      "lastModifiedDate": 5,
+                      "generation": 6,
+                      "lastModifiedDate": 9,
                       "_links": {
                         "parent": {
                           "href": "href",
@@ -80032,7 +80103,7 @@
                         }
                       },
                       "description": "description",
-                      "creationDate": 4,
+                      "creationDate": 5,
                       "version": 9,
                       "environmentKey": "environmentKey",
                       "tags": [
@@ -80061,6 +80132,9 @@
               "tags",
               "tags"
             ],
+            "applicationSummary": {
+              "applicationKey": "applicationKey"
+            },
             "accountId": "accountId",
             "deletedAt": 5,
             "deleted": false,
@@ -80099,7 +80173,7 @@
               "totalCount": 6,
               "items": [
                 {
-                  "createdAt": 1,
+                  "createdAt": 2,
                   "_links": {
                     "parent": {
                       "href": "href",
@@ -80112,17 +80186,17 @@
                   },
                   "name": "name",
                   "description": "description",
-                  "version": 6,
+                  "version": 1,
                   "key": "key",
                   "flagKey": "flagKey",
                   "tags": [
                     "tags",
                     "tags"
                   ],
-                  "updatedAt": 2
+                  "updatedAt": 6
                 },
                 {
-                  "createdAt": 1,
+                  "createdAt": 2,
                   "_links": {
                     "parent": {
                       "href": "href",
@@ -80135,23 +80209,23 @@
                   },
                   "name": "name",
                   "description": "description",
-                  "version": 6,
+                  "version": 1,
                   "key": "key",
                   "flagKey": "flagKey",
                   "tags": [
                     "tags",
                     "tags"
                   ],
-                  "updatedAt": 2
+                  "updatedAt": 6
                 }
               ]
             },
             "segmentsExpanded": {
-              "totalCount": 6,
+              "totalCount": 8,
               "items": [
                 {
-                  "generation": 9,
-                  "lastModifiedDate": 5,
+                  "generation": 6,
+                  "lastModifiedDate": 9,
                   "_links": {
                     "parent": {
                       "href": "href",
@@ -80163,7 +80237,7 @@
                     }
                   },
                   "description": "description",
-                  "creationDate": 4,
+                  "creationDate": 5,
                   "version": 9,
                   "environmentKey": "environmentKey",
                   "tags": [
@@ -80177,8 +80251,8 @@
                   "key": "key"
                 },
                 {
-                  "generation": 9,
-                  "lastModifiedDate": 5,
+                  "generation": 6,
+                  "lastModifiedDate": 9,
                   "_links": {
                     "parent": {
                       "href": "href",
@@ -80190,7 +80264,7 @@
                     }
                   },
                   "description": "description",
-                  "creationDate": 4,
+                  "creationDate": 5,
                   "version": 9,
                   "environmentKey": "environmentKey",
                   "tags": [
@@ -80208,7 +80282,7 @@
             "_affectsSdkPayload": true,
             "projectId": "projectId",
             "flagsExpanded": {
-              "totalCount": 1,
+              "totalCount": 4,
               "items": [
                 {
                   "archived": true,
@@ -80226,8 +80300,8 @@
                   },
                   "name": "name",
                   "description": "description",
-                  "creationDate": 6,
-                  "_version": 7,
+                  "creationDate": 7,
+                  "_version": 1,
                   "key": "key",
                   "maintainer": {
                     "kind": "member",
@@ -80280,8 +80354,8 @@
                   },
                   "name": "name",
                   "description": "description",
-                  "creationDate": 6,
-                  "_version": 7,
+                  "creationDate": 7,
+                  "_version": 1,
                   "key": "key",
                   "maintainer": {
                     "kind": "member",
@@ -80337,8 +80411,8 @@
             },
             "name": "name",
             "description": "description",
-            "creationDate": 6,
-            "_version": 7,
+            "creationDate": 7,
+            "_version": 1,
             "key": "key",
             "maintainer": {
               "kind": "member",
@@ -80388,21 +80462,21 @@
             },
             "kind": "kind",
             "description": "description",
-            "creationDate": 8,
+            "creationDate": 9,
             "isActive": true,
-            "lastSeen": 6,
+            "lastSeen": 3,
             "eventKey": "eventKey",
             "_versionId": "_versionId",
             "isNumeric": true,
             "name": "name",
-            "lastModified": 9,
+            "lastModified": 6,
             "_id": "_id",
             "category": "category",
             "key": "key"
           },
           "segment": {
-            "generation": 9,
-            "lastModifiedDate": 5,
+            "generation": 6,
+            "lastModifiedDate": 9,
             "_links": {
               "parent": {
                 "href": "href",
@@ -80414,7 +80488,7 @@
               }
             },
             "description": "description",
-            "creationDate": 4,
+            "creationDate": 5,
             "version": 9,
             "environmentKey": "environmentKey",
             "tags": [
@@ -80428,7 +80502,7 @@
             "key": "key"
           },
           "aiConfig": {
-            "createdAt": 1,
+            "createdAt": 2,
             "_links": {
               "parent": {
                 "href": "href",
@@ -80441,14 +80515,14 @@
             },
             "name": "name",
             "description": "description",
-            "version": 6,
+            "version": 1,
             "key": "key",
             "flagKey": "flagKey",
             "tags": [
               "tags",
               "tags"
             ],
-            "updatedAt": 2
+            "updatedAt": 6
           }
         },
         "properties": {
@@ -80583,7 +80657,7 @@
       },
       "ExpandedLinkedResourcesFlags": {
         "example": {
-          "totalCount": 6,
+          "totalCount": 5,
           "items": [
             {
               "archived": true,
@@ -80601,8 +80675,8 @@
               },
               "name": "name",
               "description": "description",
-              "creationDate": 6,
-              "_version": 7,
+              "creationDate": 7,
+              "_version": 1,
               "key": "key",
               "maintainer": {
                 "kind": "member",
@@ -80655,8 +80729,8 @@
               },
               "name": "name",
               "description": "description",
-              "creationDate": 6,
-              "_version": 7,
+              "creationDate": 7,
+              "_version": 1,
               "key": "key",
               "maintainer": {
                 "kind": "member",
@@ -80715,11 +80789,11 @@
       },
       "ExpandedLinkedResourcesSegments": {
         "example": {
-          "totalCount": 5,
+          "totalCount": 6,
           "items": [
             {
-              "generation": 9,
-              "lastModifiedDate": 5,
+              "generation": 6,
+              "lastModifiedDate": 9,
               "_links": {
                 "parent": {
                   "href": "href",
@@ -80731,7 +80805,7 @@
                 }
               },
               "description": "description",
-              "creationDate": 4,
+              "creationDate": 5,
               "version": 9,
               "environmentKey": "environmentKey",
               "tags": [
@@ -80745,8 +80819,8 @@
               "key": "key"
             },
             {
-              "generation": 9,
-              "lastModifiedDate": 5,
+              "generation": 6,
+              "lastModifiedDate": 9,
               "_links": {
                 "parent": {
                   "href": "href",
@@ -80758,7 +80832,7 @@
                 }
               },
               "description": "description",
-              "creationDate": 4,
+              "creationDate": 5,
               "version": 9,
               "environmentKey": "environmentKey",
               "tags": [
@@ -80794,7 +80868,7 @@
       "ExpandedLinkedResourcesItems": {
         "example": {
           "flags": {
-            "totalCount": 6,
+            "totalCount": 5,
             "items": [
               {
                 "archived": true,
@@ -80812,8 +80886,8 @@
                 },
                 "name": "name",
                 "description": "description",
-                "creationDate": 6,
-                "_version": 7,
+                "creationDate": 7,
+                "_version": 1,
                 "key": "key",
                 "maintainer": {
                   "kind": "member",
@@ -80866,8 +80940,8 @@
                 },
                 "name": "name",
                 "description": "description",
-                "creationDate": 6,
-                "_version": 7,
+                "creationDate": 7,
+                "_version": 1,
                 "key": "key",
                 "maintainer": {
                   "kind": "member",
@@ -80907,10 +80981,10 @@
             ]
           },
           "aiConfigs": {
-            "totalCount": 6,
+            "totalCount": 3,
             "items": [
               {
-                "createdAt": 1,
+                "createdAt": 2,
                 "_links": {
                   "parent": {
                     "href": "href",
@@ -80923,17 +80997,17 @@
                 },
                 "name": "name",
                 "description": "description",
-                "version": 6,
+                "version": 1,
                 "key": "key",
                 "flagKey": "flagKey",
                 "tags": [
                   "tags",
                   "tags"
                 ],
-                "updatedAt": 2
+                "updatedAt": 6
               },
               {
-                "createdAt": 1,
+                "createdAt": 2,
                 "_links": {
                   "parent": {
                     "href": "href",
@@ -80946,14 +81020,14 @@
                 },
                 "name": "name",
                 "description": "description",
-                "version": 6,
+                "version": 1,
                 "key": "key",
                 "flagKey": "flagKey",
                 "tags": [
                   "tags",
                   "tags"
                 ],
-                "updatedAt": 2
+                "updatedAt": 6
               }
             ]
           },
@@ -80973,14 +81047,14 @@
                 },
                 "kind": "kind",
                 "description": "description",
-                "creationDate": 8,
+                "creationDate": 9,
                 "isActive": true,
-                "lastSeen": 6,
+                "lastSeen": 3,
                 "eventKey": "eventKey",
                 "_versionId": "_versionId",
                 "isNumeric": true,
                 "name": "name",
-                "lastModified": 9,
+                "lastModified": 6,
                 "_id": "_id",
                 "category": "category",
                 "key": "key"
@@ -80998,14 +81072,14 @@
                 },
                 "kind": "kind",
                 "description": "description",
-                "creationDate": 8,
+                "creationDate": 9,
                 "isActive": true,
-                "lastSeen": 6,
+                "lastSeen": 3,
                 "eventKey": "eventKey",
                 "_versionId": "_versionId",
                 "isNumeric": true,
                 "name": "name",
-                "lastModified": 9,
+                "lastModified": 6,
                 "_id": "_id",
                 "category": "category",
                 "key": "key"
@@ -81013,11 +81087,11 @@
             ]
           },
           "segments": {
-            "totalCount": 5,
+            "totalCount": 6,
             "items": [
               {
-                "generation": 9,
-                "lastModifiedDate": 5,
+                "generation": 6,
+                "lastModifiedDate": 9,
                 "_links": {
                   "parent": {
                     "href": "href",
@@ -81029,7 +81103,7 @@
                   }
                 },
                 "description": "description",
-                "creationDate": 4,
+                "creationDate": 5,
                 "version": 9,
                 "environmentKey": "environmentKey",
                 "tags": [
@@ -81043,8 +81117,8 @@
                 "key": "key"
               },
               {
-                "generation": 9,
-                "lastModifiedDate": 5,
+                "generation": 6,
+                "lastModifiedDate": 9,
                 "_links": {
                   "parent": {
                     "href": "href",
@@ -81056,7 +81130,7 @@
                   }
                 },
                 "description": "description",
-                "creationDate": 4,
+                "creationDate": 5,
                 "version": 9,
                 "environmentKey": "environmentKey",
                 "tags": [
