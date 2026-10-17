@@ -131,7 +131,7 @@
     },
     {
       "name": "Holdouts",
-      "description": "> ### Available for customers using Experimentation\n>\n> Holdouts are available to customers using [Experimentation](https://launchdarkly.com/docs/api/experiments).\n\n\nHoldouts let you exclude a percentage of your audience from your Experimentation program. This enables you to see the overall effect of your experiments on your customer base, and helps determine how effective the experiments you're running are.\n\nUsing the holdouts API, you can create, delete, and manage holdouts. To learn more, read [Holdouts](https://launchdarkly.com/docs/home/holdouts).\n"
+      "description": "> ### Available for customers using Experimentation\n>\n> Holdouts are available to customers using [Experimentation](https://launchdarkly.com/docs/api/experiments).\n\n\nHoldouts let you exclude a percentage of your audience from your Experimentation program. This enables you to see the overall effect of your experiments on your customer base, and helps determine how effective the experiments you're running are.\n\nUsing the holdouts API, you can create, update, and end holdouts. To learn more, read [Holdouts](https://launchdarkly.com/docs/home/holdouts).\n"
     },
     {
       "name": "Insights charts (beta)",
@@ -246,8 +246,8 @@
       "description": "> ### Contexts are now available\n>\n> After you have upgraded your LaunchDarkly SDK to use contexts instead of users, you should use [Contexts](https://launchdarkly.com/docs/api/contexts) instead of these endpoints. To learn more, read [Contexts](https://launchdarkly.com/docs/home/observability/contexts).\n\n\nLaunchDarkly creates a record for each user passed in to `variation` calls. This record powers the autocomplete functionality on the feature flag dashboard, as well as the Users page. To learn more, read [Contexts](https://launchdarkly.com/docs/home/observability/contexts).\n\nLaunchDarkly also offers an API that lets you tap into this data. You can use the users API to see what user data is available to LaunchDarkly, as well as determine which flag values a user will receive. You can also explicitly set which flag value a user will receive via this API.\n\nUsers are always scoped within a project and environment. In other words, each environment has its own set of user records.\n"
     },
     {
-      "name": "Views (beta)",
-      "description": "> ### This feature is in beta\n>\n> To use this feature, pass in a header including the `LD-API-Version` key with value set to `beta`. Use this header with each call. To learn more, read [Beta resources](https://launchdarkly.com/docs/api#beta-resources).\n>\n> Resources that are in beta are still undergoing testing and development. They may change without notice, including becoming backwards incompatible.\nThe views API allows you to create, retrieve, and edit views, and link other resources to views.\n\nA view is a resource in LaunchDarkly that you can use to logically group other resources within a project, such as flags or segments. For example, views let you restrict access to sets of flags, so that members of your organization can focus on just the flags they work with.\n\nTo learn more, read [Views](https://launchdarkly.com/docs/home/account/views).\n"
+      "name": "Views",
+      "description": "The views API allows you to create, retrieve, and edit views, and link other resources to views.\n\nA view is a resource in LaunchDarkly that you can use to logically group other resources within a project, such as flags or segments. For example, views let you restrict access to sets of flags, so that members of your organization can focus on just the flags they work with.\n\nTo learn more, read [Views](https://launchdarkly.com/docs/home/account/views).\n"
     },
     {
       "name": "Webhooks",
@@ -35698,20 +35698,6 @@
         "operationId": "getViews",
         "parameters": [
           {
-            "description": "Version of the endpoint.",
-            "explode": false,
-            "in": "header",
-            "name": "LD-API-Version",
-            "required": true,
-            "schema": {
-              "enum": [
-                "beta"
-              ],
-              "type": "string"
-            },
-            "style": "simple"
-          },
-          {
             "example": "default",
             "explode": false,
             "in": "path",
@@ -35847,27 +35833,13 @@
         },
         "summary": "List views",
         "tags": [
-          "Views (beta)"
+          "Views"
         ]
       },
       "post": {
         "description": "Create a new view in the given project.",
         "operationId": "createView",
         "parameters": [
-          {
-            "description": "Version of the endpoint.",
-            "explode": false,
-            "in": "header",
-            "name": "LD-API-Version",
-            "required": true,
-            "schema": {
-              "enum": [
-                "beta"
-              ],
-              "type": "string"
-            },
-            "style": "simple"
-          },
           {
             "example": "default",
             "explode": false,
@@ -35945,7 +35917,7 @@
         },
         "summary": "Create view",
         "tags": [
-          "Views (beta)"
+          "Views"
         ]
       }
     },
@@ -35954,20 +35926,6 @@
         "description": "Delete a specific view by its key.",
         "operationId": "deleteView",
         "parameters": [
-          {
-            "description": "Version of the endpoint.",
-            "explode": false,
-            "in": "header",
-            "name": "LD-API-Version",
-            "required": true,
-            "schema": {
-              "enum": [
-                "beta"
-              ],
-              "type": "string"
-            },
-            "style": "simple"
-          },
           {
             "example": "default",
             "explode": false,
@@ -36028,27 +35986,13 @@
         },
         "summary": "Delete view",
         "tags": [
-          "Views (beta)"
+          "Views"
         ]
       },
       "get": {
         "description": "Retrieve a specific view by its key.",
         "operationId": "getView",
         "parameters": [
-          {
-            "description": "Version of the endpoint.",
-            "explode": false,
-            "in": "header",
-            "name": "LD-API-Version",
-            "required": true,
-            "schema": {
-              "enum": [
-                "beta"
-              ],
-              "type": "string"
-            },
-            "style": "simple"
-          },
           {
             "example": "default",
             "explode": false,
@@ -36202,27 +36146,13 @@
         },
         "summary": "Get view",
         "tags": [
-          "Views (beta)"
+          "Views"
         ]
       },
       "patch": {
         "description": "Edit an existing view.\n\nThe request body must be a JSON object of the fields to update. The values you include replace the existing values for the fields.\n\nHere's an example:\n  ```\n    {\n      \"description\": \"Example updated description\",\n      \"tags\": [\"new-tag\"]\n    }\n  ```\n",
         "operationId": "updateView",
         "parameters": [
-          {
-            "description": "Version of the endpoint.",
-            "explode": false,
-            "in": "header",
-            "name": "LD-API-Version",
-            "required": true,
-            "schema": {
-              "enum": [
-                "beta"
-              ],
-              "type": "string"
-            },
-            "style": "simple"
-          },
           {
             "example": "default",
             "explode": false,
@@ -36311,7 +36241,7 @@
         },
         "summary": "Update view",
         "tags": [
-          "Views (beta)"
+          "Views"
         ]
       }
     },
@@ -36320,20 +36250,6 @@
         "description": "Unlink one or multiple resources from a view:\n- Unlink flags using flag keys\n- Unlink segments using segment IDs\n- Unlink AI configs using config keys\n",
         "operationId": "unlinkResource",
         "parameters": [
-          {
-            "description": "Version of the endpoint.",
-            "explode": false,
-            "in": "header",
-            "name": "LD-API-Version",
-            "required": true,
-            "schema": {
-              "enum": [
-                "beta"
-              ],
-              "type": "string"
-            },
-            "style": "simple"
-          },
           {
             "example": "default",
             "explode": false,
@@ -36438,27 +36354,13 @@
         },
         "summary": "Unlink resource",
         "tags": [
-          "Views (beta)"
+          "Views"
         ]
       },
       "post": {
         "description": "Link one or multiple resources to a view by keys, filters, or both:\n- Link flags using flag keys or filters (maintainerId, maintainerTeamKey, tags, state, query)\n- Link segments using segment IDs or filters (tags, query, unbounded)\n- Link AI configs using config keys\n\nWhen both keys and filters are provided, resources matching either condition are linked (union).\n",
         "operationId": "linkResource",
         "parameters": [
-          {
-            "description": "Version of the endpoint.",
-            "explode": false,
-            "in": "header",
-            "name": "LD-API-Version",
-            "required": true,
-            "schema": {
-              "enum": [
-                "beta"
-              ],
-              "type": "string"
-            },
-            "style": "simple"
-          },
           {
             "example": "default",
             "explode": false,
@@ -36563,7 +36465,7 @@
         },
         "summary": "Link resource",
         "tags": [
-          "Views (beta)"
+          "Views"
         ]
       }
     },
@@ -36572,20 +36474,6 @@
         "description": "Get a list of all linked resources for a given view.",
         "operationId": "getLinkedResources",
         "parameters": [
-          {
-            "description": "Version of the endpoint.",
-            "explode": false,
-            "in": "header",
-            "name": "LD-API-Version",
-            "required": true,
-            "schema": {
-              "enum": [
-                "beta"
-              ],
-              "type": "string"
-            },
-            "style": "simple"
-          },
           {
             "example": "default",
             "explode": false,
@@ -36757,7 +36645,7 @@
         },
         "summary": "Get linked resources",
         "tags": [
-          "Views (beta)"
+          "Views"
         ]
       }
     },
@@ -36766,20 +36654,6 @@
         "description": "Get a list of all linked views for a resource. Flags and AI configs are identified by key. Segments are identified by segment ID.",
         "operationId": "getLinkedViews",
         "parameters": [
-          {
-            "description": "Version of the endpoint.",
-            "explode": false,
-            "in": "header",
-            "name": "LD-API-Version",
-            "required": true,
-            "schema": {
-              "enum": [
-                "beta"
-              ],
-              "type": "string"
-            },
-            "style": "simple"
-          },
           {
             "example": "default",
             "explode": false,
@@ -36907,7 +36781,7 @@
         },
         "summary": "Get linked views for a given resource",
         "tags": [
-          "Views (beta)"
+          "Views"
         ]
       }
     },
@@ -43858,6 +43732,17 @@
           "clientName": {
             "type": "string",
             "description": "The registered name of the OAuth client the access token was issued to. Only present for OAuth access tokens, and omitted when the client's name can't be resolved."
+          },
+          "audience": {
+            "type": "array",
+            "description": "The resources (RFC 8707) the OAuth access token was issued for. Only present for OAuth access tokens issued for a specific resource.",
+            "items": {
+              "type": "string"
+            }
+          },
+          "expiresAt": {
+            "description": "When the OAuth access token expires. Only present for OAuth access tokens.",
+            "$ref": "#/components/schemas/UnixMillis"
           },
           "tokenName": {
             "type": "string"
