@@ -207,7 +207,7 @@
     },
     {
       "name": "Release policies (beta)",
-      "description": "> ### This feature is in beta\n>\n> To use this feature, pass in a header including the `LD-API-Version` key with value set to `beta`. Use this header with each call. To learn more, read [Beta resources](https://launchdarkly.com/docs/api#beta-resources).\n>\n> Resources that are in beta are still undergoing testing and development. They may change without notice, including becoming backwards incompatible.\n\nRelease policies let you specify your preferred rollout method for a given set of environments.\n"
+      "description": "> ### This feature is in beta\n>\n> To use this feature, pass in a header including the `LD-API-Version` key with value set to `beta`. Use this header with each call. To learn more, read [Beta resources](https://launchdarkly.com/docs/api#beta-resources).\n>\n> Resources that are in beta are still undergoing testing and development. They may change without notice, including becoming backwards incompatible.\n\n> ### This feature is deprecated\n>\n> The release policies API is deprecated and will be removed. Release policies continue to work during the deprecation period. LaunchDarkly will announce the exact dates for end of support and removal of access separately.\n\nRelease policies let you specify your preferred rollout method for a given set of environments.\n"
     },
     {
       "name": "Releases (beta)",
