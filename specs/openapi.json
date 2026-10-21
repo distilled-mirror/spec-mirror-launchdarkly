@@ -2,7 +2,7 @@
   "openapi": "3.0.3",
   "info": {
     "title": "LaunchDarkly REST API",
-    "description": "This documentation describes LaunchDarkly's REST API. To access the complete OpenAPI spec directly, use [Get OpenAPI spec](https://launchdarkly.com/docs/api/other/get-openapi-spec).\n\nTo learn how to use LaunchDarkly using the user interface (UI) instead, read our [product documentation](https://launchdarkly.com/docs/home).\n\n## Authentication\n\nLaunchDarkly's REST API uses the HTTPS protocol with a minimum TLS version of 1.2.\n\nAll REST API resources are authenticated with either [personal or service access tokens](https://launchdarkly.com/docs/home/account/api), or session cookies. Other authentication mechanisms are not supported. You can manage personal access tokens on your [**Authorization**](https://app.launchdarkly.com/settings/authorization) page in the LaunchDarkly UI.\n\nLaunchDarkly also has SDK keys, mobile keys, and client-side IDs that are used by our server-side SDKs, mobile SDKs, and JavaScript-based SDKs, respectively. **These keys cannot be used to access our REST API**. These keys are environment-specific, and can only perform read-only operations such as fetching feature flag settings.\n\n| Auth mechanism                                                                                  | Allowed resources                                                                                     | Use cases                                          |\n| ----------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------- | -------------------------------------------------- |\n| [Personal or service access tokens](https://launchdarkly.com/docs/home/account/api) | Can be customized on a per-token basis                                                                | Building scripts, custom integrations, data export. |\n| SDK keys                                                                                        | Can only access read-only resources specific to server-side SDKs. Restricted to a single environment. | Server-side SDKs                     |\n| Mobile keys                                                                                     | Can only access read-only resources specific to mobile SDKs, and only for flags marked available to mobile keys. Restricted to a single environment.           | Mobile SDKs                                        |\n| Client-side ID                                                                                  | Can only access read-only resources specific to JavaScript-based client-side SDKs, and only for flags marked available to client-side. Restricted to a single environment.           | Client-side JavaScript                             |\n\n> #### Keep your access tokens and SDK keys private\n>\n> Access tokens should _never_ be exposed in untrusted contexts. Never put an access token in client-side JavaScript, or embed it in a mobile application. LaunchDarkly has special mobile keys that you can embed in mobile apps. If you accidentally expose an access token or SDK key, you can reset it from your [**Authorization**](https://app.launchdarkly.com/settings/authorization) page.\n>\n> The client-side ID is safe to embed in untrusted contexts. It's designed for use in client-side JavaScript.\n\n### Authentication using request header\n\nThe preferred way to authenticate with the API is by adding an `Authorization` header containing your access token to your requests. The value of the `Authorization` header must be your access token.\n\nManage personal access tokens from the [**Authorization**](https://app.launchdarkly.com/settings/authorization) page.\n\n### Authentication using session cookie\n\nFor testing purposes, you can make API calls directly from your web browser. If you are logged in to the LaunchDarkly application, the API will use your existing session to authenticate calls.\n\nDepending on the permissions granted as part of your [role](https://launchdarkly.com/docs/home/account/roles), you may not have permission to perform some API calls. You will receive a `401` response code in that case.\n\n> ### Modifying the Origin header causes an error\n>\n> LaunchDarkly validates that the Origin header for any API request authenticated by a session cookie matches the expected Origin header. The expected Origin header is `https://app.launchdarkly.com`.\n>\n> If the Origin header does not match what's expected, LaunchDarkly returns an error. This error can prevent the LaunchDarkly app from working correctly.\n>\n> Any browser extension that intentionally changes the Origin header can cause this problem. For example, Cross-Origin Resource Sharing (CORS) extensions used during development can modify the Origin header and cause the app to fail.\n>\n> To prevent this error, do not modify your Origin header.\n>\n> LaunchDarkly does not require origin matching when authenticating with an access token, so this issue does not affect normal API usage.\n\n## Representations\n\nAll resources expect and return JSON response bodies. Error responses also send a JSON body. To learn more about the error format of the API, read [Errors](https://launchdarkly.com/docs/api#errors).\n\nIn practice this means that you always get a response with a `Content-Type` header set to `application/json`.\n\nIn addition, request bodies for `PATCH`, `POST`, and `PUT` requests must be encoded as JSON with a `Content-Type` header set to `application/json`.\n\n### Summary and detailed representations\n\nWhen you fetch a list of resources, the response includes only the most important attributes of each resource. This is a _summary representation_ of the resource. When you fetch an individual resource, such as a single feature flag, you receive a _detailed representation_ of the resource.\n\nThe best way to find a detailed representation is to follow links. Every summary representation includes a link to its detailed representation.\n\n### Expanding responses\n\nSometimes the detailed representation of a resource does not include all of the attributes of the resource by default. If this is the case, the request method will clearly document this and describe which attributes you can include in an expanded response.\n\nTo include the additional attributes, append the `expand` request parameter to your request and add a comma-separated list of the attributes to include. For example, when you append `?expand=members,maintainers` to the [Get team](https://launchdarkly.com/docs/api/teams/get-team) endpoint, the expanded response includes both of these attributes.\n\n### Links and addressability\n\nThe best way to navigate the API is by following links. These are attributes in representations that link to other resources. The API always uses the same format for links:\n\n- Links to other resources within the API are encapsulated in a `_links` object\n- If the resource has a corresponding link to HTML content on the site, it is stored in a special `_site` link\n\nEach link has two attributes:\n\n- An `href`, which contains the URL\n- A `type`, which describes the content type\n\nFor example, a feature resource might return the following:\n\n```json\n{\n  \"_links\": {\n    \"parent\": {\n      \"href\": \"/api/features\",\n      \"type\": \"application/json\"\n    },\n    \"self\": {\n      \"href\": \"/api/features/sort.order\",\n      \"type\": \"application/json\"\n    }\n  },\n  \"_site\": {\n    \"href\": \"/features/sort.order\",\n    \"type\": \"text/html\"\n  }\n}\n```\n\nFrom this, you can navigate to the parent collection of features by following the `parent` link, or navigate to the site page for the feature by following the `_site` link.\n\nCollections are always represented as a JSON object with an `items` attribute containing an array of representations. Like all other representations, collections have `_links` defined at the top level.\n\nPaginated collections include `first`, `last`, `next`, and `prev` links containing a URL with the respective set of elements in the collection.\n\n## Updates\n\nResources that accept partial updates use the `PATCH` verb. Most resources support the [JSON patch](https://launchdarkly.com/docs/api#updates-using-json-patch) format. Some resources also support the [JSON merge patch](https://launchdarkly.com/docs/api#updates-using-json-merge-patch) format, and some resources support the [semantic patch](https://launchdarkly.com/docs/api#updates-using-semantic-patch) format, which is a way to specify the modifications to perform as a set of executable instructions. Each resource supports optional [comments](https://launchdarkly.com/docs/api#updates-with-comments) that you can submit with updates. Comments appear in outgoing webhooks, the audit log, and other integrations.\n\nWhen a resource supports both JSON patch and semantic patch, we document both in the request method. However, the specific request body fields and descriptions included in our documentation only match one type of patch or the other.\n\n### Updates using JSON patch\n\n[JSON patch](https://datatracker.ietf.org/doc/html/rfc6902) is a way to specify the modifications to perform on a resource. JSON patch uses paths and a limited set of operations to describe how to transform the current state of the resource into a new state. JSON patch documents are always arrays, where each element contains an operation, a path to the field to update, and the new value.\n\nFor example, in this feature flag representation:\n\n```json\n{\n    \"name\": \"New recommendations engine\",\n    \"key\": \"engine.enable\",\n    \"description\": \"This is the description\",\n    ...\n}\n```\nYou can change the feature flag's description with the following patch document:\n\n```json\n[{ \"op\": \"replace\", \"path\": \"/description\", \"value\": \"This is the new description\" }]\n```\n\nYou can specify multiple modifications to perform in a single request. You can also test that certain preconditions are met before applying the patch:\n\n```json\n[\n  { \"op\": \"test\", \"path\": \"/version\", \"value\": 10 },\n  { \"op\": \"replace\", \"path\": \"/description\", \"value\": \"The new description\" }\n]\n```\n\nThe above patch request tests whether the feature flag's `version` is `10`, and if so, changes the feature flag's description.\n\nAttributes that are not editable, such as a resource's `_links`, have names that start with an underscore.\n\n### Updates using JSON merge patch\n\n[JSON merge patch](https://datatracker.ietf.org/doc/html/rfc7386) is another format for specifying the modifications to perform on a resource. JSON merge patch is less expressive than JSON patch. However, in many cases it is simpler to construct a merge patch document. For example, you can change a feature flag's description with the following merge patch document:\n\n```json\n{\n  \"description\": \"New flag description\"\n}\n```\n\n### Updates using semantic patch\n\nSome resources support the semantic patch format. A semantic patch is a way to specify the modifications to perform on a resource as a set of executable instructions.\n\nSemantic patch allows you to be explicit about intent using precise, custom instructions. In many cases, you can define semantic patch instructions independently of the current state of the resource. This can be useful when defining a change that may be applied at a future date.\n\nTo make a semantic patch request, you must append `domain-model=launchdarkly.semanticpatch` to your `Content-Type` header.\n\nHere's how:\n\n```\nContent-Type: application/json; domain-model=launchdarkly.semanticpatch\n```\n\nIf you call a semantic patch resource without this header, you will receive a `400` response because your semantic patch will be interpreted as a JSON patch.\n\nThe body of a semantic patch request takes the following properties:\n\n* `comment` (string): (Optional) A description of the update.\n* `environmentKey` (string): (Required for some resources only) The environment key.\n* `instructions` (array): (Required) A list of actions the update should perform. Each action in the list must be an object with a `kind` property that indicates the instruction. If the instruction requires parameters, you must include those parameters as additional fields in the object. The documentation for each resource that supports semantic patch includes the available instructions and any additional parameters.\n\nFor example:\n\n```json\n{\n  \"comment\": \"optional comment\",\n  \"instructions\": [ {\"kind\": \"turnFlagOn\"} ]\n}\n```\n\nSemantic patches are not applied partially; either all of the instructions are applied or none of them are. If **any** instruction is invalid, the endpoint returns an error and will not change the resource. If all instructions are valid, the request succeeds and the resources are updated if necessary, or left unchanged if they are already in the state you request.\n\n### Updates with comments\n\nYou can submit optional comments with `PATCH` changes.\n\nTo submit a comment along with a JSON patch document, use the following format:\n\n```json\n{\n  \"comment\": \"This is a comment string\",\n  \"patch\": [{ \"op\": \"replace\", \"path\": \"/description\", \"value\": \"The new description\" }]\n}\n```\n\nTo submit a comment along with a JSON merge patch document, use the following format:\n\n```json\n{\n  \"comment\": \"This is a comment string\",\n  \"merge\": { \"description\": \"New flag description\" }\n}\n```\n\nTo submit a comment along with a semantic patch, use the following format:\n\n```json\n{\n  \"comment\": \"This is a comment string\",\n  \"instructions\": [ {\"kind\": \"turnFlagOn\"} ]\n}\n```\n\n## Errors\n\nThe API always returns errors in a common format. Here's an example:\n\n```json\n{\n  \"code\": \"invalid_request\",\n  \"message\": \"A feature with that key already exists\",\n  \"id\": \"30ce6058-87da-11e4-b116-123b93f75cba\"\n}\n```\n\nThe `code` indicates the general class of error. The `message` is a human-readable explanation of what went wrong. The `id` is a unique identifier. Use it when you're working with LaunchDarkly Support to debug a problem with a specific API call.\n\n### HTTP status error response codes\n\n| Code | Definition        | Description                                                                                       | Possible Solution                                                |\n| ---- | ----------------- | ------------------------------------------------------------------------------------------- | ---------------------------------------------------------------- |\n| 400  | Invalid request       | The request cannot be understood.                                    | Ensure JSON syntax in request body is correct.                   |\n| 401  | Invalid access token      | Requestor is unauthorized or does not have permission for this API call.                                                | Ensure your API access token is valid and has the appropriate permissions.                                     |\n| 403  | Forbidden         | Requestor does not have access to this resource.                                                | Ensure that the account member or access token has proper permissions set. |\n| 404  | Invalid resource identifier | The requested resource is not valid. | Ensure that the resource is correctly identified by ID or key. |\n| 405  | Method not allowed | The request method is not allowed on this resource. | Ensure that the HTTP verb is correct. |\n| 409  | Conflict          | The API request can not be completed because it conflicts with a concurrent API request. | Retry your request.                                              |\n| 422  | Unprocessable entity | The API request can not be completed because the update description can not be understood. | Ensure that the request body is correct for the type of patch you are using, either JSON patch or semantic patch.\n| 429  | Too many requests | Read [Rate limiting](https://launchdarkly.com/docs/api#rate-limiting).                                               | Wait and try again later.                                        |\n\n## CORS\n\nThe LaunchDarkly API supports Cross Origin Resource Sharing (CORS) for AJAX requests from any origin. If an `Origin` header is given in a request, it will be echoed as an explicitly allowed origin. Otherwise the request returns a wildcard, `Access-Control-Allow-Origin: *`. For more information on CORS, read the [CORS W3C Recommendation](http://www.w3.org/TR/cors). Example CORS headers might look like:\n\n```http\nAccess-Control-Allow-Headers: Accept, Content-Type, Content-Length, Accept-Encoding, Authorization\nAccess-Control-Allow-Methods: OPTIONS, GET, DELETE, PATCH\nAccess-Control-Allow-Origin: *\nAccess-Control-Max-Age: 300\n```\n\nYou can make authenticated CORS calls just as you would make same-origin calls, using either [token or session-based authentication](https://launchdarkly.com/docs/api#authentication). If you are using session authentication, you should set the `withCredentials` property for your `xhr` request to `true`. You should never expose your access tokens to untrusted entities.\n\n## Rate limiting\n\nWe use several rate-limiting strategies to ensure the availability of our APIs. Rate-limited calls to our APIs return a `429` status code and include headers to indicate the current rate limit status. The specific headers returned depend on the API route that was called. Limits differ based on the route, authentication mechanism, and other factors.\n\nEach set of headers below appears only when the corresponding limit is being enforced for your call. A given route may be subject to any combination of these limits, so a response can include one, several, or none of these headers. A missing header indicates that the limit was not applied to this specific call; it does not necessarily indicate that the limit does not exist. To reduce usage before hitting a `429` status, program against whichever rate limit headers are present rather than expecting a specific header.\n\nWe do not publicly document the specific number of calls permitted by any of these limits, and these limits may change. We encourage clients to program against the specification and rely on the headers described below, rather than hardcoding the current limits.\n\n> ### Rate limiting and SDKs\n>\n> LaunchDarkly SDKs are never rate limited and do not use the API endpoints defined here. LaunchDarkly uses a different set of approaches, including streaming/server-sent events and a global CDN, to ensure availability to the routes used by LaunchDarkly SDKs.\n\n### Global rate limits\n\nAuthenticated requests are subject to a global limit. This is the maximum number of calls that your account can make to the API per ten seconds. All service and personal access tokens on the account share this limit, so exceeding the limit with one access token will impact other tokens. Calls that are subject to global rate limits may return the headers below:\n\n| Header name                    | Description                                                                      |\n| ------------------------------ | -------------------------------------------------------------------------------- |\n| `X-Ratelimit-Global-Limit`     | The maximum number of requests the account is permitted to make per ten seconds. |\n| `X-Ratelimit-Global-Remaining` | The number of requests remaining in the current global rate limit window.        |\n| `X-Ratelimit-Reset`            | The time at which the current rate limit window resets in epoch milliseconds.    |\n\n### Route-level rate limits\n\nSome authenticated routes have custom rate limits. These also reset every ten seconds. Any service or personal access tokens hitting the same route share this limit, so exceeding the limit with one access token may impact other tokens. Calls that are subject to route-level rate limits return the headers below:\n\n| Header name                   | Description                                                                                           |\n| ----------------------------- | ----------------------------------------------------------------------------------------------------- |\n| `X-Ratelimit-Route-Limit`     | The maximum number of requests to the current route permitted per ten seconds.           |\n| `X-Ratelimit-Route-Remaining` | The number of requests remaining for the current route in the current rate limit window. |\n| `X-Ratelimit-Reset`           | The time at which the current rate limit window resets in epoch milliseconds.            |\n\nA _route_ represents a specific URL pattern and verb. For example, the [Delete environment](https://launchdarkly.com/docs/api/environments/delete-environment) endpoint is considered a single route, and each call to delete an environment counts against your route-level rate limit for that route.\n\n### Access token rate limits\n\nSome calls are rate limited per access token. Unlike the global and route-level limits, this limit applies to a single service or personal access token on its own. Exceeding a limit with one access token does not affect other tokens on the account. Calls that are subject to access token rate limits return these headers:\n\n| Header name                        | Description                                                                             |\n| ---------------------------------- | --------------------------------------------------------------------------------------- |\n| `X-Ratelimit-Auth-Token-Limit`     | The maximum number of requests the access token can make per ten seconds.               |\n| `X-Ratelimit-Auth-Token-Remaining` | The number of requests remaining for the access token in the current rate limit window. |\n| `X-Ratelimit-Auth-Token-Reset`     | The time at which the current rate limit window resets in epoch milliseconds.           |\n\nUnlike the other rate limits, access token rate limits report their own reset time in the `X-Ratelimit-Auth-Token-Reset` header instead of in `X-Ratelimit-Reset`.\n\n### IP-based rate limiting\n\nWe also employ IP-based rate limiting on some API routes. If you hit an IP-based rate limit, your API response will include a `Retry-After` header indicating how long to wait before re-trying the call. Clients must wait at least `Retry-After` seconds before making additional calls to our API, and should employ jitter and backoff strategies to avoid triggering rate limits again.\n\n## OpenAPI (Swagger) and client libraries\n\nWe have a [complete OpenAPI (Swagger) specification](https://app.launchdarkly.com/api/v2/openapi.json) for our API.\n\nWe auto-generate multiple client libraries based on our OpenAPI specification. To learn more, visit the [collection of client libraries on GitHub](https://github.com/search?q=topic%3Alaunchdarkly-api+org%3Alaunchdarkly&type=Repositories). Alternatively, you can use the specification to generate client libraries to interact with our REST API in your language of choice. Or, you can refer to our API endpoints' documentation for guidance on how to make requests with a common HTTP library in your language of choice.\n\nOur OpenAPI specification is supported by several API-based tools such as Postman and Insomnia. In many cases, you can directly import our specification to explore our APIs.\n\n## Method overriding\n\nSome firewalls and HTTP clients restrict the use of verbs other than `GET` and `POST`. In those environments, our API endpoints that use `DELETE`, `PATCH`, and `PUT` verbs are inaccessible.\n\nTo avoid this issue, our API supports the `X-HTTP-Method-Override` header, allowing clients to \"tunnel\" `DELETE`, `PATCH`, and `PUT` requests using a `POST` request.\n\nFor example, to call a `PATCH` endpoint using a `POST` request, you can include `X-HTTP-Method-Override:PATCH` as a header.\n\n## Beta resources\n\nWe sometimes release new API resources in **beta** status before we release them with general availability.\n\nResources that are in beta are still undergoing testing and development. They may change without notice, including becoming backwards incompatible.\n\nWe try to promote resources into general availability as quickly as possible. This happens after sufficient testing and when we're satisfied that we no longer need to make backwards-incompatible changes.\n\nWe mark beta resources with a \"Beta\" callout in our documentation, pictured below:\n\n> ### This feature is in beta\n>\n> To use this feature, pass in a header including the `LD-API-Version` key with value set to `beta`. Use this header with each call. To learn more, read [Beta resources](https://launchdarkly.com/docs/api#beta-resources).\n>\n> Resources that are in beta are still undergoing testing and development. They may change without notice, including becoming backwards incompatible.\n\n### Using beta resources\n\nTo use a beta resource, you must include a header in the request. If you call a beta resource without this header, you receive a `403` response.\n\nUse this header:\n\n```\nLD-API-Version: beta\n```\n\n## Federal and EU environments\n\nIn addition to the commercial versions, LaunchDarkly offers instances for federal agencies and those based in the European Union (EU).\n\n### Federal environments\n\nThe version of LaunchDarkly that is available on domains controlled by the United States government is different from the version of LaunchDarkly available to the general public. If you are an employee or contractor for a United States federal agency and use LaunchDarkly in your work, you likely use the federal instance of LaunchDarkly.\n\nIf you are working in the federal instance of LaunchDarkly, the base URI for each request is `https://app.launchdarkly.us`.\n\nTo learn more, read [LaunchDarkly in federal environments](https://launchdarkly.com/docs/home/infrastructure/federal).\n\n### EU environments\n\nThe version of LaunchDarkly that is available in the EU is different from the version of LaunchDarkly available to other regions. If you are based in the EU, you likely use the EU instance of LaunchDarkly. The LaunchDarkly EU instance complies with EU data residency principles, including the protection and confidentiality of EU customer information.\n\nIf you are working in the EU instance of LaunchDarkly, the base URI for each request is `https://app.eu.launchdarkly.com`.\n\nTo learn more, read [LaunchDarkly in the European Union (EU)](https://launchdarkly.com/docs/home/infrastructure/eu).\n\n## Versioning\n\nWe try hard to keep our REST API backwards compatible, but we occasionally have to make backwards-incompatible changes in the process of shipping new features. These breaking changes can cause unexpected behavior if you don't prepare for them accordingly.\n\nUpdates to our REST API include support for the latest features in LaunchDarkly. We also release a new version of our REST API every time we make a breaking change. We provide simultaneous support for multiple API versions so you can migrate from your current API version to a new version at your own pace.\n\n### Setting the API version per request\n\nYou can set the API version on a specific request by sending an `LD-API-Version` header, as shown in the example below:\n\n```\nLD-API-Version: 20240415\n```\n\nThe header value is the version number of the API version you would like to request. The number for each version corresponds to the date the version was released in `yyyymmdd` format. In the example above the version `20240415` corresponds to April 15, 2024.\n\n### Setting the API version per access token\n\nWhen you create an access token, you must specify a specific version of the API to use. This ensures that integrations using this token cannot be broken by version changes.\n\nTokens created before versioning was released have their version set to `20160426`, which is the version of the API that existed before the current versioning scheme, so that they continue working the same way they did before versioning.\n\nIf you would like to upgrade your integration to use a new API version, you can explicitly set the header described above.\n\n> ### Best practice: Set the header for every client or integration\n>\n> We recommend that you set the API version header explicitly in any client or integration you build.\n>\n> Only rely on the access token API version during manual testing.\n\n### API version changelog\n\n<table>\n  <tr>\n    <th>Version</th>\n    <th>Changes</th>\n    <th>End of life (EOL)</th>\n  </tr>\n  <tr>\n    <td>`20240415`</td>\n    <td>\n      <ul><li>Changed several endpoints from unpaginated to paginated. Use the `limit` and `offset` query parameters to page through the results.</li> <li>Changed the [list access tokens](https://launchdarkly.com/docs/api/access-tokens/get-tokens) endpoint: <ul><li>Response is now paginated with a default limit of `25`</li></ul></li> <li>Changed the [list account members](https://launchdarkly.com/docs/api/account-members/get-members) endpoint: <ul><li>The `accessCheck` filter is no longer available</li></ul></li> <li>Changed the [list custom roles](https://launchdarkly.com/docs/api/custom-roles/get-custom-roles) endpoint: <ul><li>Response is now paginated with a default limit of `20`</li></ul></li> <li>Changed the [list feature flags](https://launchdarkly.com/docs/api/feature-flags/get-feature-flags) endpoint: <ul><li>Response is now paginated with a default limit of `20`</li><li>The `environments` field is now only returned if the request is filtered by environment, using the `filterEnv` query parameter</li><li>The `followerId`, `hasDataExport`, `status`, `contextKindTargeted`, and `segmentTargeted` filters are no longer available</li><li>The `compare` query parameter is no longer available</li></ul></li> <li>Changed the [list segments](https://launchdarkly.com/docs/api/segments/get-segments) endpoint: <ul><li>Response is now paginated with a default limit of `20`</li></ul></li> <li>Changed the [list teams](https://launchdarkly.com/docs/api/teams/get-teams) endpoint: <ul><li>The `expand` parameter no longer supports including `projects` or `roles`</li><li>In paginated results, the maximum page size is now 100</li></ul></li> <li>Changed the [get workflows](https://launchdarkly.com/docs/api/workflows/get-workflows) endpoint: <ul><li>Response is now paginated with a default limit of `20`</li><li>The `_conflicts` field in the response is no longer available</li></ul></li> </ul>\n    </td>\n    <td>Current</td>\n  </tr>\n  <tr>\n    <td>`20220603`</td>\n    <td>\n      <ul><li>Changed the [list projects](https://launchdarkly.com/docs/api/projects/get-projects) return value:<ul><li>Response is now paginated with a default limit of `20`.</li><li>Added support for filter and sort.</li><li>The project `environments` field is now expandable. This field is omitted by default.</li></ul></li><li>Changed the [get project](https://launchdarkly.com/docs/api/projects/get-project) return value:<ul><li>The `environments` field is now expandable. This field is omitted by default.</li></ul></li></ul>\n    </td>\n    <td>2025-04-15</td>\n  </tr>\n  <tr>\n    <td>`20210729`</td>\n    <td>\n      <ul><li>Changed the [create approval request](https://launchdarkly.com/docs/api/approvals/post-approval-request) return value. It now returns HTTP Status Code `201` instead of `200`.</li><li> Changed the [get user](https://launchdarkly.com/docs/api/users/get-user) return value. It now returns a user record, not a user. </li><li>Added additional optional fields to environment, segments, flags, members, and segments, including the ability to create big segments. </li><li> Added default values for flag variations when new environments are created. </li><li>Added filtering and pagination for getting flags and members, including `limit`, `number`, `filter`, and `sort` query parameters. </li><li>Added endpoints for expiring user targets for flags and segments, scheduled changes, access tokens, Relay Proxy configuration, integrations and subscriptions, and approvals. </li></ul>\n    </td>\n    <td>2023-06-03</td>\n  </tr>\n  <tr>\n    <td>`20191212`</td>\n    <td>\n      <ul><li>[List feature flags](https://launchdarkly.com/docs/api/feature-flags/get-feature-flags) now defaults to sending summaries of feature flag configurations, equivalent to setting the query parameter `summary=true`. Summaries omit flag targeting rules and individual user targets from the payload. </li><li> Added endpoints for flags, flag status, projects, environments, audit logs, members, users, custom roles, segments, usage, streams, events, and data export. </li></ul>\n    </td>\n    <td>2022-07-29</td>\n  </tr>\n  <tr>\n    <td>`20160426`</td>\n    <td>\n      <ul><li>Initial versioning of API. Tokens created before versioning have their version set to this.</li></ul>\n    </td>\n    <td>2020-12-12</td>\n  </tr>\n</table>\n\nTo learn more about how EOL is determined, read LaunchDarkly's [End of Life (EOL) Policy](https://launchdarkly.com/policies/end-of-life-policy/).\n",
+    "description": "This documentation describes LaunchDarkly's REST API. To access the complete OpenAPI spec directly, use [Get OpenAPI spec](https://launchdarkly.com/docs/api/other/get-openapi-spec).\n\nTo learn how to use LaunchDarkly using the user interface (UI) instead, read our [product documentation](https://launchdarkly.com/docs/home).\n\n## Authentication\n\nLaunchDarkly's REST API uses the HTTPS protocol with a minimum TLS version of 1.2.\n\nAll REST API resources are authenticated with either [personal or service access tokens](https://launchdarkly.com/docs/home/account/api), or session cookies. Other authentication mechanisms are not supported. You can manage personal access tokens on your [**Authorization**](https://app.launchdarkly.com/settings/authorization) page in the LaunchDarkly UI.\n\nLaunchDarkly also has SDK keys, mobile keys, and client-side IDs that are used by our server-side SDKs, mobile SDKs, and JavaScript-based SDKs, respectively. **These keys cannot be used to access our REST API**. These keys are environment-specific, and can only perform read-only operations such as fetching feature flag settings.\n\n| Auth mechanism                                                                                  | Allowed resources                                                                                     | Use cases                                          |\n| ----------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------- | -------------------------------------------------- |\n| [Personal or service access tokens](https://launchdarkly.com/docs/home/account/api) | Can be customized on a per-token basis                                                                | Building scripts, custom integrations, data export. |\n| SDK keys                                                                                        | Can only access read-only resources specific to server-side SDKs. Restricted to a single environment. | Server-side SDKs                     |\n| Mobile keys                                                                                     | Can only access read-only resources specific to mobile SDKs, and only for flags marked available to mobile keys. Restricted to a single environment.           | Mobile SDKs                                        |\n| Client-side ID                                                                                  | Can only access read-only resources specific to JavaScript-based client-side SDKs, and only for flags marked available to client-side. Restricted to a single environment.           | Client-side JavaScript                             |\n\n> #### Keep your access tokens and SDK keys private\n>\n> Access tokens should _never_ be exposed in untrusted contexts. Never put an access token in client-side JavaScript, or embed it in a mobile application. LaunchDarkly has special mobile keys that you can embed in mobile apps. If you accidentally expose an access token or SDK key, you can reset it from your [**Authorization**](https://app.launchdarkly.com/settings/authorization) page.\n>\n> The client-side ID is safe to embed in untrusted contexts. It's designed for use in client-side JavaScript.\n\n### Authentication using request header\n\nThe preferred way to authenticate with the API is by adding an `Authorization` header containing your access token to your requests. The value of the `Authorization` header must be your access token.\n\nManage personal access tokens from the [**Authorization**](https://app.launchdarkly.com/settings/authorization) page.\n\n### Authentication using session cookie\n\nFor testing purposes, you can make API calls directly from your web browser. If you are logged in to the LaunchDarkly application, the API will use your existing session to authenticate calls.\n\nDepending on the permissions granted as part of your [role](https://launchdarkly.com/docs/home/account/roles), you may not have permission to perform some API calls. You will receive a `401` response code in that case.\n\n> ### Modifying the Origin header causes an error\n>\n> LaunchDarkly validates that the Origin header for any API request authenticated by a session cookie matches the expected Origin header. The expected Origin header is `https://app.launchdarkly.com`.\n>\n> If the Origin header does not match what's expected, LaunchDarkly returns an error. This error can prevent the LaunchDarkly app from working correctly.\n>\n> Any browser extension that intentionally changes the Origin header can cause this problem. For example, Cross-Origin Resource Sharing (CORS) extensions used during development can modify the Origin header and cause the app to fail.\n>\n> To prevent this error, do not modify your Origin header.\n>\n> LaunchDarkly does not require origin matching when authenticating with an access token, so this issue does not affect normal API usage.\n\n## Representations\n\nAll resources expect and return JSON response bodies. Error responses also send a JSON body. To learn more about the error format of the API, read [Errors](https://launchdarkly.com/docs/api#errors).\n\nIn practice this means that you always get a response with a `Content-Type` header set to `application/json`.\n\nIn addition, request bodies for `PATCH`, `POST`, and `PUT` requests must be encoded as JSON with a `Content-Type` header set to `application/json`.\n\nUnless an endpoint's documentation says otherwise, the API ignores request body fields that are not part of that endpoint's request schema, and does not return an error for them. A successful response does not mean that every field you sent was applied. To confirm the result, check the response body.\n\n### Summary and detailed representations\n\nWhen you fetch a list of resources, the response includes only the most important attributes of each resource. This is a _summary representation_ of the resource. When you fetch an individual resource, such as a single feature flag, you receive a _detailed representation_ of the resource.\n\nThe best way to find a detailed representation is to follow links. Every summary representation includes a link to its detailed representation.\n\n### Expanding responses\n\nSometimes the detailed representation of a resource does not include all of the attributes of the resource by default. If this is the case, the request method will clearly document this and describe which attributes you can include in an expanded response.\n\nTo include the additional attributes, append the `expand` request parameter to your request and add a comma-separated list of the attributes to include. For example, when you append `?expand=members,maintainers` to the [Get team](https://launchdarkly.com/docs/api/teams/get-team) endpoint, the expanded response includes both of these attributes.\n\n### Links and addressability\n\nThe best way to navigate the API is by following links. These are attributes in representations that link to other resources. The API always uses the same format for links:\n\n- Links to other resources within the API are encapsulated in a `_links` object\n- If the resource has a corresponding link to HTML content on the site, it is stored in a special `_site` link\n\nEach link has two attributes:\n\n- An `href`, which contains the URL\n- A `type`, which describes the content type\n\nFor example, a feature resource might return the following:\n\n```json\n{\n  \"_links\": {\n    \"parent\": {\n      \"href\": \"/api/features\",\n      \"type\": \"application/json\"\n    },\n    \"self\": {\n      \"href\": \"/api/features/sort.order\",\n      \"type\": \"application/json\"\n    }\n  },\n  \"_site\": {\n    \"href\": \"/features/sort.order\",\n    \"type\": \"text/html\"\n  }\n}\n```\n\nFrom this, you can navigate to the parent collection of features by following the `parent` link, or navigate to the site page for the feature by following the `_site` link.\n\nCollections are always represented as a JSON object with an `items` attribute containing an array of representations. Like all other representations, collections have `_links` defined at the top level.\n\nPaginated collections include `first`, `last`, `next`, and `prev` links containing a URL with the respective set of elements in the collection.\n\n## Updates\n\nResources that accept partial updates use the `PATCH` verb. Most resources support the [JSON patch](https://launchdarkly.com/docs/api#updates-using-json-patch) format. Some resources also support the [JSON merge patch](https://launchdarkly.com/docs/api#updates-using-json-merge-patch) format, and some resources support the [semantic patch](https://launchdarkly.com/docs/api#updates-using-semantic-patch) format, which is a way to specify the modifications to perform as a set of executable instructions. Each resource supports optional [comments](https://launchdarkly.com/docs/api#updates-with-comments) that you can submit with updates. Comments appear in outgoing webhooks, the audit log, and other integrations.\n\nWhen a resource supports both JSON patch and semantic patch, we document both in the request method. However, the specific request body fields and descriptions included in our documentation only match one type of patch or the other.\n\n### Updates using JSON patch\n\n[JSON patch](https://datatracker.ietf.org/doc/html/rfc6902) is a way to specify the modifications to perform on a resource. JSON patch uses paths and a limited set of operations to describe how to transform the current state of the resource into a new state. JSON patch documents are always arrays, where each element contains an operation, a path to the field to update, and the new value.\n\nFor example, in this feature flag representation:\n\n```json\n{\n    \"name\": \"New recommendations engine\",\n    \"key\": \"engine.enable\",\n    \"description\": \"This is the description\",\n    ...\n}\n```\nYou can change the feature flag's description with the following patch document:\n\n```json\n[{ \"op\": \"replace\", \"path\": \"/description\", \"value\": \"This is the new description\" }]\n```\n\nYou can specify multiple modifications to perform in a single request. You can also test that certain preconditions are met before applying the patch:\n\n```json\n[\n  { \"op\": \"test\", \"path\": \"/version\", \"value\": 10 },\n  { \"op\": \"replace\", \"path\": \"/description\", \"value\": \"The new description\" }\n]\n```\n\nThe above patch request tests whether the feature flag's `version` is `10`, and if so, changes the feature flag's description.\n\nAttributes that are not editable, such as a resource's `_links`, have names that start with an underscore.\n\n### Updates using JSON merge patch\n\n[JSON merge patch](https://datatracker.ietf.org/doc/html/rfc7386) is another format for specifying the modifications to perform on a resource. JSON merge patch is less expressive than JSON patch. However, in many cases it is simpler to construct a merge patch document. For example, you can change a feature flag's description with the following merge patch document:\n\n```json\n{\n  \"description\": \"New flag description\"\n}\n```\n\n### Updates using semantic patch\n\nSome resources support the semantic patch format. A semantic patch is a way to specify the modifications to perform on a resource as a set of executable instructions.\n\nSemantic patch allows you to be explicit about intent using precise, custom instructions. In many cases, you can define semantic patch instructions independently of the current state of the resource. This can be useful when defining a change that may be applied at a future date.\n\nTo make a semantic patch request, you must append `domain-model=launchdarkly.semanticpatch` to your `Content-Type` header.\n\nHere's how:\n\n```\nContent-Type: application/json; domain-model=launchdarkly.semanticpatch\n```\n\nIf you call a semantic patch resource without this header, you will receive a `400` response because your semantic patch will be interpreted as a JSON patch.\n\nThe body of a semantic patch request takes the following properties:\n\n* `comment` (string): (Optional) A description of the update.\n* `environmentKey` (string): (Required for some resources only) The environment key.\n* `instructions` (array): (Required) A list of actions the update should perform. Each action in the list must be an object with a `kind` property that indicates the instruction. If the instruction requires parameters, you must include those parameters as additional fields in the object. The documentation for each resource that supports semantic patch includes the available instructions and any additional parameters.\n\nFor example:\n\n```json\n{\n  \"comment\": \"optional comment\",\n  \"instructions\": [ {\"kind\": \"turnFlagOn\"} ]\n}\n```\n\nSemantic patches are not applied partially; either all of the instructions are applied or none of them are. If **any** instruction is invalid, the endpoint returns an error and will not change the resource. If all instructions are valid, the request succeeds and the resources are updated if necessary, or left unchanged if they are already in the state you request.\n\n### Updates with comments\n\nYou can submit optional comments with `PATCH` changes.\n\nTo submit a comment along with a JSON patch document, use the following format:\n\n```json\n{\n  \"comment\": \"This is a comment string\",\n  \"patch\": [{ \"op\": \"replace\", \"path\": \"/description\", \"value\": \"The new description\" }]\n}\n```\n\nTo submit a comment along with a JSON merge patch document, use the following format:\n\n```json\n{\n  \"comment\": \"This is a comment string\",\n  \"merge\": { \"description\": \"New flag description\" }\n}\n```\n\nTo submit a comment along with a semantic patch, use the following format:\n\n```json\n{\n  \"comment\": \"This is a comment string\",\n  \"instructions\": [ {\"kind\": \"turnFlagOn\"} ]\n}\n```\n\n## Errors\n\nThe API always returns errors in a common format. Here's an example:\n\n```json\n{\n  \"code\": \"invalid_request\",\n  \"message\": \"A feature with that key already exists\",\n  \"id\": \"30ce6058-87da-11e4-b116-123b93f75cba\"\n}\n```\n\nThe `code` indicates the general class of error. The `message` is a human-readable explanation of what went wrong. The `id` is a unique identifier. Use it when you're working with LaunchDarkly Support to debug a problem with a specific API call.\n\n### HTTP status error response codes\n\n| Code | Definition        | Description                                                                                       | Possible Solution                                                |\n| ---- | ----------------- | ------------------------------------------------------------------------------------------- | ---------------------------------------------------------------- |\n| 400  | Invalid request       | The request cannot be understood.                                    | Ensure JSON syntax in request body is correct.                   |\n| 401  | Invalid access token      | Requestor is unauthorized or does not have permission for this API call.                                                | Ensure your API access token is valid and has the appropriate permissions.                                     |\n| 403  | Forbidden         | Requestor does not have access to this resource.                                                | Ensure that the account member or access token has proper permissions set. |\n| 404  | Invalid resource identifier | The requested resource is not valid. | Ensure that the resource is correctly identified by ID or key. |\n| 405  | Method not allowed | The request method is not allowed on this resource. | Ensure that the HTTP verb is correct. |\n| 409  | Conflict          | The API request can not be completed because it conflicts with a concurrent API request. | Retry your request.                                              |\n| 422  | Unprocessable entity | The API request can not be completed because the update description can not be understood. | Ensure that the request body is correct for the type of patch you are using, either JSON patch or semantic patch.\n| 429  | Too many requests | Read [Rate limiting](https://launchdarkly.com/docs/api#rate-limiting).                                               | Wait and try again later.                                        |\n\n## CORS\n\nThe LaunchDarkly API supports Cross Origin Resource Sharing (CORS) for AJAX requests from any origin. If an `Origin` header is given in a request, it will be echoed as an explicitly allowed origin. Otherwise the request returns a wildcard, `Access-Control-Allow-Origin: *`. For more information on CORS, read the [CORS W3C Recommendation](http://www.w3.org/TR/cors). Example CORS headers might look like:\n\n```http\nAccess-Control-Allow-Headers: Accept, Content-Type, Content-Length, Accept-Encoding, Authorization\nAccess-Control-Allow-Methods: OPTIONS, GET, DELETE, PATCH\nAccess-Control-Allow-Origin: *\nAccess-Control-Max-Age: 300\n```\n\nYou can make authenticated CORS calls just as you would make same-origin calls, using either [token or session-based authentication](https://launchdarkly.com/docs/api#authentication). If you are using session authentication, you should set the `withCredentials` property for your `xhr` request to `true`. You should never expose your access tokens to untrusted entities.\n\n## Rate limiting\n\nWe use several rate-limiting strategies to ensure the availability of our APIs. Rate-limited calls to our APIs return a `429` status code and include headers to indicate the current rate limit status. The specific headers returned depend on the API route that was called. Limits differ based on the route, authentication mechanism, and other factors.\n\nEach set of headers below appears only when the corresponding limit is being enforced for your call. A given route may be subject to any combination of these limits, so a response can include one, several, or none of these headers. A missing header indicates that the limit was not applied to this specific call; it does not necessarily indicate that the limit does not exist. To reduce usage before hitting a `429` status, program against whichever rate limit headers are present rather than expecting a specific header.\n\nWe do not publicly document the specific number of calls permitted by any of these limits, and these limits may change. We encourage clients to program against the specification and rely on the headers described below, rather than hardcoding the current limits.\n\n> ### Rate limiting and SDKs\n>\n> LaunchDarkly SDKs are never rate limited and do not use the API endpoints defined here. LaunchDarkly uses a different set of approaches, including streaming/server-sent events and a global CDN, to ensure availability to the routes used by LaunchDarkly SDKs.\n\n### Global rate limits\n\nAuthenticated requests are subject to a global limit. This is the maximum number of calls that your account can make to the API per ten seconds. All service and personal access tokens on the account share this limit, so exceeding the limit with one access token will impact other tokens. Calls that are subject to global rate limits may return the headers below:\n\n| Header name                    | Description                                                                      |\n| ------------------------------ | -------------------------------------------------------------------------------- |\n| `X-Ratelimit-Global-Limit`     | The maximum number of requests the account is permitted to make per ten seconds. |\n| `X-Ratelimit-Global-Remaining` | The number of requests remaining in the current global rate limit window.        |\n| `X-Ratelimit-Reset`            | The time at which the current rate limit window resets in epoch milliseconds.    |\n\n### Route-level rate limits\n\nSome authenticated routes have custom rate limits. These also reset every ten seconds. Any service or personal access tokens hitting the same route share this limit, so exceeding the limit with one access token may impact other tokens. Calls that are subject to route-level rate limits return the headers below:\n\n| Header name                   | Description                                                                                           |\n| ----------------------------- | ----------------------------------------------------------------------------------------------------- |\n| `X-Ratelimit-Route-Limit`     | The maximum number of requests to the current route permitted per ten seconds.           |\n| `X-Ratelimit-Route-Remaining` | The number of requests remaining for the current route in the current rate limit window. |\n| `X-Ratelimit-Reset`           | The time at which the current rate limit window resets in epoch milliseconds.            |\n\nA _route_ represents a specific URL pattern and verb. For example, the [Delete environment](https://launchdarkly.com/docs/api/environments/delete-environment) endpoint is considered a single route, and each call to delete an environment counts against your route-level rate limit for that route.\n\n### Access token rate limits\n\nSome calls are rate limited per access token. Unlike the global and route-level limits, this limit applies to a single service or personal access token on its own. Exceeding a limit with one access token does not affect other tokens on the account. Calls that are subject to access token rate limits return these headers:\n\n| Header name                        | Description                                                                             |\n| ---------------------------------- | --------------------------------------------------------------------------------------- |\n| `X-Ratelimit-Auth-Token-Limit`     | The maximum number of requests the access token can make per ten seconds.               |\n| `X-Ratelimit-Auth-Token-Remaining` | The number of requests remaining for the access token in the current rate limit window. |\n| `X-Ratelimit-Auth-Token-Reset`     | The time at which the current rate limit window resets in epoch milliseconds.           |\n\nUnlike the other rate limits, access token rate limits report their own reset time in the `X-Ratelimit-Auth-Token-Reset` header instead of in `X-Ratelimit-Reset`.\n\n### IP-based rate limiting\n\nWe also employ IP-based rate limiting on some API routes. If you hit an IP-based rate limit, your API response will include a `Retry-After` header indicating how long to wait before re-trying the call. Clients must wait at least `Retry-After` seconds before making additional calls to our API, and should employ jitter and backoff strategies to avoid triggering rate limits again.\n\n## OpenAPI (Swagger) and client libraries\n\nWe have a [complete OpenAPI (Swagger) specification](https://app.launchdarkly.com/api/v2/openapi.json) for our API.\n\nWe auto-generate multiple client libraries based on our OpenAPI specification. To learn more, visit the [collection of client libraries on GitHub](https://github.com/search?q=topic%3Alaunchdarkly-api+org%3Alaunchdarkly&type=Repositories). Alternatively, you can use the specification to generate client libraries to interact with our REST API in your language of choice. Or, you can refer to our API endpoints' documentation for guidance on how to make requests with a common HTTP library in your language of choice.\n\nOur OpenAPI specification is supported by several API-based tools such as Postman and Insomnia. In many cases, you can directly import our specification to explore our APIs.\n\n## Method overriding\n\nSome firewalls and HTTP clients restrict the use of verbs other than `GET` and `POST`. In those environments, our API endpoints that use `DELETE`, `PATCH`, and `PUT` verbs are inaccessible.\n\nTo avoid this issue, our API supports the `X-HTTP-Method-Override` header, allowing clients to \"tunnel\" `DELETE`, `PATCH`, and `PUT` requests using a `POST` request.\n\nFor example, to call a `PATCH` endpoint using a `POST` request, you can include `X-HTTP-Method-Override:PATCH` as a header.\n\n## Beta resources\n\nWe sometimes release new API resources in **beta** status before we release them with general availability.\n\nResources that are in beta are still undergoing testing and development. They may change without notice, including becoming backwards incompatible.\n\nWe try to promote resources into general availability as quickly as possible. This happens after sufficient testing and when we're satisfied that we no longer need to make backwards-incompatible changes.\n\nWe mark beta resources with a \"Beta\" callout in our documentation, pictured below:\n\n> ### This feature is in beta\n>\n> To use this feature, pass in a header including the `LD-API-Version` key with value set to `beta`. Use this header with each call. To learn more, read [Beta resources](https://launchdarkly.com/docs/api#beta-resources).\n>\n> Resources that are in beta are still undergoing testing and development. They may change without notice, including becoming backwards incompatible.\n\n### Using beta resources\n\nTo use a beta resource, you must include a header in the request. If you call a beta resource without this header, you receive a `403` response.\n\nUse this header:\n\n```\nLD-API-Version: beta\n```\n\n## Federal and EU environments\n\nIn addition to the commercial versions, LaunchDarkly offers instances for federal agencies and those based in the European Union (EU).\n\n### Federal environments\n\nThe version of LaunchDarkly that is available on domains controlled by the United States government is different from the version of LaunchDarkly available to the general public. If you are an employee or contractor for a United States federal agency and use LaunchDarkly in your work, you likely use the federal instance of LaunchDarkly.\n\nIf you are working in the federal instance of LaunchDarkly, the base URI for each request is `https://app.launchdarkly.us`.\n\nTo learn more, read [LaunchDarkly in federal environments](https://launchdarkly.com/docs/home/infrastructure/federal).\n\n### EU environments\n\nThe version of LaunchDarkly that is available in the EU is different from the version of LaunchDarkly available to other regions. If you are based in the EU, you likely use the EU instance of LaunchDarkly. The LaunchDarkly EU instance complies with EU data residency principles, including the protection and confidentiality of EU customer information.\n\nIf you are working in the EU instance of LaunchDarkly, the base URI for each request is `https://app.eu.launchdarkly.com`.\n\nTo learn more, read [LaunchDarkly in the European Union (EU)](https://launchdarkly.com/docs/home/infrastructure/eu).\n\n## Versioning\n\nWe try hard to keep our REST API backwards compatible, but we occasionally have to make backwards-incompatible changes in the process of shipping new features. These breaking changes can cause unexpected behavior if you don't prepare for them accordingly.\n\nUpdates to our REST API include support for the latest features in LaunchDarkly. We also release a new version of our REST API every time we make a breaking change. We provide simultaneous support for multiple API versions so you can migrate from your current API version to a new version at your own pace.\n\n### Setting the API version per request\n\nYou can set the API version on a specific request by sending an `LD-API-Version` header, as shown in the example below:\n\n```\nLD-API-Version: 20240415\n```\n\nThe header value is the version number of the API version you would like to request. The number for each version corresponds to the date the version was released in `yyyymmdd` format. In the example above the version `20240415` corresponds to April 15, 2024.\n\n### Setting the API version per access token\n\nWhen you create an access token, you must specify a specific version of the API to use. This ensures that integrations using this token cannot be broken by version changes.\n\nTokens created before versioning was released have their version set to `20160426`, which is the version of the API that existed before the current versioning scheme, so that they continue working the same way they did before versioning.\n\nIf you would like to upgrade your integration to use a new API version, you can explicitly set the header described above.\n\n> ### Best practice: Set the header for every client or integration\n>\n> We recommend that you set the API version header explicitly in any client or integration you build.\n>\n> Only rely on the access token API version during manual testing.\n\n### API version changelog\n\n<table>\n  <tr>\n    <th>Version</th>\n    <th>Changes</th>\n    <th>End of life (EOL)</th>\n  </tr>\n  <tr>\n    <td>`20240415`</td>\n    <td>\n      <ul><li>Changed several endpoints from unpaginated to paginated. Use the `limit` and `offset` query parameters to page through the results.</li> <li>Changed the [list access tokens](https://launchdarkly.com/docs/api/access-tokens/get-tokens) endpoint: <ul><li>Response is now paginated with a default limit of `25`</li></ul></li> <li>Changed the [list account members](https://launchdarkly.com/docs/api/account-members/get-members) endpoint: <ul><li>The `accessCheck` filter is no longer available</li></ul></li> <li>Changed the [list custom roles](https://launchdarkly.com/docs/api/custom-roles/get-custom-roles) endpoint: <ul><li>Response is now paginated with a default limit of `20`</li></ul></li> <li>Changed the [list feature flags](https://launchdarkly.com/docs/api/feature-flags/get-feature-flags) endpoint: <ul><li>Response is now paginated with a default limit of `20`</li><li>The `environments` field is now only returned if the request is filtered by environment, using the `filterEnv` query parameter</li><li>The `followerId`, `hasDataExport`, `status`, `contextKindTargeted`, and `segmentTargeted` filters are no longer available</li><li>The `compare` query parameter is no longer available</li></ul></li> <li>Changed the [list segments](https://launchdarkly.com/docs/api/segments/get-segments) endpoint: <ul><li>Response is now paginated with a default limit of `20`</li></ul></li> <li>Changed the [list teams](https://launchdarkly.com/docs/api/teams/get-teams) endpoint: <ul><li>The `expand` parameter no longer supports including `projects` or `roles`</li><li>In paginated results, the maximum page size is now 100</li></ul></li> <li>Changed the [get workflows](https://launchdarkly.com/docs/api/workflows/get-workflows) endpoint: <ul><li>Response is now paginated with a default limit of `20`</li><li>The `_conflicts` field in the response is no longer available</li></ul></li> </ul>\n    </td>\n    <td>Current</td>\n  </tr>\n  <tr>\n    <td>`20220603`</td>\n    <td>\n      <ul><li>Changed the [list projects](https://launchdarkly.com/docs/api/projects/get-projects) return value:<ul><li>Response is now paginated with a default limit of `20`.</li><li>Added support for filter and sort.</li><li>The project `environments` field is now expandable. This field is omitted by default.</li></ul></li><li>Changed the [get project](https://launchdarkly.com/docs/api/projects/get-project) return value:<ul><li>The `environments` field is now expandable. This field is omitted by default.</li></ul></li></ul>\n    </td>\n    <td>2025-04-15</td>\n  </tr>\n  <tr>\n    <td>`20210729`</td>\n    <td>\n      <ul><li>Changed the [create approval request](https://launchdarkly.com/docs/api/approvals/post-approval-request) return value. It now returns HTTP Status Code `201` instead of `200`.</li><li> Changed the [get user](https://launchdarkly.com/docs/api/users/get-user) return value. It now returns a user record, not a user. </li><li>Added additional optional fields to environment, segments, flags, members, and segments, including the ability to create big segments. </li><li> Added default values for flag variations when new environments are created. </li><li>Added filtering and pagination for getting flags and members, including `limit`, `number`, `filter`, and `sort` query parameters. </li><li>Added endpoints for expiring user targets for flags and segments, scheduled changes, access tokens, Relay Proxy configuration, integrations and subscriptions, and approvals. </li></ul>\n    </td>\n    <td>2023-06-03</td>\n  </tr>\n  <tr>\n    <td>`20191212`</td>\n    <td>\n      <ul><li>[List feature flags](https://launchdarkly.com/docs/api/feature-flags/get-feature-flags) now defaults to sending summaries of feature flag configurations, equivalent to setting the query parameter `summary=true`. Summaries omit flag targeting rules and individual user targets from the payload. </li><li> Added endpoints for flags, flag status, projects, environments, audit logs, members, users, custom roles, segments, usage, streams, events, and data export. </li></ul>\n    </td>\n    <td>2022-07-29</td>\n  </tr>\n  <tr>\n    <td>`20160426`</td>\n    <td>\n      <ul><li>Initial versioning of API. Tokens created before versioning have their version set to this.</li></ul>\n    </td>\n    <td>2020-12-12</td>\n  </tr>\n</table>\n\nTo learn more about how EOL is determined, read LaunchDarkly's [End of Life (EOL) Policy](https://launchdarkly.com/policies/end-of-life-policy/).\n",
     "contact": {
       "name": "LaunchDarkly Technical Support Team",
       "url": "https://support.launchdarkly.com",
@@ -203,15 +203,11 @@
     },
     {
       "name": "Release pipelines (beta)",
-      "description": "> ### This feature is in beta\n>\n> To use this feature, pass in a header including the `LD-API-Version` key with value set to `beta`. Use this header with each call. To learn more, read [Beta resources](https://launchdarkly.com/docs/api#beta-resources).\n>\n> Resources that are in beta are still undergoing testing and development. They may change without notice, including becoming backwards incompatible.\n\nRelease pipelines standardize and automate the release process for feature flags across a series of phases, where each phase consists of one or more environments and audiences. Each phase can use an immediate or guarded rollout to a designated audience, and can require approvals for selected environments. You can use release pipelines to ensure that you correctly roll out a flag in one environment before moving on to the next. To learn more, read [Release pipelines](https://launchdarkly.com/docs/home/releases/release-pipelines).\n\nUse the release pipelines API to view, create, update, and delete release pipelines. You can also use this API to view the progress of all ongoing releases across all flags in a project for a given release pipeline. \n\n### Creating releases and updating release phases\n\nWhen you add a flag to a release pipeline, you create a new \"release\" to automate that flag's progress through phases in the pipeline.\n\nUse the related [releases API](https://launchdarkly.com/docs/api/releases-beta) to create a new release, or to view or update a release for a given flag. For example, you can use the releases API to add a flag to an existing release pipeline, or to start the next phase of a flag's ongoing release.\n"
+      "description": "> ### This feature is in beta\n>\n> To use this feature, pass in a header including the `LD-API-Version` key with value set to `beta`. Use this header with each call. To learn more, read [Beta resources](https://launchdarkly.com/docs/api#beta-resources).\n>\n> Resources that are in beta are still undergoing testing and development. They may change without notice, including becoming backwards incompatible.\n\nRelease pipelines standardize and automate the release process for feature flags across a series of phases, where each phase consists of one or more environments and audiences. Each phase can use an immediate or guarded rollout to a designated audience, and can require approvals for selected environments. You can use release pipelines to ensure that you correctly roll out a flag in one environment before moving on to the next. To learn more, read [Release pipelines](https://launchdarkly.com/docs/home/releases/release-pipelines).\n\nUse the release pipelines API to view, create, update, and delete release pipelines. You can also use this API to view the progress of all ongoing releases across all flags in a project for a given release pipeline.\n\n### Creating releases and updating release phases\n\nWhen you add a flag to an existing release pipeline, you create a \"release\" to automate that flag's progress through the pipeline's phases. Use the release endpoints in this section to add a flag to an existing release pipeline, or to monitor or update an ongoing release for a flag. Updating an ongoing release generally involves the following steps:\n\n1. Obtain the release phases associated with the release. The `phases` field provides an ordered list of all pipeline phases associated with the flag's release. `phases` is returned in the response when you [Create a new release for a flag](https://launchdarkly.com/docs/api/release-pipelines-beta/create-release-for-flag) or [Get the release for a flag](https://launchdarkly.com/docs/api/release-pipelines-beta/get-release-by-flag-key).\n\n2. Determine the `_id` of the phase you want to start. Release pipeline phases take place in their configured order, so find the first incomplete, unstarted phase in the `phases` list. For example, in a newly-created release the first phase in the `phases` list has both the `complete` and `started` fields set to `false`.\n\n3. Use the phase `_id` value with the [Update phase status for release](https://launchdarkly.com/docs/api/release-pipelines-beta/update-phase-status) endpoint to start the release phase. At a minimum, you must provide `{\"status\": active}` in the request object to start a pipeline phase. If the phase requires approvals or guarded rollouts, provide the additional required information in the `audiences` list.\n"
     },
     {
       "name": "Release policies (beta)",
       "description": "> ### This feature is in beta\n>\n> To use this feature, pass in a header including the `LD-API-Version` key with value set to `beta`. Use this header with each call. To learn more, read [Beta resources](https://launchdarkly.com/docs/api#beta-resources).\n>\n> Resources that are in beta are still undergoing testing and development. They may change without notice, including becoming backwards incompatible.\n\n> ### This feature is deprecated\n>\n> The release policies API is deprecated and will be removed. Release policies continue to work during the deprecation period. LaunchDarkly will announce the exact dates for end of support and removal of access separately.\n\nRelease policies let you specify your preferred rollout method for a given set of environments.\n"
-    },
-    {
-      "name": "Releases (beta)",
-      "description": "> ### This feature is in beta\n>\n> To use this feature, pass in a header including the `LD-API-Version` key with value set to `beta`. Use this header with each call. To learn more, read [Beta resources](https://launchdarkly.com/docs/api#beta-resources).\n>\n> Resources that are in beta are still undergoing testing and development. They may change without notice, including becoming backwards incompatible.\n\nRelease pipelines standardize and automate the release process for feature flags across a series of phases, where each phase consists of one or more environments and audiences. When you add a flag to an existing release pipeline, you create a \"release\" to automate that flag's progress through the pipeline. \n\nUse the releases API to add a flag to an existing release pipeline, or to monitor or update an ongoing release for a flag. Updating an ongoing release generally involves the following steps:\n\n1. Obtain the release phases associated with the release. The `phases` field provides an ordered list of all pipeline phases associated with the flag's release. `phases` is returned in the response when you [Create a new release for a flag](https://launchdarkly.com/docs/api/releases-beta/create-release-for-flag) or [Get the release for a flag](https://launchdarkly.com/docs/api/releases-beta/get-release-by-flag-key).\n\n2. Determine the `_id` of the phase you want to start. Release pipeline phases take place in their configured order, so find the first incomplete, unstarted phase in the `phases` list. For example, in a newly-created release the first phase in the `phases` list has both the `complete` and `started` fields set to `false`.\n\n3. Use the phase `_id` value with the [Update phase status for release](https://launchdarkly.com/docs/api/releases-beta/update-phase-status) endpoint to start the release phase. At a minimum, you must provide `{\"status\": active}` in the request object to start a pipeline phase. If the phase requires approvals or guarded rollouts, provide the additional required information in the `audiences` list.\n\n### Configuring release pipelines\n\nUse the related [release pipelines API](https://launchdarkly.com/docs/api/release-pipelines-beta) to view, create, update, and delete release pipelines, or to view the progress of all ongoing releases across all flags in a project for a given release pipeline. \n"
     },
     {
       "name": "Scheduled changes",
@@ -7401,7 +7397,7 @@
           }
         },
         "tags": [
-          "Releases (beta)"
+          "Release pipelines (beta)"
         ],
         "summary": "Get release for flag",
         "description": "Get currently active release for a flag",
@@ -7495,10 +7491,10 @@
           }
         },
         "tags": [
-          "Releases (beta)"
+          "Release pipelines (beta)"
         ],
         "summary": "Patch release for flag",
-        "description": "This endpoint is only available for releases that are part of a legacy release pipeline. Releases for new release pipelines should use the [Update phase status for release](https://launchdarkly.com/docs/api/releases-beta/update-phase-status) endpoint.\n\nUpdate currently active release for a flag. Updating releases requires the [JSON patch](https://datatracker.ietf.org/doc/html/rfc6902) format. To learn more, read [Updates](https://launchdarkly.com/docs/api#updates).\n\nYou can only use this endpoint to mark a release phase complete or incomplete. To indicate which phase to update, use the array index in the `path`. For example, to mark the first phase of a release as complete, use the following request body:\n\n```\n  [\n    {\n      \"op\": \"replace\",\n      \"path\": \"/phase/0/complete\",\n      \"value\": true\n    }\n  ]\n```\n",
+        "description": "This endpoint is only available for releases that are part of a legacy release pipeline. Releases for new release pipelines should use the [Update phase status for release](https://launchdarkly.com/docs/api/release-pipelines-beta/update-phase-status) endpoint.\n\nUpdate currently active release for a flag. Updating releases requires the [JSON patch](https://datatracker.ietf.org/doc/html/rfc6902) format. To learn more, read [Updates](https://launchdarkly.com/docs/api#updates).\n\nYou can only use this endpoint to mark a release phase complete or incomplete. To indicate which phase to update, use the array index in the `path`. For example, to mark the first phase of a release as complete, use the following request body:\n\n```\n  [\n    {\n      \"op\": \"replace\",\n      \"path\": \"/phase/0/complete\",\n      \"value\": true\n    }\n  ]\n```\n",
         "parameters": [
           {
             "name": "projectKey",
@@ -7569,7 +7565,7 @@
           }
         },
         "tags": [
-          "Releases (beta)"
+          "Release pipelines (beta)"
         ],
         "summary": "Delete a release for flag",
         "description": "Deletes a release from a flag",
@@ -18709,7 +18705,7 @@
           }
         },
         "tags": [
-          "Releases (beta)"
+          "Release pipelines (beta)"
         ],
         "summary": "Create a new release for flag",
         "description": "Creates a release by adding a flag to a release pipeline",
@@ -18805,7 +18801,7 @@
           }
         },
         "tags": [
-          "Releases (beta)"
+          "Release pipelines (beta)"
         ],
         "summary": "Update phase status for release",
         "description": "Updates the execution status of a phase of a release",
@@ -20771,7 +20767,7 @@
           "Segments"
         ],
         "summary": "Create segment",
-        "description": "Create a new segment.",
+        "description": "Create a new segment. The new segment has no individual targets or rules.\n\nThe request body only accepts the fields documented below. If you include targeting fields such as `included`, `excluded`, `includedContexts`, `excludedContexts`, or `rules`, LaunchDarkly ignores them and does not return an error. These fields are empty in the response.\n\nTo add individual targets or rules after you create the segment, use [Update segment](https://launchdarkly.com/docs/api/segments/patch-segment) with a semantic patch. For example, use the `addIncludedTargets` or `addExcludedTargets` instruction to add individual targets, and the `addRule` instruction to add a rule. For big segments, use the `addBigSegmentIncludedTargets` or `addBigSegmentExcludedTargets` instruction.\n",
         "parameters": [
           {
             "name": "projectKey",
@@ -29487,6 +29483,7 @@
         "operationId": "getAIConfigTargeting",
         "parameters": [
           {
+            "description": "The project key",
             "explode": false,
             "in": "path",
             "name": "projectKey",
@@ -29497,6 +29494,7 @@
             "style": "simple"
           },
           {
+            "description": "The AI Config key",
             "explode": false,
             "in": "path",
             "name": "configKey",
@@ -29559,6 +29557,7 @@
         "operationId": "patchAIConfigTargeting",
         "parameters": [
           {
+            "description": "The project key",
             "explode": false,
             "in": "path",
             "name": "projectKey",
@@ -29569,6 +29568,7 @@
             "style": "simple"
           },
           {
+            "description": "The AI Config key",
             "explode": false,
             "in": "path",
             "name": "configKey",
@@ -29653,6 +29653,7 @@
         "operationId": "getAIConfigs",
         "parameters": [
           {
+            "description": "The project key",
             "example": "default",
             "explode": false,
             "in": "path",
@@ -29770,6 +29771,7 @@
         "operationId": "postAIConfig",
         "parameters": [
           {
+            "description": "The project key",
             "explode": false,
             "in": "path",
             "name": "projectKey",
@@ -29855,6 +29857,7 @@
         "operationId": "deleteAIConfig",
         "parameters": [
           {
+            "description": "The project key",
             "example": "default",
             "explode": false,
             "in": "path",
@@ -29866,6 +29869,7 @@
             "style": "simple"
           },
           {
+            "description": "The AI Config key",
             "explode": false,
             "in": "path",
             "name": "configKey",
@@ -29931,6 +29935,7 @@
         "operationId": "getAIConfig",
         "parameters": [
           {
+            "description": "The project key",
             "explode": false,
             "in": "path",
             "name": "projectKey",
@@ -29941,6 +29946,7 @@
             "style": "simple"
           },
           {
+            "description": "The AI Config key",
             "explode": false,
             "in": "path",
             "name": "configKey",
@@ -30013,6 +30019,7 @@
         "operationId": "patchAIConfig",
         "parameters": [
           {
+            "description": "The project key",
             "explode": false,
             "in": "path",
             "name": "projectKey",
@@ -30023,6 +30030,7 @@
             "style": "simple"
           },
           {
+            "description": "The AI Config key",
             "explode": false,
             "in": "path",
             "name": "configKey",
@@ -30107,6 +30115,7 @@
         "operationId": "postAIConfigVariation",
         "parameters": [
           {
+            "description": "The project key",
             "explode": false,
             "in": "path",
             "name": "projectKey",
@@ -30117,6 +30126,7 @@
             "style": "simple"
           },
           {
+            "description": "The AI Config key",
             "explode": false,
             "in": "path",
             "name": "configKey",
@@ -30202,6 +30212,7 @@
         "operationId": "deleteAIConfigVariation",
         "parameters": [
           {
+            "description": "The project key",
             "explode": false,
             "in": "path",
             "name": "projectKey",
@@ -30212,6 +30223,7 @@
             "style": "simple"
           },
           {
+            "description": "The AI Config key",
             "explode": false,
             "in": "path",
             "name": "configKey",
@@ -30222,6 +30234,7 @@
             "style": "simple"
           },
           {
+            "description": "The AI Config variation key",
             "explode": false,
             "in": "path",
             "name": "variationKey",
@@ -30287,6 +30300,7 @@
         "operationId": "getAIConfigVariation",
         "parameters": [
           {
+            "description": "The project key",
             "example": "default",
             "explode": false,
             "in": "path",
@@ -30298,6 +30312,7 @@
             "style": "simple"
           },
           {
+            "description": "The AI Config key",
             "example": "default",
             "explode": false,
             "in": "path",
@@ -30309,6 +30324,7 @@
             "style": "simple"
           },
           {
+            "description": "The AI Config variation key",
             "example": "default",
             "explode": false,
             "in": "path",
@@ -30382,6 +30398,7 @@
         "operationId": "patchAIConfigVariation",
         "parameters": [
           {
+            "description": "The project key",
             "explode": false,
             "in": "path",
             "name": "projectKey",
@@ -30392,6 +30409,7 @@
             "style": "simple"
           },
           {
+            "description": "The AI Config key",
             "explode": false,
             "in": "path",
             "name": "configKey",
@@ -30402,6 +30420,7 @@
             "style": "simple"
           },
           {
+            "description": "The AI Config variation key",
             "explode": false,
             "in": "path",
             "name": "variationKey",
@@ -30486,6 +30505,7 @@
         "operationId": "getAIConfigQuickStats",
         "parameters": [
           {
+            "description": "The project key",
             "explode": false,
             "in": "path",
             "name": "projectKey",
@@ -30571,6 +30591,7 @@
         "operationId": "getAIConfigMetrics",
         "parameters": [
           {
+            "description": "The project key",
             "explode": false,
             "in": "path",
             "name": "projectKey",
@@ -30581,6 +30602,7 @@
             "style": "simple"
           },
           {
+            "description": "The AI Config key",
             "explode": false,
             "in": "path",
             "name": "configKey",
@@ -30710,6 +30732,7 @@
         "operationId": "getAIConfigMetricsByVariation",
         "parameters": [
           {
+            "description": "The project key",
             "explode": false,
             "in": "path",
             "name": "projectKey",
@@ -30720,6 +30743,7 @@
             "style": "simple"
           },
           {
+            "description": "The AI Config key",
             "explode": false,
             "in": "path",
             "name": "configKey",
@@ -30849,6 +30873,7 @@
         "operationId": "deleteRestrictedModels",
         "parameters": [
           {
+            "description": "The project key",
             "example": "default",
             "explode": false,
             "in": "path",
@@ -30926,6 +30951,7 @@
         "operationId": "postRestrictedModels",
         "parameters": [
           {
+            "description": "The project key",
             "example": "default",
             "explode": false,
             "in": "path",
@@ -31012,6 +31038,7 @@
         "operationId": "listModelConfigs",
         "parameters": [
           {
+            "description": "The project key",
             "example": "default",
             "explode": false,
             "in": "path",
@@ -31121,6 +31148,7 @@
         "operationId": "postModelConfig",
         "parameters": [
           {
+            "description": "The project key",
             "example": "default",
             "explode": false,
             "in": "path",
@@ -31207,6 +31235,7 @@
         "operationId": "deleteModelConfig",
         "parameters": [
           {
+            "description": "The project key",
             "example": "default",
             "explode": false,
             "in": "path",
@@ -31218,6 +31247,7 @@
             "style": "simple"
           },
           {
+            "description": "The AI model config key",
             "explode": false,
             "in": "path",
             "name": "modelConfigKey",
@@ -31283,6 +31313,7 @@
         "operationId": "getModelConfig",
         "parameters": [
           {
+            "description": "The project key",
             "example": "default",
             "explode": false,
             "in": "path",
@@ -31294,6 +31325,7 @@
             "style": "simple"
           },
           {
+            "description": "The AI model config key",
             "example": "default",
             "explode": false,
             "in": "path",
@@ -31379,6 +31411,7 @@
         "operationId": "patchModelConfig",
         "parameters": [
           {
+            "description": "The project key",
             "example": "default",
             "explode": false,
             "in": "path",
@@ -31390,6 +31423,7 @@
             "style": "simple"
           },
           {
+            "description": "The AI model config key",
             "explode": false,
             "in": "path",
             "name": "modelConfigKey",
@@ -31475,6 +31509,7 @@
         "operationId": "listModelConfigVersions",
         "parameters": [
           {
+            "description": "The project key",
             "example": "default",
             "explode": false,
             "in": "path",
@@ -31486,6 +31521,7 @@
             "style": "simple"
           },
           {
+            "description": "The AI model config key",
             "example": "default",
             "explode": false,
             "in": "path",
@@ -31583,6 +31619,7 @@
         "operationId": "listAITools",
         "parameters": [
           {
+            "description": "The project key",
             "explode": false,
             "in": "path",
             "name": "projectKey",
@@ -31689,6 +31726,7 @@
         "operationId": "postAITool",
         "parameters": [
           {
+            "description": "The project key",
             "explode": false,
             "in": "path",
             "name": "projectKey",
@@ -31774,6 +31812,7 @@
         "operationId": "listAIToolVersions",
         "parameters": [
           {
+            "description": "The project key",
             "explode": false,
             "in": "path",
             "name": "projectKey",
@@ -31784,6 +31823,7 @@
             "style": "simple"
           },
           {
+            "description": "The AI tool key",
             "explode": false,
             "in": "path",
             "name": "toolKey",
@@ -31881,6 +31921,7 @@
         "operationId": "listAIToolReferences",
         "parameters": [
           {
+            "description": "The project key",
             "explode": false,
             "in": "path",
             "name": "projectKey",
@@ -31891,6 +31932,7 @@
             "style": "simple"
           },
           {
+            "description": "The AI tool key",
             "explode": false,
             "in": "path",
             "name": "toolKey",
@@ -31987,6 +32029,7 @@
         "operationId": "deleteAITool",
         "parameters": [
           {
+            "description": "The project key",
             "explode": false,
             "in": "path",
             "name": "projectKey",
@@ -31997,6 +32040,7 @@
             "style": "simple"
           },
           {
+            "description": "The AI tool key",
             "explode": false,
             "in": "path",
             "name": "toolKey",
@@ -32062,6 +32106,7 @@
         "operationId": "getAITool",
         "parameters": [
           {
+            "description": "The project key",
             "explode": false,
             "in": "path",
             "name": "projectKey",
@@ -32072,6 +32117,7 @@
             "style": "simple"
           },
           {
+            "description": "The AI tool key",
             "explode": false,
             "in": "path",
             "name": "toolKey",
@@ -32144,6 +32190,7 @@
         "operationId": "patchAITool",
         "parameters": [
           {
+            "description": "The project key",
             "explode": false,
             "in": "path",
             "name": "projectKey",
@@ -32154,6 +32201,7 @@
             "style": "simple"
           },
           {
+            "description": "The AI tool key",
             "explode": false,
             "in": "path",
             "name": "toolKey",
@@ -32238,6 +32286,7 @@
         "operationId": "listPromptSnippets",
         "parameters": [
           {
+            "description": "The project key",
             "explode": false,
             "in": "path",
             "name": "projectKey",
@@ -32343,6 +32392,7 @@
         "operationId": "postPromptSnippet",
         "parameters": [
           {
+            "description": "The project key",
             "explode": false,
             "in": "path",
             "name": "projectKey",
@@ -32438,6 +32488,7 @@
         "operationId": "deletePromptSnippet",
         "parameters": [
           {
+            "description": "The project key",
             "explode": false,
             "in": "path",
             "name": "projectKey",
@@ -32448,6 +32499,7 @@
             "style": "simple"
           },
           {
+            "description": "The prompt snippet key",
             "explode": false,
             "in": "path",
             "name": "snippetKey",
@@ -32503,6 +32555,7 @@
         "operationId": "getPromptSnippet",
         "parameters": [
           {
+            "description": "The project key",
             "explode": false,
             "in": "path",
             "name": "projectKey",
@@ -32513,6 +32566,7 @@
             "style": "simple"
           },
           {
+            "description": "The prompt snippet key",
             "explode": false,
             "in": "path",
             "name": "snippetKey",
@@ -32575,6 +32629,7 @@
         "operationId": "patchPromptSnippet",
         "parameters": [
           {
+            "description": "The project key",
             "explode": false,
             "in": "path",
             "name": "projectKey",
@@ -32585,6 +32640,7 @@
             "style": "simple"
           },
           {
+            "description": "The prompt snippet key",
             "explode": false,
             "in": "path",
             "name": "snippetKey",
@@ -32680,6 +32736,7 @@
         "operationId": "listPromptSnippetReferences",
         "parameters": [
           {
+            "description": "The project key",
             "explode": false,
             "in": "path",
             "name": "projectKey",
@@ -32690,6 +32747,7 @@
             "style": "simple"
           },
           {
+            "description": "The prompt snippet key",
             "explode": false,
             "in": "path",
             "name": "snippetKey",
@@ -32776,6 +32834,7 @@
         "operationId": "listPromptSnippetVersions",
         "parameters": [
           {
+            "description": "The project key",
             "explode": false,
             "in": "path",
             "name": "projectKey",
@@ -32786,6 +32845,7 @@
             "style": "simple"
           },
           {
+            "description": "The prompt snippet key",
             "explode": false,
             "in": "path",
             "name": "snippetKey",
@@ -32882,6 +32942,7 @@
         "operationId": "listAgentSkills",
         "parameters": [
           {
+            "description": "The project key",
             "explode": false,
             "in": "path",
             "name": "projectKey",
@@ -32987,6 +33048,7 @@
         "operationId": "postAgentSkill",
         "parameters": [
           {
+            "description": "The project key",
             "explode": false,
             "in": "path",
             "name": "projectKey",
@@ -33082,6 +33144,7 @@
         "operationId": "deleteAgentSkill",
         "parameters": [
           {
+            "description": "The project key",
             "explode": false,
             "in": "path",
             "name": "projectKey",
@@ -33092,6 +33155,7 @@
             "style": "simple"
           },
           {
+            "description": "The agent skill key",
             "explode": false,
             "in": "path",
             "name": "skillKey",
@@ -33157,6 +33221,7 @@
         "operationId": "getAgentSkill",
         "parameters": [
           {
+            "description": "The project key",
             "explode": false,
             "in": "path",
             "name": "projectKey",
@@ -33167,6 +33232,7 @@
             "style": "simple"
           },
           {
+            "description": "The agent skill key",
             "explode": false,
             "in": "path",
             "name": "skillKey",
@@ -33229,6 +33295,7 @@
         "operationId": "patchAgentSkill",
         "parameters": [
           {
+            "description": "The project key",
             "explode": false,
             "in": "path",
             "name": "projectKey",
@@ -33239,6 +33306,7 @@
             "style": "simple"
           },
           {
+            "description": "The agent skill key",
             "explode": false,
             "in": "path",
             "name": "skillKey",
@@ -33334,6 +33402,7 @@
         "operationId": "listAgentSkillReferences",
         "parameters": [
           {
+            "description": "The project key",
             "explode": false,
             "in": "path",
             "name": "projectKey",
@@ -33344,6 +33413,7 @@
             "style": "simple"
           },
           {
+            "description": "The agent skill key",
             "explode": false,
             "in": "path",
             "name": "skillKey",
@@ -33430,6 +33500,7 @@
         "operationId": "listAgentSkillVersions",
         "parameters": [
           {
+            "description": "The project key",
             "explode": false,
             "in": "path",
             "name": "projectKey",
@@ -33440,6 +33511,7 @@
             "style": "simple"
           },
           {
+            "description": "The agent skill key",
             "explode": false,
             "in": "path",
             "name": "skillKey",
@@ -33550,6 +33622,7 @@
             "style": "simple"
           },
           {
+            "description": "The project key",
             "explode": false,
             "in": "path",
             "name": "projectKey",
@@ -33659,6 +33732,7 @@
             "style": "simple"
           },
           {
+            "description": "The project key",
             "explode": false,
             "in": "path",
             "name": "projectKey",
@@ -33758,6 +33832,7 @@
             "style": "simple"
           },
           {
+            "description": "The project key",
             "explode": false,
             "in": "path",
             "name": "projectKey",
@@ -33768,6 +33843,7 @@
             "style": "simple"
           },
           {
+            "description": "The agent graph key",
             "explode": false,
             "in": "path",
             "name": "graphKey",
@@ -33847,6 +33923,7 @@
             "style": "simple"
           },
           {
+            "description": "The project key",
             "explode": false,
             "in": "path",
             "name": "projectKey",
@@ -33857,6 +33934,7 @@
             "style": "simple"
           },
           {
+            "description": "The agent graph key",
             "explode": false,
             "in": "path",
             "name": "graphKey",
@@ -33943,6 +34021,7 @@
             "style": "simple"
           },
           {
+            "description": "The project key",
             "explode": false,
             "in": "path",
             "name": "projectKey",
@@ -33953,6 +34032,7 @@
             "style": "simple"
           },
           {
+            "description": "The agent graph key",
             "explode": false,
             "in": "path",
             "name": "graphKey",
@@ -34037,6 +34117,7 @@
         "operationId": "listAgentOptimizations",
         "parameters": [
           {
+            "description": "The project key",
             "explode": false,
             "in": "path",
             "name": "projectKey",
@@ -34142,6 +34223,7 @@
         "operationId": "postAgentOptimization",
         "parameters": [
           {
+            "description": "The project key",
             "explode": false,
             "in": "path",
             "name": "projectKey",
@@ -34227,6 +34309,7 @@
         "operationId": "deleteAgentOptimization",
         "parameters": [
           {
+            "description": "The project key",
             "explode": false,
             "in": "path",
             "name": "projectKey",
@@ -34237,6 +34320,7 @@
             "style": "simple"
           },
           {
+            "description": "The agent optimization key",
             "explode": false,
             "in": "path",
             "name": "optimizationKey",
@@ -34292,6 +34376,7 @@
         "operationId": "getAgentOptimization",
         "parameters": [
           {
+            "description": "The project key",
             "explode": false,
             "in": "path",
             "name": "projectKey",
@@ -34302,6 +34387,7 @@
             "style": "simple"
           },
           {
+            "description": "The agent optimization key",
             "explode": false,
             "in": "path",
             "name": "optimizationKey",
@@ -34364,6 +34450,7 @@
         "operationId": "patchAgentOptimization",
         "parameters": [
           {
+            "description": "The project key",
             "explode": false,
             "in": "path",
             "name": "projectKey",
@@ -34374,6 +34461,7 @@
             "style": "simple"
           },
           {
+            "description": "The agent optimization key",
             "explode": false,
             "in": "path",
             "name": "optimizationKey",
@@ -34469,6 +34557,7 @@
         "operationId": "listAgentOptimizationResults",
         "parameters": [
           {
+            "description": "The project key",
             "explode": false,
             "in": "path",
             "name": "projectKey",
@@ -34479,6 +34568,7 @@
             "style": "simple"
           },
           {
+            "description": "The agent optimization key",
             "explode": false,
             "in": "path",
             "name": "optimizationKey",
@@ -34563,6 +34653,7 @@
         "operationId": "postAgentOptimizationResult",
         "parameters": [
           {
+            "description": "The project key",
             "explode": false,
             "in": "path",
             "name": "projectKey",
@@ -34573,6 +34664,7 @@
             "style": "simple"
           },
           {
+            "description": "The agent optimization key",
             "explode": false,
             "in": "path",
             "name": "optimizationKey",
@@ -34668,6 +34760,7 @@
         "operationId": "listAllAgentOptimizationResults",
         "parameters": [
           {
+            "description": "The project key",
             "explode": false,
             "in": "path",
             "name": "projectKey",
@@ -34678,6 +34771,7 @@
             "style": "simple"
           },
           {
+            "description": "The agent optimization key",
             "explode": false,
             "in": "path",
             "name": "optimizationKey",
@@ -34764,6 +34858,7 @@
         "operationId": "listAgentOptimizationRuns",
         "parameters": [
           {
+            "description": "The project key",
             "explode": false,
             "in": "path",
             "name": "projectKey",
@@ -34774,6 +34869,7 @@
             "style": "simple"
           },
           {
+            "description": "The agent optimization key",
             "explode": false,
             "in": "path",
             "name": "optimizationKey",
@@ -34884,6 +34980,7 @@
             "style": "simple"
           },
           {
+            "description": "The project key",
             "explode": false,
             "in": "path",
             "name": "projectKey",
@@ -34894,6 +34991,7 @@
             "style": "simple"
           },
           {
+            "description": "The agent optimization key",
             "explode": false,
             "in": "path",
             "name": "optimizationKey",
@@ -34904,6 +35002,7 @@
             "style": "simple"
           },
           {
+            "description": "The agent optimization run ID",
             "explode": false,
             "in": "path",
             "name": "runId",
@@ -34962,6 +35061,7 @@
         "operationId": "listAgentOptimizationResultsByRunId",
         "parameters": [
           {
+            "description": "The project key",
             "explode": false,
             "in": "path",
             "name": "projectKey",
@@ -34972,6 +35072,7 @@
             "style": "simple"
           },
           {
+            "description": "The agent optimization key",
             "explode": false,
             "in": "path",
             "name": "optimizationKey",
@@ -34982,6 +35083,7 @@
             "style": "simple"
           },
           {
+            "description": "The agent optimization run ID",
             "explode": false,
             "in": "path",
             "name": "runId",
@@ -35047,6 +35149,7 @@
         "operationId": "patchAgentOptimizationResult",
         "parameters": [
           {
+            "description": "The project key",
             "explode": false,
             "in": "path",
             "name": "projectKey",
@@ -35057,6 +35160,7 @@
             "style": "simple"
           },
           {
+            "description": "The agent optimization key",
             "explode": false,
             "in": "path",
             "name": "optimizationKey",
@@ -35067,6 +35171,7 @@
             "style": "simple"
           },
           {
+            "description": "The agent optimization result ID",
             "explode": false,
             "in": "path",
             "name": "resultId",
@@ -45966,6 +46071,7 @@
           },
           "version": {
             "type": "number",
+            "format": "double",
             "example": 1
           },
           "config": {
@@ -51210,6 +51316,7 @@
           },
           "value": {
             "type": "number",
+            "format": "double",
             "description": "The default value applied to missing unit events. Set to 0 when <code>disabled</code> is false. No other values are currently supported.",
             "example": 0
           }
@@ -54691,13 +54798,15 @@
       "SeriesTimeSliceRep": {
         "type": "object",
         "additionalProperties": {
-          "type": "integer"
+          "type": "integer",
+          "format": "int64"
         }
       },
       "SeriesTimeSliceRepFloat": {
         "type": "object",
         "additionalProperties": {
-          "type": "number"
+          "type": "number",
+          "format": "double"
         }
       },
       "SimpleHoldoutRep": {
@@ -58376,18 +58485,22 @@
         },
         "properties": {
           "activeConfigs": {
+            "description": "Number of active AI Configs",
             "type": "integer"
           },
           "activeExperiments": {
+            "description": "Number of active experiments on AI Configs",
             "type": "integer"
           },
           "averageSatisfaction7D": {
+            "description": "Average satisfaction rating over the last 7 days",
             "format": "float",
             "nullable": true,
             "type": "number",
             "x-omitempty": false
           },
           "spendMonthToDate": {
+            "description": "Spend so far this month",
             "format": "double",
             "nullable": true,
             "type": "number",
@@ -59021,12 +59134,14 @@
             "$ref": "#/components/schemas/PaginatedLinks"
           },
           "items": {
+            "description": "The items on this page",
             "items": {
               "$ref": "#/components/schemas/AIConfig"
             },
             "type": "array"
           },
           "totalCount": {
+            "description": "The total number of items",
             "type": "integer"
           }
         },
@@ -59342,9 +59457,11 @@
             "$ref": "#/components/schemas/CoreLink"
           },
           "description": {
+            "description": "A description of the AI Config",
             "type": "string"
           },
           "key": {
+            "description": "The AI Config key",
             "type": "string"
           },
           "_maintainer": {
@@ -59352,6 +59469,7 @@
           },
           "mode": {
             "default": "completion",
+            "description": "The AI Config mode",
             "enum": [
               "agent",
               "completion",
@@ -59360,18 +59478,22 @@
             "type": "string"
           },
           "name": {
+            "description": "The AI Config name",
             "type": "string"
           },
           "tags": {
+            "description": "Tags for this resource",
             "items": {
               "type": "string"
             },
             "type": "array"
           },
           "version": {
+            "description": "The version number of this resource",
             "type": "integer"
           },
           "variations": {
+            "description": "The variations of this AI Config",
             "items": {
               "$ref": "#/components/schemas/AIConfigVariation"
             },
@@ -59502,21 +59624,26 @@
         "properties": {
           "description": {
             "default": "",
+            "description": "A description of the AI Config",
             "type": "string"
           },
           "key": {
+            "description": "A unique key for the AI Config",
             "type": "string"
           },
           "maintainerId": {
+            "description": "The ID of the member who maintains this resource",
             "example": "507f1f77bcf86cd799439011",
             "type": "string"
           },
           "maintainerTeamKey": {
+            "description": "The key of the team that maintains this resource",
             "example": "example-team-key",
             "type": "string"
           },
           "mode": {
             "default": "completion",
+            "description": "The AI Config mode",
             "enum": [
               "agent",
               "completion",
@@ -59525,15 +59652,18 @@
             "type": "string"
           },
           "name": {
+            "description": "A human-readable name for the AI Config",
             "type": "string"
           },
           "tags": {
+            "description": "Tags for this resource",
             "items": {
               "type": "string"
             },
             "type": "array"
           },
           "viewKeys": {
+            "description": "Keys of the views to add the AI Config to",
             "items": {
               "type": "string"
             },
@@ -59577,20 +59707,25 @@
             "type": "string"
           },
           "description": {
+            "description": "A description of the AI Config",
             "type": "string"
           },
           "maintainerId": {
+            "description": "The ID of the member who maintains this resource",
             "example": "507f1f77bcf86cd799439011",
             "type": "string"
           },
           "maintainerTeamKey": {
+            "description": "The key of the team that maintains this resource",
             "example": "example-team-key",
             "type": "string"
           },
           "name": {
+            "description": "A human-readable name for the AI Config",
             "type": "string"
           },
           "tags": {
+            "description": "Tags for this resource",
             "items": {
               "type": "string"
             },
@@ -59691,9 +59826,11 @@
             "$ref": "#/components/schemas/ParentLink"
           },
           "color": {
+            "description": "The color used for this variation in the UI",
             "type": "string"
           },
           "comment": {
+            "description": "A comment describing this version of the variation",
             "type": "string"
           },
           "description": {
@@ -59705,12 +59842,15 @@
             "type": "string"
           },
           "key": {
+            "description": "The variation key",
             "type": "string"
           },
           "_id": {
+            "description": "The variation ID",
             "type": "string"
           },
           "messages": {
+            "description": "The prompt messages for this variation",
             "items": {
               "$ref": "#/components/schemas/Message"
             },
@@ -59729,6 +59869,7 @@
             "type": "integer"
           },
           "name": {
+            "description": "The variation name",
             "type": "string"
           },
           "outputFormat": {
@@ -59741,9 +59882,11 @@
             "type": "integer"
           },
           "version": {
+            "description": "The version number of this resource",
             "type": "integer"
           },
           "state": {
+            "description": "The state of this variation",
             "type": "string"
           },
           "_archivedAt": {
@@ -59755,12 +59898,14 @@
             "type": "integer"
           },
           "tools": {
+            "description": "The tools this variation can use",
             "items": {
               "$ref": "#/components/schemas/VariationTool"
             },
             "type": "array"
           },
           "skills": {
+            "description": "The agent skills this variation can use",
             "items": {
               "$ref": "#/components/schemas/VariationSkill"
             },
@@ -59770,6 +59915,7 @@
             "$ref": "#/components/schemas/JudgeConfiguration"
           },
           "judgingConfigKeys": {
+            "description": "Keys of the judge AI Configs attached to this variation",
             "items": {
               "type": "string"
             },
@@ -59950,12 +60096,14 @@
         },
         "properties": {
           "items": {
+            "description": "The items on this page",
             "items": {
               "$ref": "#/components/schemas/AIConfigVariation"
             },
             "type": "array"
           },
           "totalCount": {
+            "description": "The total number of items",
             "type": "integer"
           }
         },
@@ -60039,9 +60187,11 @@
             "type": "string"
           },
           "key": {
+            "description": "A unique key for the variation",
             "type": "string"
           },
           "messages": {
+            "description": "The prompt messages for this variation",
             "items": {
               "$ref": "#/components/schemas/Message"
             },
@@ -60051,6 +60201,7 @@
             "type": "object"
           },
           "name": {
+            "description": "A human-readable name for the variation",
             "type": "string"
           },
           "modelConfigKey": {
@@ -60174,6 +60325,7 @@
             "type": "string"
           },
           "messages": {
+            "description": "The prompt messages for this variation",
             "items": {
               "$ref": "#/components/schemas/Message"
             },
@@ -60193,6 +60345,7 @@
             "type": "integer"
           },
           "name": {
+            "description": "A human-readable name for the variation",
             "type": "string"
           },
           "outputFormat": {
@@ -60201,6 +60354,7 @@
             "type": "object"
           },
           "published": {
+            "description": "Whether to publish this version of the variation",
             "type": "boolean"
           },
           "state": {
@@ -60289,9 +60443,11 @@
         },
         "properties": {
           "content": {
+            "description": "The message text",
             "type": "string"
           },
           "role": {
+            "description": "The message role, such as system, user, or assistant",
             "type": "string"
           }
         },
@@ -60453,12 +60609,14 @@
             "type": "object"
           },
           "tags": {
+            "description": "Tags for this resource",
             "items": {
               "type": "string"
             },
             "type": "array"
           },
           "version": {
+            "description": "The version number of this resource",
             "type": "integer"
           },
           "costPerInputToken": {
@@ -60755,12 +60913,14 @@
             "$ref": "#/components/schemas/PaginatedLinks"
           },
           "items": {
+            "description": "The items on this page",
             "items": {
               "$ref": "#/components/schemas/ModelConfig"
             },
             "type": "array"
           },
           "totalCount": {
+            "description": "The total number of items",
             "type": "integer"
           }
         },
@@ -60803,10 +60963,12 @@
             "type": "string"
           },
           "maintainerId": {
+            "description": "The ID of the member who maintains this resource",
             "example": "507f1f77bcf86cd799439011",
             "type": "string"
           },
           "maintainerTeamKey": {
+            "description": "The key of the team that maintains this resource",
             "example": "example-team-key",
             "type": "string"
           },
@@ -60825,6 +60987,7 @@
             "type": "object"
           },
           "tags": {
+            "description": "Tags for this resource",
             "items": {
               "type": "string"
             },
@@ -60905,16 +61068,19 @@
             "type": "object"
           },
           "tags": {
+            "description": "Tags for this resource",
             "items": {
               "type": "string"
             },
             "type": "array"
           },
           "maintainerId": {
+            "description": "The ID of the member who maintains this resource",
             "example": "507f1f77bcf86cd799439011",
             "type": "string"
           },
           "maintainerTeamKey": {
+            "description": "The key of the team that maintains this resource",
             "example": "example-team-key",
             "type": "string"
           }
@@ -60930,6 +61096,7 @@
         },
         "properties": {
           "keys": {
+            "description": "Keys of the model configs to update",
             "items": {
               "type": "string"
             },
@@ -60962,12 +61129,14 @@
         },
         "properties": {
           "successes": {
+            "description": "Keys of the model configs that were updated",
             "items": {
               "type": "string"
             },
             "type": "array"
           },
           "errors": {
+            "description": "The model configs that could not be updated",
             "items": {
               "$ref": "#/components/schemas/RestrictedModelError"
             },
@@ -60988,12 +61157,15 @@
         },
         "properties": {
           "key": {
+            "description": "The model config key",
             "type": "string"
           },
           "message": {
+            "description": "A description of the error",
             "type": "string"
           },
           "code": {
+            "description": "The error code",
             "type": "integer"
           }
         },
@@ -61007,18 +61179,23 @@
       "MaintainerMember": {
         "properties": {
           "_id": {
+            "description": "The member ID",
             "type": "string"
           },
           "email": {
+            "description": "The member email address",
             "type": "string"
           },
           "firstName": {
+            "description": "The member first name",
             "type": "string"
           },
           "lastName": {
+            "description": "The member last name",
             "type": "string"
           },
           "role": {
+            "description": "The member role",
             "type": "string"
           }
         },
@@ -61032,9 +61209,11 @@
       "AiConfigsMaintainerTeam": {
         "properties": {
           "key": {
+            "description": "The team key",
             "type": "string"
           },
           "name": {
+            "description": "The team name",
             "type": "string"
           }
         },
@@ -61697,30 +61876,36 @@
             "additionalProperties": {
               "$ref": "#/components/schemas/AIConfigTargetingEnvironment"
             },
+            "description": "Targeting for each environment, keyed by environment key",
             "type": "object"
           },
           "experiments": {
             "$ref": "#/components/schemas/AiConfigsExperimentInfoRep"
           },
           "key": {
+            "description": "The AI Config key",
             "type": "string"
           },
           "name": {
+            "description": "The AI Config name",
             "type": "string"
           },
           "tags": {
+            "description": "Tags for this resource",
             "items": {
               "type": "string"
             },
             "type": "array"
           },
           "variations": {
+            "description": "The variations of this AI Config",
             "items": {
               "$ref": "#/components/schemas/AIConfigTargetingVariation"
             },
             "type": "array"
           },
           "_version": {
+            "description": "The version number of this resource",
             "type": "integer"
           }
         },
@@ -61751,12 +61936,15 @@
         },
         "properties": {
           "comment": {
+            "description": "A comment describing the change",
             "type": "string"
           },
           "environmentKey": {
+            "description": "The environment key",
             "type": "string"
           },
           "instructions": {
+            "description": "The semantic patch instructions to apply",
             "items": {
               "additionalProperties": true,
               "type": "object"
@@ -61791,12 +61979,15 @@
         },
         "properties": {
           "inputTokens": {
+            "description": "Number of input tokens",
             "type": "integer"
           },
           "outputTokens": {
+            "description": "Number of output tokens",
             "type": "integer"
           },
           "totalTokens": {
+            "description": "Total number of tokens",
             "type": "integer"
           },
           "generationCount": {
@@ -61813,15 +62004,19 @@
             "type": "integer"
           },
           "thumbsUp": {
+            "description": "Number of positive feedback ratings",
             "type": "integer"
           },
           "thumbsDown": {
+            "description": "Number of negative feedback ratings",
             "type": "integer"
           },
           "durationMs": {
+            "description": "Total generation duration, in milliseconds",
             "type": "integer"
           },
           "timeToFirstTokenMs": {
+            "description": "Time to the first token, in milliseconds",
             "type": "integer"
           },
           "satisfactionRating": {
@@ -61889,6 +62084,7 @@
         },
         "properties": {
           "variationKey": {
+            "description": "The variation key",
             "type": "string"
           },
           "metrics": {
@@ -61998,9 +62194,11 @@
         },
         "properties": {
           "onVariation": {
+            "description": "Index of the variation served when targeting is on",
             "type": "integer"
           },
           "offVariation": {
+            "description": "Index of the variation served when targeting is off",
             "type": "integer"
           }
         },
@@ -62134,12 +62332,14 @@
         },
         "properties": {
           "contextTargets": {
+            "description": "Individual context targets for non-user context kinds",
             "items": {
               "$ref": "#/components/schemas/AIConfigTargetingEnvironmentTarget"
             },
             "type": "array"
           },
           "enabled": {
+            "description": "Whether targeting is on in this environment",
             "type": "boolean"
           },
           "fallthrough": {
@@ -62150,30 +62350,37 @@
             "type": "integer"
           },
           "offVariation": {
+            "description": "Index of the variation served when targeting is off",
             "type": "integer"
           },
           "rules": {
+            "description": "The targeting rules",
             "items": {
               "$ref": "#/components/schemas/AIConfigTargetingEnvironmentRule"
             },
             "type": "array"
           },
           "targets": {
+            "description": "Individual user targets",
             "items": {
               "$ref": "#/components/schemas/AIConfigTargetingEnvironmentTarget"
             },
             "type": "array"
           },
           "trackEvents": {
+            "description": "Whether to send detailed events for all evaluations",
             "type": "boolean"
           },
           "trackEventsFallthrough": {
+            "description": "Whether to send detailed events for evaluations that fall through to the default rule",
             "type": "boolean"
           },
           "_environmentName": {
+            "description": "The environment name",
             "type": "string"
           },
           "_version": {
+            "description": "The version of the targeting in this environment",
             "type": "integer"
           }
         },
@@ -62218,6 +62425,7 @@
         },
         "properties": {
           "variation": {
+            "description": "Index of the variation served by the default rule",
             "type": "integer"
           },
           "rollout": {
@@ -62251,18 +62459,22 @@
         },
         "properties": {
           "bucketBy": {
+            "description": "The context attribute used to bucket contexts",
             "type": "string"
           },
           "contextKind": {
+            "description": "The context kind used to bucket contexts",
             "type": "string"
           },
           "experimentAllocation": {
             "$ref": "#/components/schemas/AIConfigTargetingEnvironmentFallthroughRolloutExperimentationAllocation"
           },
           "seed": {
+            "description": "The seed used for bucketing",
             "type": "integer"
           },
           "variations": {
+            "description": "The variations and their weights",
             "items": {
               "$ref": "#/components/schemas/AIConfigTargetingEnvironmentFallthroughRolloutVariation"
             },
@@ -62283,12 +62495,15 @@
         },
         "properties": {
           "canReshuffle": {
+            "description": "Whether contexts can be reassigned to new buckets",
             "type": "boolean"
           },
           "defaultVariation": {
+            "description": "Index of the default variation",
             "type": "integer"
           },
           "type": {
+            "description": "The allocation type",
             "type": "string"
           }
         },
@@ -62307,12 +62522,15 @@
         },
         "properties": {
           "_untracked": {
+            "description": "Whether this variation is excluded from experiment tracking",
             "type": "boolean"
           },
           "variation": {
+            "description": "Index of the variation",
             "type": "integer"
           },
           "weight": {
+            "description": "The weight of this variation, in thousandths of a percent",
             "type": "integer"
           }
         },
@@ -62350,12 +62568,14 @@
         },
         "properties": {
           "clauses": {
+            "description": "The clauses a context must match",
             "items": {
               "$ref": "#/components/schemas/AIConfigTargetingEnvironmentRuleClause"
             },
             "type": "array"
           },
           "trackEvents": {
+            "description": "Whether to send detailed events for evaluations that match this rule",
             "type": "boolean"
           }
         },
@@ -62378,18 +62598,23 @@
         },
         "properties": {
           "attribute": {
+            "description": "The context attribute to match",
             "type": "string"
           },
           "id": {
+            "description": "The clause ID",
             "type": "string"
           },
           "negate": {
+            "description": "Whether to negate the match",
             "type": "boolean"
           },
           "op": {
+            "description": "The operator to use",
             "type": "string"
           },
           "values": {
+            "description": "The values to match against",
             "items": {},
             "type": "array"
           }
@@ -62414,15 +62639,18 @@
         },
         "properties": {
           "contextKind": {
+            "description": "The context kind",
             "type": "string"
           },
           "values": {
+            "description": "The context keys to target",
             "items": {
               "type": "string"
             },
             "type": "array"
           },
           "variation": {
+            "description": "Index of the variation to serve",
             "type": "integer"
           }
         },
@@ -62442,12 +62670,15 @@
         },
         "properties": {
           "_id": {
+            "description": "The variation ID",
             "type": "string"
           },
           "description": {
+            "description": "A description of the variation",
             "type": "string"
           },
           "name": {
+            "description": "The variation name",
             "type": "string"
           },
           "value": {
@@ -62596,6 +62827,7 @@
         },
         "properties": {
           "key": {
+            "description": "The tool key",
             "type": "string"
           },
           "_access": {
@@ -62611,6 +62843,7 @@
             "$ref": "#/components/schemas/AIConfig__maintainer"
           },
           "description": {
+            "description": "A description of the tool",
             "type": "string"
           },
           "schema": {
@@ -62622,12 +62855,14 @@
             "type": "object"
           },
           "tags": {
+            "description": "Tags for this resource",
             "items": {
               "type": "string"
             },
             "type": "array"
           },
           "version": {
+            "description": "The version number of this resource",
             "type": "integer"
           },
           "createdAt": {
@@ -62914,12 +63149,14 @@
             "$ref": "#/components/schemas/PaginatedLinks"
           },
           "items": {
+            "description": "The items on this page",
             "items": {
               "$ref": "#/components/schemas/AITool"
             },
             "type": "array"
           },
           "totalCount": {
+            "description": "The total number of items",
             "type": "integer"
           }
         },
@@ -62944,17 +63181,21 @@
         },
         "properties": {
           "key": {
+            "description": "A unique key for the tool",
             "type": "string"
           },
           "maintainerId": {
+            "description": "The ID of the member who maintains this resource",
             "example": "507f1f77bcf86cd799439011",
             "type": "string"
           },
           "maintainerTeamKey": {
+            "description": "The key of the team that maintains this resource",
             "example": "example-team-key",
             "type": "string"
           },
           "description": {
+            "description": "A description of the tool",
             "type": "string"
           },
           "schema": {
@@ -62966,6 +63207,7 @@
             "type": "object"
           },
           "tags": {
+            "description": "Tags for this resource",
             "items": {
               "type": "string"
             },
@@ -62992,14 +63234,17 @@
         },
         "properties": {
           "maintainerId": {
+            "description": "The ID of the member who maintains this resource",
             "example": "507f1f77bcf86cd799439011",
             "type": "string"
           },
           "maintainerTeamKey": {
+            "description": "The key of the team that maintains this resource",
             "example": "example-team-key",
             "type": "string"
           },
           "description": {
+            "description": "A description of the tool",
             "type": "string"
           },
           "schema": {
@@ -63011,6 +63256,7 @@
             "type": "object"
           },
           "tags": {
+            "description": "Tags for this resource",
             "items": {
               "type": "string"
             },
@@ -63141,6 +63387,7 @@
         },
         "properties": {
           "key": {
+            "description": "The prompt snippet key",
             "type": "string"
           },
           "_access": {
@@ -63156,9 +63403,11 @@
             "$ref": "#/components/schemas/AIConfig__maintainer"
           },
           "name": {
+            "description": "The prompt snippet name",
             "type": "string"
           },
           "description": {
+            "description": "A description of the prompt snippet",
             "type": "string"
           },
           "text": {
@@ -63166,12 +63415,14 @@
             "type": "string"
           },
           "tags": {
+            "description": "Tags for this resource",
             "items": {
               "type": "string"
             },
             "type": "array"
           },
           "version": {
+            "description": "The version number of this resource",
             "type": "integer"
           },
           "createdAt": {
@@ -63460,12 +63711,14 @@
             "$ref": "#/components/schemas/PaginatedLinks"
           },
           "items": {
+            "description": "The items on this page",
             "items": {
               "$ref": "#/components/schemas/PromptSnippet"
             },
             "type": "array"
           },
           "totalCount": {
+            "description": "The total number of items",
             "type": "integer"
           }
         },
@@ -63490,12 +63743,15 @@
         },
         "properties": {
           "key": {
+            "description": "A unique key for the prompt snippet",
             "type": "string"
           },
           "name": {
+            "description": "A human-readable name for the prompt snippet",
             "type": "string"
           },
           "description": {
+            "description": "A description of the prompt snippet",
             "type": "string"
           },
           "text": {
@@ -63503,14 +63759,17 @@
             "type": "string"
           },
           "maintainerId": {
+            "description": "The ID of the member who maintains this resource",
             "example": "507f1f77bcf86cd799439011",
             "type": "string"
           },
           "maintainerTeamKey": {
+            "description": "The key of the team that maintains this resource",
             "example": "example-team-key",
             "type": "string"
           },
           "tags": {
+            "description": "Tags for this resource",
             "items": {
               "type": "string"
             },
@@ -63538,9 +63797,11 @@
         },
         "properties": {
           "name": {
+            "description": "A human-readable name for the prompt snippet",
             "type": "string"
           },
           "description": {
+            "description": "A description of the prompt snippet",
             "type": "string"
           },
           "text": {
@@ -63548,14 +63809,17 @@
             "type": "string"
           },
           "maintainerId": {
+            "description": "The ID of the member who maintains this resource",
             "example": "507f1f77bcf86cd799439011",
             "type": "string"
           },
           "maintainerTeamKey": {
+            "description": "The key of the team that maintains this resource",
             "example": "example-team-key",
             "type": "string"
           },
           "tags": {
+            "description": "Tags for this resource",
             "items": {
               "type": "string"
             },
@@ -63682,6 +63946,7 @@
         },
         "properties": {
           "key": {
+            "description": "The agent skill key",
             "type": "string"
           },
           "_access": {
@@ -63694,9 +63959,11 @@
             "$ref": "#/components/schemas/AIConfig__maintainer"
           },
           "name": {
+            "description": "The agent skill name",
             "type": "string"
           },
           "description": {
+            "description": "A description of the agent skill",
             "type": "string"
           },
           "markdown": {
@@ -63704,12 +63971,14 @@
             "type": "string"
           },
           "tags": {
+            "description": "Tags for this resource",
             "items": {
               "type": "string"
             },
             "type": "array"
           },
           "version": {
+            "description": "The version number of this resource",
             "type": "integer"
           },
           "createdAt": {
@@ -63990,12 +64259,14 @@
             "$ref": "#/components/schemas/PaginatedLinks"
           },
           "items": {
+            "description": "The items on this page",
             "items": {
               "$ref": "#/components/schemas/AgentSkill"
             },
             "type": "array"
           },
           "totalCount": {
+            "description": "The total number of items",
             "type": "integer"
           }
         },
@@ -64025,9 +64296,11 @@
             "type": "string"
           },
           "name": {
+            "description": "A human-readable name for the agent skill",
             "type": "string"
           },
           "description": {
+            "description": "A description of the agent skill",
             "type": "string"
           },
           "markdown": {
@@ -64035,14 +64308,17 @@
             "type": "string"
           },
           "maintainerId": {
+            "description": "The ID of the member who maintains this resource",
             "example": "507f1f77bcf86cd799439011",
             "type": "string"
           },
           "maintainerTeamKey": {
+            "description": "The key of the team that maintains this resource",
             "example": "example-team-key",
             "type": "string"
           },
           "tags": {
+            "description": "Tags for this resource",
             "items": {
               "type": "string"
             },
@@ -64070,9 +64346,11 @@
         },
         "properties": {
           "name": {
+            "description": "A human-readable name for the agent skill",
             "type": "string"
           },
           "description": {
+            "description": "A description of the agent skill",
             "type": "string"
           },
           "markdown": {
@@ -64080,14 +64358,17 @@
             "type": "string"
           },
           "maintainerId": {
+            "description": "The ID of the member who maintains this resource",
             "example": "507f1f77bcf86cd799439011",
             "type": "string"
           },
           "maintainerTeamKey": {
+            "description": "The key of the team that maintains this resource",
             "example": "example-team-key",
             "type": "string"
           },
           "tags": {
+            "description": "Tags for this resource",
             "items": {
               "type": "string"
             },
@@ -64201,6 +64482,7 @@
             "type": "string"
           },
           "items": {
+            "description": "The resources that reference this agent skill",
             "items": {
               "$ref": "#/components/schemas/AgentSkillReference"
             },
@@ -64324,6 +64606,7 @@
             "type": "string"
           },
           "items": {
+            "description": "The resources that reference this prompt snippet",
             "items": {
               "$ref": "#/components/schemas/SnippetReference"
             },
@@ -65008,12 +65291,14 @@
             "$ref": "#/components/schemas/PaginatedLinks"
           },
           "items": {
+            "description": "The items on this page",
             "items": {
               "$ref": "#/components/schemas/AgentGraph"
             },
             "type": "array"
           },
           "totalCount": {
+            "description": "The total number of items",
             "type": "integer"
           }
         },
@@ -65086,9 +65371,11 @@
         },
         "properties": {
           "statement": {
+            "description": "A statement the response must satisfy",
             "type": "string"
           },
           "threshold": {
+            "description": "The minimum score needed to pass",
             "format": "double",
             "type": "number"
           }
@@ -65106,9 +65393,11 @@
         },
         "properties": {
           "key": {
+            "description": "The key of the judge AI Config",
             "type": "string"
           },
           "threshold": {
+            "description": "The minimum score needed to pass",
             "format": "double",
             "type": "number"
           }
@@ -65284,27 +65573,34 @@
             "$ref": "#/components/schemas/ParentAndSelfLinks"
           },
           "id": {
+            "description": "The agent optimization ID",
             "type": "string"
           },
           "key": {
+            "description": "The agent optimization key",
             "type": "string"
           },
           "aiConfigKey": {
+            "description": "The key of the AI Config to optimize",
             "type": "string"
           },
           "maxAttempts": {
+            "description": "The maximum number of attempts",
             "type": "integer"
           },
           "modelChoices": {
+            "description": "The models to try",
             "items": {
               "type": "string"
             },
             "type": "array"
           },
           "judgeModel": {
+            "description": "The model used to judge responses",
             "type": "string"
           },
           "variableChoices": {
+            "description": "Sets of prompt variable values to try",
             "items": {
               "additionalProperties": true,
               "type": "object"
@@ -65312,54 +65608,67 @@
             "type": "array"
           },
           "acceptanceStatements": {
+            "description": "Statements a response must satisfy to pass",
             "items": {
               "$ref": "#/components/schemas/AgentOptimizationAcceptanceStatement"
             },
             "type": "array"
           },
           "judges": {
+            "description": "Judges that score each response",
             "items": {
               "$ref": "#/components/schemas/AgentOptimizationJudge"
             },
             "type": "array"
           },
           "userInputOptions": {
+            "description": "User inputs to test with",
             "items": {
               "type": "string"
             },
             "type": "array"
           },
           "groundTruthResponses": {
+            "description": "Expected responses to compare against",
             "items": {
               "type": "string"
             },
             "type": "array"
           },
           "metricKey": {
+            "description": "The key of the metric to optimize",
             "type": "string"
           },
           "tokenLimit": {
+            "description": "The maximum number of tokens to use",
             "type": "integer"
           },
           "variationKey": {
+            "description": "The key of the variation to start from",
             "type": "string"
           },
           "label": {
+            "description": "A label for the optimization",
             "type": "string"
           },
           "latencyOptimization": {
+            "description": "Whether to optimize for lower latency",
             "type": "boolean"
           },
           "tokenOptimization": {
+            "description": "Whether to optimize for lower token use",
             "type": "boolean"
           },
           "autoCommit": {
+            "description": "Whether to save the best result as a new variation automatically",
             "type": "boolean"
           },
           "version": {
+            "description": "The version number of this resource",
             "type": "integer"
           },
           "createdAt": {
+            "description": "When this resource was created, in Unix milliseconds",
             "format": "int64",
             "type": "integer"
           }
@@ -65726,12 +66035,14 @@
             "$ref": "#/components/schemas/PaginatedLinks"
           },
           "items": {
+            "description": "The items on this page",
             "items": {
               "$ref": "#/components/schemas/AgentOptimization"
             },
             "type": "array"
           },
           "totalCount": {
+            "description": "The total number of items",
             "type": "integer"
           }
         },
@@ -65795,18 +66106,22 @@
         },
         "properties": {
           "maxAttempts": {
+            "description": "The maximum number of attempts",
             "type": "integer"
           },
           "modelChoices": {
+            "description": "The models to try",
             "items": {
               "type": "string"
             },
             "type": "array"
           },
           "judgeModel": {
+            "description": "The model used to judge responses",
             "type": "string"
           },
           "variableChoices": {
+            "description": "Sets of prompt variable values to try",
             "items": {
               "additionalProperties": true,
               "type": "object"
@@ -65814,48 +66129,59 @@
             "type": "array"
           },
           "acceptanceStatements": {
+            "description": "Statements a response must satisfy to pass",
             "items": {
               "$ref": "#/components/schemas/AgentOptimizationAcceptanceStatement"
             },
             "type": "array"
           },
           "judges": {
+            "description": "Judges that score each response",
             "items": {
               "$ref": "#/components/schemas/AgentOptimizationJudge"
             },
             "type": "array"
           },
           "userInputOptions": {
+            "description": "User inputs to test with",
             "items": {
               "type": "string"
             },
             "type": "array"
           },
           "groundTruthResponses": {
+            "description": "Expected responses to compare against",
             "items": {
               "type": "string"
             },
             "type": "array"
           },
           "metricKey": {
+            "description": "The key of the metric to optimize",
             "type": "string"
           },
           "tokenLimit": {
+            "description": "The maximum number of tokens to use",
             "type": "integer"
           },
           "variationKey": {
+            "description": "The key of the variation to start from",
             "type": "string"
           },
           "label": {
+            "description": "A label for the optimization",
             "type": "string"
           },
           "latencyOptimization": {
+            "description": "Whether to optimize for lower latency",
             "type": "boolean"
           },
           "tokenOptimization": {
+            "description": "Whether to optimize for lower token use",
             "type": "boolean"
           },
           "autoCommit": {
+            "description": "Whether to save the best result as a new variation automatically",
             "type": "boolean"
           }
         },
@@ -65917,24 +66243,30 @@
         },
         "properties": {
           "key": {
+            "description": "A unique key for the agent optimization",
             "type": "string"
           },
           "aiConfigKey": {
+            "description": "The key of the AI Config to optimize",
             "type": "string"
           },
           "maxAttempts": {
+            "description": "The maximum number of attempts",
             "type": "integer"
           },
           "modelChoices": {
+            "description": "The models to try",
             "items": {
               "type": "string"
             },
             "type": "array"
           },
           "judgeModel": {
+            "description": "The model used to judge responses",
             "type": "string"
           },
           "variableChoices": {
+            "description": "Sets of prompt variable values to try",
             "items": {
               "additionalProperties": true,
               "type": "object"
@@ -65942,48 +66274,59 @@
             "type": "array"
           },
           "acceptanceStatements": {
+            "description": "Statements a response must satisfy to pass",
             "items": {
               "$ref": "#/components/schemas/AgentOptimizationAcceptanceStatement"
             },
             "type": "array"
           },
           "judges": {
+            "description": "Judges that score each response",
             "items": {
               "$ref": "#/components/schemas/AgentOptimizationJudge"
             },
             "type": "array"
           },
           "userInputOptions": {
+            "description": "User inputs to test with",
             "items": {
               "type": "string"
             },
             "type": "array"
           },
           "groundTruthResponses": {
+            "description": "Expected responses to compare against",
             "items": {
               "type": "string"
             },
             "type": "array"
           },
           "metricKey": {
+            "description": "The key of the metric to optimize",
             "type": "string"
           },
           "tokenLimit": {
+            "description": "The maximum number of tokens to use",
             "type": "integer"
           },
           "variationKey": {
+            "description": "The key of the variation to start from",
             "type": "string"
           },
           "label": {
+            "description": "A label for the optimization",
             "type": "string"
           },
           "latencyOptimization": {
+            "description": "Whether to optimize for lower latency",
             "type": "boolean"
           },
           "tokenOptimization": {
+            "description": "Whether to optimize for lower token use",
             "type": "boolean"
           },
           "autoCommit": {
+            "description": "Whether to save the best result as a new variation automatically",
             "type": "boolean"
           }
         },
@@ -66159,18 +66502,22 @@
             "$ref": "#/components/schemas/ParentAndSelfLinks"
           },
           "id": {
+            "description": "The result ID",
             "format": "uuid",
             "type": "string"
           },
           "runId": {
+            "description": "The ID of the run this result belongs to",
             "format": "uuid",
             "type": "string"
           },
           "agentOptimizationId": {
+            "description": "The agent optimization ID",
             "format": "uuid",
             "type": "string"
           },
           "agentOptimizationVersion": {
+            "description": "The version of the agent optimization used",
             "type": "integer"
           },
           "status": {
@@ -66180,56 +66527,71 @@
             "$ref": "#/components/schemas/AgentOptimizationResultActivity"
           },
           "iteration": {
+            "description": "The iteration number within the run",
             "type": "integer"
           },
           "instructions": {
+            "description": "The instructions used for this attempt",
             "type": "string"
           },
           "parameters": {
             "additionalProperties": true,
+            "description": "The model parameters used for this attempt",
             "type": "object"
           },
           "userInput": {
+            "description": "The user input used for this attempt",
             "type": "string"
           },
           "completionResponse": {
+            "description": "The model response",
             "type": "string"
           },
           "variation": {
             "additionalProperties": true,
+            "description": "The variation that was tested",
             "type": "object"
           },
           "scores": {
             "additionalProperties": true,
+            "description": "The scores for the response",
             "type": "object"
           },
           "generationTokens": {
             "additionalProperties": true,
+            "description": "Token usage for generating the response",
             "type": "object"
           },
           "evaluationTokens": {
             "additionalProperties": true,
+            "description": "Token usage for judging the response",
             "type": "object"
           },
           "generationLatency": {
+            "description": "How long the response took to generate",
             "type": "integer"
           },
           "evaluationLatencies": {
             "additionalProperties": true,
+            "description": "How long each evaluation took",
             "type": "object"
           },
           "completedAt": {
+            "description": "When this finished, in Unix milliseconds",
             "format": "int64",
             "type": "integer"
           },
           "createdVariationKey": {
+            "description": "The key of the variation created from this result",
             "type": "string"
           },
           "createdAt": {
+            "description": "When this resource was created, in Unix milliseconds",
             "format": "int64",
             "type": "integer"
           },
           "updatedAt": {
+            "description": "When this resource was last updated, in Unix milliseconds",
             "format": "int64",
             "type": "integer"
           }
@@ -66552,12 +66914,14 @@
             "$ref": "#/components/schemas/PaginatedLinks"
           },
           "items": {
+            "description": "The items on this page",
             "items": {
               "$ref": "#/components/schemas/AgentOptimizationResult"
             },
             "type": "array"
           },
           "totalCount": {
+            "description": "The total number of items",
             "type": "integer"
           }
         },
@@ -66579,17 +66943,21 @@
         },
         "properties": {
           "runId": {
+            "description": "The run ID",
             "format": "uuid",
             "type": "string"
           },
           "optimizationKey": {
+            "description": "The agent optimization key",
             "type": "string"
           },
           "agentOptimizationId": {
+            "description": "The agent optimization ID",
             "format": "uuid",
             "type": "string"
           },
           "agentOptimizationVersion": {
+            "description": "The version of the agent optimization used",
             "type": "integer"
           },
           "status": {
@@ -66599,10 +66967,12 @@
             "$ref": "#/components/schemas/AgentOptimizationResultActivity"
           },
           "createdAt": {
+            "description": "When this resource was created, in Unix milliseconds",
             "format": "int64",
             "type": "integer"
           },
           "completedAt": {
+            "description": "When this finished, in Unix milliseconds",
             "format": "int64",
             "nullable": true,
             "type": "integer",
@@ -66673,12 +67043,14 @@
             "$ref": "#/components/schemas/PaginatedLinks"
           },
           "items": {
+            "description": "The items on this page",
             "items": {
               "$ref": "#/components/schemas/AgentOptimizationRun"
             },
             "type": "array"
           },
           "totalCount": {
+            "description": "The total number of items",
             "type": "integer"
           }
         },
@@ -66700,23 +67072,29 @@
         },
         "properties": {
           "runId": {
+            "description": "The ID of the run this result belongs to",
             "format": "uuid",
             "type": "string"
           },
           "agentOptimizationVersion": {
+            "description": "The version of the agent optimization used",
             "type": "integer"
           },
           "iteration": {
+            "description": "The iteration number within the run",
             "type": "integer"
           },
           "instructions": {
+            "description": "The instructions used for this attempt",
             "type": "string"
           },
           "userInput": {
+            "description": "The user input used for this attempt",
             "type": "string"
           },
           "parameters": {
             "additionalProperties": true,
+            "description": "The model parameters used for this attempt",
             "type": "object"
           }
         },
@@ -66760,32 +67138,40 @@
             "$ref": "#/components/schemas/AgentOptimizationResultActivity"
           },
           "completionResponse": {
+            "description": "The model response",
             "type": "string"
           },
           "variation": {
             "additionalProperties": true,
+            "description": "The variation that was tested",
             "type": "object"
           },
           "scores": {
             "additionalProperties": true,
+            "description": "The scores for the response",
             "type": "object"
           },
           "generationTokens": {
             "additionalProperties": true,
+            "description": "Token usage for generating the response",
             "type": "object"
           },
           "evaluationTokens": {
             "additionalProperties": true,
+            "description": "Token usage for judging the response",
             "type": "object"
           },
           "generationLatency": {
+            "description": "How long the response took to generate",
             "type": "integer"
           },
           "evaluationLatencies": {
             "additionalProperties": true,
+            "description": "How long each evaluation took",
             "type": "object"
           },
           "createdVariationKey": {
+            "description": "The key of the variation created from this result",
             "type": "string"
           }
         },
@@ -66921,6 +67307,7 @@
             "type": "string"
           },
           "items": {
+            "description": "The resources that reference this tool",
             "items": {
               "$ref": "#/components/schemas/ToolReference"
             },
@@ -68703,6 +69090,7 @@
           "value": {
             "description": "The default value applied to missing unit events. Set to 0 when <code>disabled</code> is false. No other values are currently supported.",
             "example": 0,
+            "format": "double",
             "type": "number"
           }
         },
@@ -68866,6 +69254,7 @@
         "type": "object"
       },
       "AIConfig__maintainer": {
+        "description": "The member or team that maintains this resource",
         "example": {
           "kind": "kind"
         },
@@ -68887,6 +69276,7 @@
         ]
       },
       "AIConfigTargetingVariation_value": {
+        "description": "The variation value",
         "oneOf": [
           {
             "$ref": "#/components/schemas/AIConfigTargetingVariationBoolean"
@@ -68903,6 +69293,7 @@
         ]
       },
       "AgentGraph__maintainer": {
+        "description": "The member or team that maintains this agent graph",
         "example": {
           "kind": "kind"
         },
