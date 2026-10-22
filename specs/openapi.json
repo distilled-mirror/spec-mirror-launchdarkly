@@ -53533,7 +53533,7 @@
           },
           "s3BucketName": {
             "type": "string",
-            "description": "The auto-generated S3 staging bucket name."
+            "description": "The S3 staging bucket name used by the destination. This is the customer-supplied bucket name, or the auto-generated name for destinations that did not set one."
           }
         }
       },
@@ -56870,7 +56870,7 @@
           },
           "s3BucketName": {
             "type": "string",
-            "description": "The auto-generated S3 staging bucket name (ClickHouse and Redshift)"
+            "description": "The S3 staging bucket name (ClickHouse and Redshift). For Redshift this is the name chosen for setup, a previously saved name, or an auto-generated default."
           }
         }
       },
