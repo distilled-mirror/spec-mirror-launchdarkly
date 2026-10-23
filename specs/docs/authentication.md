@@ -22,7 +22,7 @@ This topic explains how to use API access tokens to authenticate with the [Launc
 
 You can scope your API tokens to restrict the set of operations they can perform. For example, you can build an integration that only has read access to the REST API.
 
-When you [create an access token](/docs/home/account/api-create), use the **Role** menu to set the scope for your access token:
+When you [create an access token](/docs/home/account/api-create.md), use the **Role** menu to set the scope for your access token:
 
 * You can select a specific role. Choosing a role gives the token the same permissions as the role.
   * Select Reader, Writer, Admin, or Owner if you want to use a base role.
@@ -59,7 +59,7 @@ The different token types respond differently when their creators' permissions c
 
 You can configure a personal access token to have the same permissions that you do, or more restrictive permissions. Your personal tokens can never do more than you can in LaunchDarkly.
 
-If you have permissions through a custom role, you can configure a personal access token to also have that custom role. If the custom role uses [role attributes](/docs/home/getting-started/vocabulary#role-attribute), then the access token will have the same value for the role attribute as you do. For example, suppose an administrator assigned you a custom role and set the value of its role attribute to `projectA` during the assignment. When you configure a personal access token with this custom role, the access token will also use the custom role with role attribute set to `projectA`. To learn more, read [Using role scope](/docs/home/account/roles/role-scope).
+If you have permissions through a custom role, you can configure a personal access token to also have that custom role. If the custom role uses [role attributes](/docs/home/getting-started/vocabulary.md#role-attribute), then the access token will have the same value for the role attribute as you do. For example, suppose an administrator assigned you a custom role and set the value of its role attribute to `projectA` during the assignment. When you configure a personal access token with this custom role, the access token will also use the custom role with role attribute set to `projectA`. To learn more, read [Using role scope](/docs/home/account/roles/role-scope.md).
 
 If your own permissions are ever reduced, personal tokens you have created have reduced scope as well. For example, if you have a base role of Writer and create a Writer token, but then are downgraded to a base role of Reader, your Writer token is also downgraded. After your permissions change, that token behaves like a Reader token.
 
@@ -101,4 +101,4 @@ By default, all account members can create access tokens limited to their existi
 
 You can restrict account members from creating or managing access tokens with custom roles.
 
-To learn more, read [Actions in custom roles](/docs/home/account/roles/role-actions).
+To learn more, read [Actions in custom roles](/docs/home/account/roles/role-actions.md).

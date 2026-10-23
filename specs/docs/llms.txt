@@ -6,6 +6,8 @@ This is the LaunchDarkly documentation index for AI agents and LLMs, organized b
 
 For the full documentation snapshot in one file, see [https://launchdarkly.com/docs/llms-full.txt](https://launchdarkly.com/docs/llms-full.txt).
 
+Pricing information for LaunchDarkly plans is available at [https://launchdarkly.com/pricing](https://launchdarkly.com/pricing).
+
 ## Get started
 
 - [Welcome to LaunchDarkly Docs](https://launchdarkly.com/docs/home.md)
@@ -348,6 +350,7 @@ For the full documentation snapshot in one file, see [https://launchdarkly.com/d
 - [AWS CloudWatch Metrics](https://launchdarkly.com/docs/home/observability/aws-cloudwatch-metrics.md): This topic explains how to stream AWS CloudWatch metrics to LaunchDarkly observability features using CloudFormation.
 - [AWS FireLens](https://launchdarkly.com/docs/home/observability/firelens.md): This topic explains how to send container logs from Amazon ECS to LaunchDarkly observability using AWS FireLens.
 - [Azure Monitor](https://launchdarkly.com/docs/home/observability/azure-monitor.md): This topic explains how to stream Azure Monitor logs and metrics from your Azure subscription to LaunchDarkly observability features.
+- [Database monitoring](https://launchdarkly.com/docs/home/observability/database-monitoring.md): This topic explains how to use LaunchDarkly observability features to monitor a ClickHouse database, and optionally a PostgreSQL database.
 - [Datadog Agent ingestion](https://launchdarkly.com/docs/home/observability/datadog-agent.md): This topic explains how to send traces, metrics, and logs from the Datadog Agent to LaunchDarkly observability features.
 - [Fluent Bit](https://launchdarkly.com/docs/home/observability/fluentbit.md): This topic explains how to send logs from Fluent Bit to LaunchDarkly's observability dashboards.
 - [Syslog log drain](https://launchdarkly.com/docs/home/observability/syslog.md): This topic explains how to send syslog-formatted logs to LaunchDarkly observability features, including from hosting platforms like Render.
