@@ -95,7 +95,7 @@
     },
     {
       "name": "Environment releases (beta)",
-      "description": "> ### This feature is in beta\n>\n> To use this feature, pass in a header including the `LD-API-Version` key with value set to `beta`. Use this header with each call. To learn more, read [Beta resources](https://launchdarkly.com/docs/api#beta-resources).\n>\n> Resources that are in beta are still undergoing testing and development. They may change without notice, including becoming backwards incompatible.\n\nEnvironment releases progressively or guardedly roll out a flag targeting change in one environment. Use the environment releases API to list and retrieve releases, start a release, or stop an active release.\n"
+      "description": "> ### This feature is in beta\n>\n> To use this feature, pass in a header including the `LD-API-Version` key with value set to `beta`. Use this header with each call. To learn more, read [Beta resources](https://launchdarkly.com/docs/api#beta-resources).\n>\n> Resources that are in beta are still undergoing testing and development. They may change without notice, including becoming backwards incompatible.\n\nAn environment release [progressively](https://launchdarkly.com/docs/home/releases/progressive-rollouts#progressive-rollouts) rolls out a new flag variation in one environment. On select plans, you can [guard](https://launchdarkly.com/docs/home/releases/guarded-rollouts) one or more metrics, monitoring them for regressions. Use the environment releases API to list releases, get a release, start a release, or stop an active release.\n"
     },
     {
       "name": "Environments",
@@ -38197,7 +38197,7 @@
                   "metrics"
                 ],
                 "type": "string",
-                "x-enumNames": [
+                "x-enum-varnames": [
                   "GetEnvironmentReleaseParamsExpandMetrics"
                 ]
               },
@@ -83879,7 +83879,7 @@
           "guarded"
         ],
         "type": "string",
-        "x-enumNames": [
+        "x-enum-varnames": [
           "ReleaseTypeProgressive",
           "ReleaseTypeGuarded"
         ]
@@ -83894,7 +83894,7 @@
           "reverted"
         ],
         "type": "string",
-        "x-enumNames": [
+        "x-enum-varnames": [
           "ReleaseStatusPending",
           "ReleaseStatusInProgress",
           "ReleaseStatusWaiting",
@@ -83915,7 +83915,7 @@
           "reverted_insufficient_data"
         ],
         "type": "string",
-        "x-enumNames": [
+        "x-enum-varnames": [
           "ReleaseStatusReasonWaitingRegressionDetected",
           "ReleaseStatusReasonWaitingPhaseEnded",
           "ReleaseStatusReasonCompletedAutomatic",
@@ -83933,7 +83933,7 @@
           "leave_rules_in_place"
         ],
         "type": "string",
-        "x-enumNames": [
+        "x-enum-varnames": [
           "CleanupBehaviorRemoveRulesAndUpdateDefaultRule",
           "CleanupBehaviorLeaveRulesInPlace"
         ]
@@ -83947,7 +83947,7 @@
           "metric_events_with_context"
         ],
         "type": "string",
-        "x-enumNames": [
+        "x-enum-varnames": [
           "ReleaseHealthCheckKindFlagEvaluationsAny",
           "ReleaseHealthCheckKindFlagEvaluationsWithContext",
           "ReleaseHealthCheckKindMetricEventsAny",
@@ -84016,27 +84016,6 @@
           "message"
         ],
         "type": "object"
-      },
-      "VariationValue": {
-        "anyOf": [
-          {
-            "type": "string"
-          },
-          {
-            "type": "boolean"
-          },
-          {
-            "type": "number"
-          },
-          {
-            "additionalProperties": true,
-            "type": "object"
-          },
-          {
-            "items": {},
-            "type": "array"
-          }
-        ]
       },
       "ReleaseStep": {
         "description": "One step in a phase's rollout schedule.",
@@ -84231,7 +84210,7 @@
           "regression_dismissed"
         ],
         "type": "string",
-        "x-enumNames": [
+        "x-enum-varnames": [
           "ReleaseMetricStatusOK",
           "ReleaseMetricStatusRegressed",
           "ReleaseMetricStatusRegressionDismissed"
@@ -84249,10 +84228,10 @@
           },
           "kind": "progressive",
           "startedAt": 7,
-          "originalVariationValue": "VariationValue",
+          "originalVariationValue": "",
           "cleanupBehavior": "remove_rules_and_update_default_rule",
           "environmentKey": "environmentKey",
-          "targetVariationValue": null,
+          "targetVariationValue": "",
           "createdAt": 4,
           "projectKey": "projectKey",
           "statusReason": "waiting_regression_detected",
@@ -84367,7 +84346,7 @@
             "type": "string"
           },
           "originalVariationValue": {
-            "$ref": "#/components/schemas/VariationValue"
+            "description": "The value of the variation. This may be a string, boolean, number, JSON object, or array."
           },
           "targetVariationId": {
             "description": "ID of the variation being released.",
@@ -84375,7 +84354,7 @@
             "type": "string"
           },
           "targetVariationValue": {
-            "$ref": "#/components/schemas/VariationValue"
+            "description": "The value of the variation. This may be a string, boolean, number, JSON object, or array."
           },
           "randomizationUnit": {
             "description": "Key of the context kind the release randomizes on.",
@@ -84461,7 +84440,7 @@
           "automatic"
         ],
         "type": "string",
-        "x-enumNames": [
+        "x-enum-varnames": [
           "EnvironmentReleaseAdvancementModeManual",
           "EnvironmentReleaseAdvancementModeAutomatic"
         ]
@@ -84764,7 +84743,7 @@
           "roll_back_current_phase_and_remove_pending_phases"
         ],
         "type": "string",
-        "x-enumNames": [
+        "x-enum-varnames": [
           "EnvironmentReleaseResolutionRollForwardAllPhases",
           "EnvironmentReleaseResolutionRollForwardCurrentPhaseAndRemovePendingPhases",
           "EnvironmentReleaseResolutionRollBackAllPhasesAndRemovePendingPhases",
@@ -84811,10 +84790,10 @@
               },
               "kind": "progressive",
               "startedAt": 7,
-              "originalVariationValue": "VariationValue",
+              "originalVariationValue": "",
               "cleanupBehavior": "remove_rules_and_update_default_rule",
               "environmentKey": "environmentKey",
-              "targetVariationValue": null,
+              "targetVariationValue": "",
               "createdAt": 4,
               "projectKey": "projectKey",
               "statusReason": "waiting_regression_detected",
@@ -84913,10 +84892,10 @@
               },
               "kind": "progressive",
               "startedAt": 7,
-              "originalVariationValue": "VariationValue",
+              "originalVariationValue": "",
               "cleanupBehavior": "remove_rules_and_update_default_rule",
               "environmentKey": "environmentKey",
-              "targetVariationValue": null,
+              "targetVariationValue": "",
               "createdAt": 4,
               "projectKey": "projectKey",
               "statusReason": "waiting_regression_detected",

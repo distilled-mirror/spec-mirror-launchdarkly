@@ -4,27 +4,27 @@
 
 # REST API overview
 
-<View title="Developer" />
+**Developer**
 
-<View title="Federal docs" />
+**Federal docs**
 
-<View title="EU docs" />
+**EU docs**
 
-This documentation describes LaunchDarkly's REST API. To access the complete OpenAPI spec directly, use [Get OpenAPI spec](/docs/api/other/gets-the-openapi-spec-in-json.md).
+This documentation describes LaunchDarkly's REST API. To access the complete OpenAPI spec directly, use [Get OpenAPI spec](https://launchdarkly.com/docs/api/other/gets-the-openapi-spec-in-json.md).
 
-To learn how to use LaunchDarkly using the user interface (UI) instead, read our [product documentation](/docs/home.md).
+To learn how to use LaunchDarkly using the user interface (UI) instead, read our [product documentation](https://launchdarkly.com/docs/home.md).
 
 ## Authentication
 
 LaunchDarkly's REST API uses the HTTPS protocol with a minimum TLS version of 1.2.
 
-All REST API resources are authenticated with either [personal or service access tokens](/docs/home/account/api), or session cookies. Other authentication mechanisms are not supported. You can manage personal access tokens on your [**Authorization**](https://app.launchdarkly.com/settings/authorization) page in the LaunchDarkly UI.
+All REST API resources are authenticated with either [personal or service access tokens](https://launchdarkly.com/docs/home/account/api), or session cookies. Other authentication mechanisms are not supported. You can manage personal access tokens on your [**Authorization**](https://app.launchdarkly.com/settings/authorization) page in the LaunchDarkly UI.
 
 LaunchDarkly also has SDK keys, mobile keys, and client-side IDs that are used by our server-side SDKs, mobile SDKs, and JavaScript-based SDKs, respectively. **These keys cannot be used to access our REST API**. These keys are environment-specific, and can only perform read-only operations such as fetching feature flag settings.
 
 | Auth mechanism | Allowed resources | Use cases |
 | - | - | - |
-| [Personal or service access tokens](/docs/home/account/api) | Can be customized on a per-token basis | Building scripts, custom integrations, data export. |
+| [Personal or service access tokens](https://launchdarkly.com/docs/home/account/api) | Can be customized on a per-token basis | Building scripts, custom integrations, data export. |
 | SDK keys | Can only access read-only resources specific to server-side SDKs. Restricted to a single environment. | Server-side SDKs |
 | Mobile keys | Can only access read-only resources specific to mobile SDKs, and only for flags marked available to mobile keys. Restricted to a single environment. | Mobile SDKs |
 | Client-side ID | Can only access read-only resources specific to JavaScript-based client-side SDKs, and only for flags marked available to client-side. Restricted to a single environment. | Client-side JavaScript |
@@ -45,7 +45,7 @@ Manage personal access tokens from the [**Authorization**](https://app.launchdar
 
 For testing purposes, you can make API calls directly from your web browser. If you are logged in to the LaunchDarkly application, the API will use your existing session to authenticate calls.
 
-Depending on the permissions granted as part of your [role](/docs/home/account/roles), you may not have permission to perform some API calls. You will receive a `401` response code in that case.
+Depending on the permissions granted as part of your [role](https://launchdarkly.com/docs/home/account/roles), you may not have permission to perform some API calls. You will receive a `401` response code in that case.
 
 > ### Modifying the Origin header causes an error
 >
@@ -61,7 +61,7 @@ Depending on the permissions granted as part of your [role](/docs/home/account/r
 
 ## Representations
 
-All resources expect and return JSON response bodies. Error responses also send a JSON body. To learn more about the error format of the API, read [Errors](/docs/api/overview.md#errors).
+All resources expect and return JSON response bodies. Error responses also send a JSON body. To learn more about the error format of the API, read [Errors](https://launchdarkly.com/docs/api/overview.md#errors).
 
 In practice this means that you always get a response with a `Content-Type` header set to `application/json`.
 
@@ -79,7 +79,7 @@ The best way to find a detailed representation is to follow links. Every summary
 
 Sometimes the detailed representation of a resource does not include all of the attributes of the resource by default. If this is the case, the request method will clearly document this and describe which attributes you can include in an expanded response.
 
-To include the additional attributes, append the `expand` request parameter to your request and add a comma-separated list of the attributes to include. For example, when you append `?expand=members,maintainers` to the [Get team](/docs/api/teams/get-team.md) endpoint, the expanded response includes both of these attributes.
+To include the additional attributes, append the `expand` request parameter to your request and add a comma-separated list of the attributes to include. For example, when you append `?expand=members,maintainers` to the [Get team](https://launchdarkly.com/docs/api/teams/get-team.md) endpoint, the expanded response includes both of these attributes.
 
 ### Links and addressability
 
@@ -122,7 +122,7 @@ Paginated collections include `first`, `last`, `next`, and `prev` links containi
 
 ## Updates
 
-Resources that accept partial updates use the `PATCH` verb. Most resources support the [JSON patch](/docs/api/overview.md#updates-using-json-patch) format. Some resources also support the [JSON merge patch](/docs/api/overview.md#updates-using-json-merge-patch) format, and some resources support the [semantic patch](/docs/api/overview.md#updates-using-semantic-patch) format, which is a way to specify the modifications to perform as a set of executable instructions. Each resource supports optional [comments](/docs/api/overview.md#updates-with-comments) that you can submit with updates. Comments appear in outgoing webhooks, the audit log, and other integrations.
+Resources that accept partial updates use the `PATCH` verb. Most resources support the [JSON patch](https://launchdarkly.com/docs/api/overview.md#updates-using-json-patch) format. Some resources also support the [JSON merge patch](https://launchdarkly.com/docs/api/overview.md#updates-using-json-merge-patch) format, and some resources support the [semantic patch](https://launchdarkly.com/docs/api/overview.md#updates-using-semantic-patch) format, which is a way to specify the modifications to perform as a set of executable instructions. Each resource supports optional [comments](https://launchdarkly.com/docs/api/overview.md#updates-with-comments) that you can submit with updates. Comments appear in outgoing webhooks, the audit log, and other integrations.
 
 When a resource supports both JSON patch and semantic patch, we document both in the request method. However, the specific request body fields and descriptions included in our documentation only match one type of patch or the other.
 
@@ -259,7 +259,7 @@ The `code` indicates the general class of error. The `message` is a human-readab
 | 405 | Method not allowed | The request method is not allowed on this resource. | Ensure that the HTTP verb is correct. |
 | 409 | Conflict | The API request can not be completed because it conflicts with a concurrent API request. | Retry your request. |
 | 422 | Unprocessable entity | The API request can not be completed because the update description can not be understood. | Ensure that the request body is correct for the type of patch you are using, either JSON patch or semantic patch. |
-| 429 | Too many requests | Read [Rate limiting](/docs/api/overview.md#rate-limiting). | Wait and try again later. |
+| 429 | Too many requests | Read [Rate limiting](https://launchdarkly.com/docs/api/overview.md#rate-limiting). | Wait and try again later. |
 
 ## CORS
 
@@ -272,7 +272,7 @@ Access-Control-Allow-Origin: *
 Access-Control-Max-Age: 300
 ```
 
-You can make authenticated CORS calls just as you would make same-origin calls, using either [token or session-based authentication](/docs/api/overview.md#authentication). If you are using session authentication, you should set the `withCredentials` property for your `xhr` request to `true`. You should never expose your access tokens to untrusted entities.
+You can make authenticated CORS calls just as you would make same-origin calls, using either [token or session-based authentication](https://launchdarkly.com/docs/api/overview.md#authentication). If you are using session authentication, you should set the `withCredentials` property for your `xhr` request to `true`. You should never expose your access tokens to untrusted entities.
 
 ## Rate limiting
 
@@ -306,7 +306,7 @@ Some authenticated routes have custom rate limits. These also reset every ten se
 | `X-Ratelimit-Route-Remaining` | The number of requests remaining for the current route in the current rate limit window. |
 | `X-Ratelimit-Reset` | The time at which the current rate limit window resets in epoch milliseconds. |
 
-A *route* represents a specific URL pattern and verb. For example, the [Delete environment](/docs/api/environments/delete-environment.md) endpoint is considered a single route, and each call to delete an environment counts against your route-level rate limit for that route.
+A *route* represents a specific URL pattern and verb. For example, the [Delete environment](https://launchdarkly.com/docs/api/environments/delete-environment.md) endpoint is considered a single route, and each call to delete an environment counts against your route-level rate limit for that route.
 
 ### Access token rate limits
 
@@ -352,7 +352,7 @@ We mark beta resources with a "Beta" callout in our documentation, pictured belo
 
 > ### This feature is in beta
 >
-> To use this feature, pass in a header including the `LD-API-Version` key with value set to `beta`. Use this header with each call. To learn more, read [Beta resources](/docs/api/overview.md#beta-resources).
+> To use this feature, pass in a header including the `LD-API-Version` key with value set to `beta`. Use this header with each call. To learn more, read [Beta resources](https://launchdarkly.com/docs/api/overview.md#beta-resources).
 >
 > Resources that are in beta are still undergoing testing and development. They may change without notice, including becoming backwards incompatible.
 
@@ -376,7 +376,7 @@ The version of LaunchDarkly that is available on domains controlled by the Unite
 
 If you are working in the federal instance of LaunchDarkly, the base URI for each request is `https://app.launchdarkly.us`.
 
-To learn more, read [LaunchDarkly in federal environments](/docs/home/infrastructure/federal).
+To learn more, read [LaunchDarkly in federal environments](https://launchdarkly.com/docs/home/infrastructure/federal).
 
 ### EU environments
 
@@ -384,7 +384,7 @@ The version of LaunchDarkly that is available in the EU is different from the ve
 
 If you are working in the EU instance of LaunchDarkly, the base URI for each request is `https://app.eu.launchdarkly.com`.
 
-To learn more, read [LaunchDarkly in the European Union (EU)](/docs/home/infrastructure/eu.md).
+To learn more, read [LaunchDarkly in the European Union (EU)](https://launchdarkly.com/docs/home/infrastructure/eu.md).
 
 ## Versioning
 
@@ -432,7 +432,7 @@ If you would like to upgrade your integration to use a new API version, you can 
       <td>`20240415`</td>
 
       <td>
-        <ul><li>Changed several endpoints from unpaginated to paginated. Use the `limit` and `offset` query parameters to page through the results.</li> <li>Changed the [list access tokens](/docs/api/access-tokens/list-access-tokens.md) endpoint: <ul><li>Response is now paginated with a default limit of `25`</li></ul></li> <li>Changed the [list account members](/docs/api/account-members/list-account-members.md) endpoint: <ul><li>The `accessCheck` filter is no longer available</li></ul></li> <li>Changed the [list custom roles](/docs/api/custom-roles/list-custom-roles.md) endpoint: <ul><li>Response is now paginated with a default limit of `20`</li></ul></li> <li>Changed the [list feature flags](/docs/api/feature-flags/list-feature-flags.md) endpoint: <ul><li>Response is now paginated with a default limit of `20`</li><li>The `environments` field is now only returned if the request is filtered by environment, using the `filterEnv` query parameter</li><li>The `followerId`, `hasDataExport`, `status`, `contextKindTargeted`, and `segmentTargeted` filters are no longer available</li><li>The `compare` query parameter is no longer available</li></ul></li> <li>Changed the [list segments](/docs/api/segments/list-segments.md) endpoint: <ul><li>Response is now paginated with a default limit of `20`</li></ul></li> <li>Changed the [list teams](/docs/api/teams/list-teams.md) endpoint: <ul><li>The `expand` parameter no longer supports including `projects` or `roles`</li><li>In paginated results, the maximum page size is now 100</li></ul></li> <li>Changed the [get workflows](/docs/api/workflows/get-workflows.md) endpoint: <ul><li>Response is now paginated with a default limit of `20`</li><li>The `_conflicts` field in the response is no longer available</li></ul></li> </ul>
+        <ul><li>Changed several endpoints from unpaginated to paginated. Use the `limit` and `offset` query parameters to page through the results.</li> <li>Changed the [list access tokens](https://launchdarkly.com/docs/api/access-tokens/list-access-tokens.md) endpoint: <ul><li>Response is now paginated with a default limit of `25`</li></ul></li> <li>Changed the [list account members](https://launchdarkly.com/docs/api/account-members/list-account-members.md) endpoint: <ul><li>The `accessCheck` filter is no longer available</li></ul></li> <li>Changed the [list custom roles](https://launchdarkly.com/docs/api/custom-roles/list-custom-roles.md) endpoint: <ul><li>Response is now paginated with a default limit of `20`</li></ul></li> <li>Changed the [list feature flags](https://launchdarkly.com/docs/api/feature-flags/list-feature-flags.md) endpoint: <ul><li>Response is now paginated with a default limit of `20`</li><li>The `environments` field is now only returned if the request is filtered by environment, using the `filterEnv` query parameter</li><li>The `followerId`, `hasDataExport`, `status`, `contextKindTargeted`, and `segmentTargeted` filters are no longer available</li><li>The `compare` query parameter is no longer available</li></ul></li> <li>Changed the [list segments](https://launchdarkly.com/docs/api/segments/list-segments.md) endpoint: <ul><li>Response is now paginated with a default limit of `20`</li></ul></li> <li>Changed the [list teams](https://launchdarkly.com/docs/api/teams/list-teams.md) endpoint: <ul><li>The `expand` parameter no longer supports including `projects` or `roles`</li><li>In paginated results, the maximum page size is now 100</li></ul></li> <li>Changed the [get workflows](https://launchdarkly.com/docs/api/workflows/get-workflows.md) endpoint: <ul><li>Response is now paginated with a default limit of `20`</li><li>The `_conflicts` field in the response is no longer available</li></ul></li> </ul>
       </td>
 
       <td>Current</td>
@@ -442,7 +442,7 @@ If you would like to upgrade your integration to use a new API version, you can 
       <td>`20220603`</td>
 
       <td>
-        <ul><li>Changed the [list projects](/docs/api/projects/list-projects.md) return value:<ul><li>Response is now paginated with a default limit of `20`.</li><li>Added support for filter and sort.</li><li>The project `environments` field is now expandable. This field is omitted by default.</li></ul></li><li>Changed the [get project](/docs/api/projects/get-project.md) return value:<ul><li>The `environments` field is now expandable. This field is omitted by default.</li></ul></li></ul>
+        <ul><li>Changed the [list projects](https://launchdarkly.com/docs/api/projects/list-projects.md) return value:<ul><li>Response is now paginated with a default limit of `20`.</li><li>Added support for filter and sort.</li><li>The project `environments` field is now expandable. This field is omitted by default.</li></ul></li><li>Changed the [get project](https://launchdarkly.com/docs/api/projects/get-project.md) return value:<ul><li>The `environments` field is now expandable. This field is omitted by default.</li></ul></li></ul>
       </td>
 
       <td>2025-04-15</td>
@@ -452,7 +452,7 @@ If you would like to upgrade your integration to use a new API version, you can 
       <td>`20210729`</td>
 
       <td>
-        <ul><li>Changed the [create approval request](/docs/api/approvals/create-approval-request.md) return value. It now returns HTTP Status Code `201` instead of `200`.</li><li> Changed the [get user](/docs/api/users/get-user.md) return value. It now returns a user record, not a user. </li><li>Added additional optional fields to environment, segments, flags, members, and segments, including the ability to create big segments. </li><li> Added default values for flag variations when new environments are created. </li><li>Added filtering and pagination for getting flags and members, including `limit`, `number`, `filter`, and `sort` query parameters. </li><li>Added endpoints for expiring user targets for flags and segments, scheduled changes, access tokens, Relay Proxy configuration, integrations and subscriptions, and approvals. </li></ul>
+        <ul><li>Changed the [create approval request](https://launchdarkly.com/docs/api/approvals/create-approval-request.md) return value. It now returns HTTP Status Code `201` instead of `200`.</li><li> Changed the [get user](https://launchdarkly.com/docs/api/users/get-user.md) return value. It now returns a user record, not a user. </li><li>Added additional optional fields to environment, segments, flags, members, and segments, including the ability to create big segments. </li><li> Added default values for flag variations when new environments are created. </li><li>Added filtering and pagination for getting flags and members, including `limit`, `number`, `filter`, and `sort` query parameters. </li><li>Added endpoints for expiring user targets for flags and segments, scheduled changes, access tokens, Relay Proxy configuration, integrations and subscriptions, and approvals. </li></ul>
       </td>
 
       <td>2023-06-03</td>
@@ -462,7 +462,7 @@ If you would like to upgrade your integration to use a new API version, you can 
       <td>`20191212`</td>
 
       <td>
-        <ul><li>[List feature flags](/docs/api/feature-flags/list-feature-flags.md) now defaults to sending summaries of feature flag configurations, equivalent to setting the query parameter `summary=true`. Summaries omit flag targeting rules and individual user targets from the payload. </li><li> Added endpoints for flags, flag status, projects, environments, audit logs, members, users, custom roles, segments, usage, streams, events, and data export. </li></ul>
+        <ul><li>[List feature flags](https://launchdarkly.com/docs/api/feature-flags/list-feature-flags.md) now defaults to sending summaries of feature flag configurations, equivalent to setting the query parameter `summary=true`. Summaries omit flag targeting rules and individual user targets from the payload. </li><li> Added endpoints for flags, flag status, projects, environments, audit logs, members, users, custom roles, segments, usage, streams, events, and data export. </li></ul>
       </td>
 
       <td>2022-07-29</td>
