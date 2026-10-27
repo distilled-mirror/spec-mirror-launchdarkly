@@ -60506,7 +60506,8 @@
             "type": "array"
           },
           "isInverted": {
-            "description": "Whether the evaluation metric is inverted, meaning a lower value is better if set as true",
+            "description": "The success direction of a judge. Offline evaluations use it to decide whether a score passes.\n\n- `true`: A lower score is better. Use this for a judge that scores bad output, such as a toxicity or hallucination judge.\n- `false`: A higher score is better. Use this for a judge that scores good output, such as an accuracy or relevance judge.\n\nThe response includes this field only when `mode` is `judge`. For a built-in judge key, the value is always the built-in direction. Built-in judge keys are `ld-ai-judge-accuracy`, `ld-ai-judge-relevance`, and `ld-ai-judge-toxicity`, with or without a `-<timestamp>` suffix such as `ld-ai-judge-accuracy-1760000000000`. A custom judge with no stored direction omits this field.\n",
+            "example": true,
             "type": "boolean"
           },
           "dependencies": {
@@ -60677,7 +60678,8 @@
             "type": "string"
           },
           "isInverted": {
-            "description": "Whether the evaluation metric is inverted, meaning a lower value is better if set as true",
+            "description": "The success direction of a judge. Offline evaluations use it to decide whether a score passes.\n\n- `true`: A lower score is better. Use this for a judge that scores bad output, such as a toxicity or hallucination judge.\n- `false`: A higher score is better. Use this for a judge that scores good output, such as an accuracy or relevance judge.\n\n**Required for a custom judge.** A custom judge has `mode` set to `judge` and a `key` that is not a built-in judge key. Built-in judge keys are `ld-ai-judge-accuracy`, `ld-ai-judge-relevance`, and `ld-ai-judge-toxicity`, with or without a `-<timestamp>` suffix such as `ld-ai-judge-accuracy-1760000000000`. For a built-in judge key, this field is optional, and the API always uses the built-in direction.\n\nDo not send this field when `mode` is `agent` or `completion`.\n\nThis field is not in the schema's `required` list, because only custom judges need it.\n\nThe API returns a `400` error in these cases:\n- `isInverted is required for a custom judge: ...`: You create a custom judge without this field. Send `true` or `false`.\n- `isInverted is only supported for judge mode`: You send this field and `mode` is `agent` or `completion`. Remove the field, or set `mode` to `judge`.\n- `isInverted is not supported`: Custom judges are not available for your account. Remove the field from the request.\n",
+            "example": true,
             "type": "boolean"
           }
         },
@@ -60736,7 +60738,8 @@
             "type": "string"
           },
           "isInverted": {
-            "description": "Whether the evaluation metric is inverted, meaning a lower value is better if set as true",
+            "description": "The success direction of a judge. Offline evaluations use it to decide whether a score passes.\n\n- `true`: A lower score is better. Use this for a judge that scores bad output, such as a toxicity or hallucination judge.\n- `false`: A higher score is better. Use this for a judge that scores good output, such as an accuracy or relevance judge.\n\nSend this field only when the AI Config's `mode` is `judge`. If you omit it, the current direction does not change. For a built-in judge key, the API always returns the built-in direction. Built-in judge keys are `ld-ai-judge-accuracy`, `ld-ai-judge-relevance`, and `ld-ai-judge-toxicity`, with or without a `-<timestamp>` suffix such as `ld-ai-judge-accuracy-1760000000000`.\n\nThe API returns a `400` error in these cases:\n- `isInverted is only supported for judge mode`: You send this field and the AI Config's `mode` is `agent` or `completion`. Remove the field.\n- `isInverted is not supported`: Custom judges are not available for your account. Remove the field from the request.\n",
+            "example": true,
             "type": "boolean"
           }
         },

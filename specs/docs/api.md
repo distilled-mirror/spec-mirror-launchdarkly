@@ -67,7 +67,7 @@ In practice this means that you always get a response with a `Content-Type` head
 
 In addition, request bodies for `PATCH`, `POST`, and `PUT` requests must be encoded as JSON with a `Content-Type` header set to `application/json`.
 
-Unless an endpoint's documentation says otherwise, the API ignores request body fields that are not part of that endpoint's request schema, and does not return an error for them. A successful response does not mean that the API applied every field you sent. To confirm the result, check the response body.
+Unless an endpoint's documentation says otherwise, the API ignores request body fields that are not part of that endpoint's request schema, and does not return an error for them. A successful response does not mean that every field you sent was applied. To confirm the result, check the response body.
 
 ### Summary and detailed representations
 

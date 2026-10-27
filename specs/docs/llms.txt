@@ -528,7 +528,7 @@ Pricing information for LaunchDarkly plans is available at [https://launchdarkly
 - [Edit environment settings](https://launchdarkly.com/docs/home/account/environment/settings.md): This topic explains how to edit the environment settings in LaunchDarkly.
 - [Delete environments](https://launchdarkly.com/docs/home/account/environment/delete.md): This topic explains how to delete environments in LaunchDarkly.
 - [Clone environments](https://launchdarkly.com/docs/home/account/environment/clone.md): This topic explains how to clone environments in LaunchDarkly.
-- [SDK credentials](https://launchdarkly.com/docs/home/account/environment/keys.md): This topic explains how to view, copy, rotate, create, and delete SDK credentials and environment keys.
+- [SDK credentials](https://launchdarkly.com/docs/home/account/environment/keys.md): This topic explains how to view, copy, rotate, create, delete, and set expiration dates for SDK credentials.
 
 ### Teams
 
