@@ -63151,6 +63151,18 @@
           "judgeToxicity": 0.6846853,
           "totalTokens": 1,
           "judgeAccuracy": 0.10246457,
+          "judgeScores": [
+            {
+              "score": 7.4577446,
+              "metricKey": "$ld:ai:judge:helpfulness",
+              "count": 1
+            },
+            {
+              "score": 7.4577446,
+              "metricKey": "$ld:ai:judge:helpfulness",
+              "count": 1
+            }
+          ],
           "generationCount": 5,
           "timeToFirstTokenMs": 2,
           "outputTokens": 6,
@@ -63237,8 +63249,44 @@
             "maximum": 1,
             "minimum": 0,
             "type": "number"
+          },
+          "judgeScores": {
+            "description": "Average score and sample count for every judge metric recorded in the time range, keyed by the judge's evaluation metric key. Includes custom judges and the built-in accuracy, relevance, and toxicity judges. Omitted when no judge scores were recorded.",
+            "items": {
+              "$ref": "#/components/schemas/JudgeScore"
+            },
+            "type": "array"
           }
         },
+        "type": "object"
+      },
+      "JudgeScore": {
+        "example": {
+          "score": 7.4577446,
+          "metricKey": "$ld:ai:judge:helpfulness",
+          "count": 1
+        },
+        "properties": {
+          "metricKey": {
+            "description": "The judge's evaluation metric key",
+            "example": "$ld:ai:judge:helpfulness",
+            "type": "string"
+          },
+          "score": {
+            "description": "Average judge score across the recorded samples",
+            "format": "float",
+            "type": "number"
+          },
+          "count": {
+            "description": "Number of judge scores recorded",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "count",
+          "metricKey",
+          "score"
+        ],
         "type": "object"
       },
       "MetricByVariation": {
@@ -63254,6 +63302,18 @@
             "judgeToxicity": 0.6846853,
             "totalTokens": 1,
             "judgeAccuracy": 0.10246457,
+            "judgeScores": [
+              {
+                "score": 7.4577446,
+                "metricKey": "$ld:ai:judge:helpfulness",
+                "count": 1
+              },
+              {
+                "score": 7.4577446,
+                "metricKey": "$ld:ai:judge:helpfulness",
+                "count": 1
+              }
+            ],
             "generationCount": 5,
             "timeToFirstTokenMs": 2,
             "outputTokens": 6,
@@ -84175,6 +84235,7 @@
           "metricKey": "metricKey",
           "definition": "",
           "autoRollback": true,
+          "analysisUnit": "analysisUnit",
           "metricVersionId": "046b6c7f-0b8a-43b9-b35d-6489e6daee91"
         },
         "properties": {
@@ -84189,6 +84250,11 @@
           "autoRollback": {
             "description": "Whether a regression automatically reverts the release.",
             "type": "boolean"
+          },
+          "analysisUnit": {
+            "description": "Key of the context kind this metric is analyzed on. It is the release's\nrandomization unit unless the metric uses a decoupled unit of analysis.\nOmitted on releases started before analysis units were recorded. Those\nmetrics are analyzed on the randomization unit.\n",
+            "readOnly": true,
+            "type": "string"
           },
           "definition": {
             "allOf": [
@@ -84247,12 +84313,14 @@
               "metricKey": "metricKey",
               "definition": "",
               "autoRollback": true,
+              "analysisUnit": "analysisUnit",
               "metricVersionId": "046b6c7f-0b8a-43b9-b35d-6489e6daee91"
             },
             {
               "metricKey": "metricKey",
               "definition": "",
               "autoRollback": true,
+              "analysisUnit": "analysisUnit",
               "metricVersionId": "046b6c7f-0b8a-43b9-b35d-6489e6daee91"
             }
           ],
@@ -84508,7 +84576,8 @@
         "description": "A metric to monitor across every phase of a guarded release.",
         "example": {
           "metricKey": "metricKey",
-          "autoRollback": false
+          "autoRollback": false,
+          "analysisUnit": "analysisUnit"
         },
         "properties": {
           "metricKey": {
@@ -84518,6 +84587,10 @@
             "default": false,
             "description": "Whether a regression on this metric automatically reverts the\nrelease. When `false`, a detected regression pauses the release\ninstead: it reports `waiting` with reason\n`waiting_regression_detected` and does not advance until the\nregression is dismissed or the release is stopped.\n",
             "type": "boolean"
+          },
+          "analysisUnit": {
+            "description": "Key of the context kind to analyze this metric on. Omit it to analyze\non the randomization unit. A value must differ from the randomization\nunit and be one of the metric's units. Percentile metrics, ratio\nmetrics, and metrics in a group cannot set it. The value cannot be\nchanged after the release starts.\n",
+            "type": "string"
           }
         },
         "required": [
@@ -84617,11 +84690,13 @@
           "metrics": [
             {
               "metricKey": "metricKey",
-              "autoRollback": false
+              "autoRollback": false,
+              "analysisUnit": "analysisUnit"
             },
             {
               "metricKey": "metricKey",
-              "autoRollback": false
+              "autoRollback": false,
+              "analysisUnit": "analysisUnit"
             }
           ],
           "randomizationUnit": "randomizationUnit",
@@ -84809,12 +84884,14 @@
                   "metricKey": "metricKey",
                   "definition": "",
                   "autoRollback": true,
+                  "analysisUnit": "analysisUnit",
                   "metricVersionId": "046b6c7f-0b8a-43b9-b35d-6489e6daee91"
                 },
                 {
                   "metricKey": "metricKey",
                   "definition": "",
                   "autoRollback": true,
+                  "analysisUnit": "analysisUnit",
                   "metricVersionId": "046b6c7f-0b8a-43b9-b35d-6489e6daee91"
                 }
               ],
@@ -84911,12 +84988,14 @@
                   "metricKey": "metricKey",
                   "definition": "",
                   "autoRollback": true,
+                  "analysisUnit": "analysisUnit",
                   "metricVersionId": "046b6c7f-0b8a-43b9-b35d-6489e6daee91"
                 },
                 {
                   "metricKey": "metricKey",
                   "definition": "",
                   "autoRollback": true,
+                  "analysisUnit": "analysisUnit",
                   "metricVersionId": "046b6c7f-0b8a-43b9-b35d-6489e6daee91"
                 }
               ],
