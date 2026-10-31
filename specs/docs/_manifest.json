@@ -12,7 +12,7 @@
     {
       "path": "llms.txt",
       "source": "https://launchdarkly.com/docs/llms.txt",
-      "bytes": 211395
+      "bytes": 208806
     },
     {
       "path": "api.md",
@@ -22,7 +22,7 @@
     {
       "path": "authentication.md",
       "source": "https://launchdarkly.com/docs/home/account/api.md",
-      "bytes": 6903
+      "bytes": 6914
     }
   ]
 }

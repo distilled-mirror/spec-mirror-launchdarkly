@@ -35,6 +35,8 @@ When you [create an access token](https://launchdarkly.com/docs/home/account/api
 >
 > API access tokens are secrets. If you share your access token with others, they may be able to use it to impersonate you, or perform actions with it that could later be attributed to you or your integration erroneously.
 
+> [card]
+>
 > You can also use the REST API: [Access tokens](https://launchdarkly.com/docs/api/access-tokens)
 
 ## Access token permissions

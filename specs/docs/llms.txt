@@ -271,22 +271,6 @@ Pricing information for LaunchDarkly plans is available at [https://launchdarkly
 - [Managing release pipelines](https://launchdarkly.com/docs/home/releases/release-pipelines-manage.md): This topic explains how to duplicate and manage release pipelines.
 - [Deleting release pipelines](https://launchdarkly.com/docs/home/releases/release-pipelines-delete.md): This topic explains how to delete release pipelines.
 
-### Engineering insights
-
-- [Engineering insights](https://launchdarkly.com/docs/home/releases/eng-insights.md): This category contains documentation topics about LaunchDarkly's engineering insights feature.
-- [Get started with engineering insights](https://launchdarkly.com/docs/home/releases/get-started.md): This topic explains how to set up projects, environments, and applications, and begin using engineering insights.
-- [Send deployment information](https://launchdarkly.com/docs/home/releases/config-deployment.md): This topic explains how to configure your app to send deployment information to LaunchDarkly.
-- [Install the GitHub app](https://launchdarkly.com/docs/home/releases/github-app.md): This topic explains how to install the GitHub app for engineering insights and how to associate repositories and projects.
-- [Set up code references](https://launchdarkly.com/docs/home/releases/code-refs.md): This topic explains how to set up code references for engineering insights.
-- [Applications in Engineering insights](https://launchdarkly.com/docs/home/releases/applications-eng-insights.md): This topic explains how to work with LaunchDarkly applications in engineering insights.
-- [Project overview](https://launchdarkly.com/docs/home/releases/project-overview.md): This topic explains how to use the engineering insights Overview page to evaluate LaunchDarkly project health at a high level.
-- [Project metrics](https://launchdarkly.com/docs/home/releases/project-metrics.md): This category contains documentation topics about LaunchDarkly's engineering insights project metrics.
-- [Deployments](https://launchdarkly.com/docs/home/releases/deployments.md): This topic explains how to use the deployments page in engineering insights.
-- [Releases](https://launchdarkly.com/docs/home/releases/releases.md): This topic explains how to use the releases page in engineering insights.
-- [Lead time](https://launchdarkly.com/docs/home/releases/lead-time.md): This topic explains how to use the lead time page in engineering insights.
-- [Flag health](https://launchdarkly.com/docs/home/releases/flag-health.md): This topic explains how to use the flag health page in engineering insights.
-- [Experimentation rate](https://launchdarkly.com/docs/home/releases/exp-rate.md): This topic explains how to use the Experimentation rate page in engineering insights.
-
 ### Release management tools
 
 - [Release management tools](https://launchdarkly.com/docs/home/releases/release-management.md): This category explains how you can more finely control your use of feature flags by release management tools within LaunchDarkly.
@@ -709,7 +693,6 @@ Pricing information for LaunchDarkly plans is available at [https://launchdarkly
 - [Building a metric import and sync integration](https://launchdarkly.com/docs/guides/metrics/build-metric.md): This guide explains how LaunchDarkly partners can use the REST API to build a metric import and sync integration.
 - [Example metrics](https://launchdarkly.com/docs/guides/metrics/example-metrics.md): This guide provides examples of metrics you can use with LaunchDarkly features such as Experimentation and guarded rollouts.
 - [Understanding LaunchDarkly metrics](https://launchdarkly.com/docs/guides/metrics/launchdarkly-metrics.md): This guide explains the different kinds of LaunchDarkly metrics and what you can use them for.
-- [Using metrics from engineering insights](https://launchdarkly.com/docs/guides/metrics/engineering-insights-metrics.md): This guide describes strategies for reviewing and responding to metrics from engineering insights.
 
 ### Infrastructure
 
