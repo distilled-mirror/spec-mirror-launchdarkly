@@ -14436,7 +14436,7 @@
           "Experiments"
         ],
         "summary": "Patch experiment",
-        "description": "Update an experiment. Updating an experiment uses the semantic patch format.\n\nTo make a semantic patch request, you must append `domain-model=launchdarkly.semanticpatch` to your `Content-Type` header. To learn more, read [Updates using semantic patch](https://launchdarkly.com/docs/api#updates-using-semantic-patch).\n\n### Instructions\n\nSemantic patch requests support the following `kind` instructions for updating experiments.\n\n#### updateName\n\n> **Deprecated**: `updateName` will be removed in a future version. Use `updateExperimentFields` instead.\n\nUpdates the experiment name.\n\n##### Parameters\n\n- `value`: The new name.\n\nHere's an example:\n\n```json\n{\n  \"instructions\": [{\n    \"kind\": \"updateName\",\n    \"value\": \"Example updated experiment name\"\n  }]\n}\n```\n\n#### updateDescription\n\n> **Deprecated**: `updateDescription` will be removed in a future version. Use `updateExperimentFields` instead.\n\nUpdates the experiment description.\n\n##### Parameters\n\n- `value`: The new description.\n\nHere's an example:\n\n```json\n{\n  \"instructions\": [{\n    \"kind\": \"updateDescription\",\n    \"value\": \"Example updated description\"\n  }]\n}\n```\n\n#### updateExperimentFields\n\nUpdates one or more fields on an experiment or its current iteration. Each field update specifies an operation (`add`, `update`, or `remove`) and an optional value.\n\nWhich fields are mutable depends on the current iteration status. To discover which fields and operations are allowed, expand `mutableFieldsByStatus` on the [Get experiment](https://launchdarkly.com/docs/api/experiments/get-experiment) response.\n\n##### Parameters\n\n- `value`: An object mapping field names to field updates. Each field update has the following properties:\n  - `operation`: The operation to perform. One of `add`, `update`, or `remove`.\n  - `value`: The new value for the field. Required for `add` and `update` operations.\n\nTo find which fields are supported and which operations are allowed for each iteration status, expand `mutableFieldsByStatus` on the [Get experiment](https://launchdarkly.com/docs/api/experiments/get-experiment) response.\n\nHere's an example:\n\n```json\n{\n  \"instructions\": [{\n    \"kind\": \"updateExperimentFields\",\n    \"value\": {\n      \"name\": {\n        \"operation\": \"update\",\n        \"value\": \"Updated experiment name\"\n      },\n      \"tags\": {\n        \"operation\": \"add\",\n        \"value\": [\"tag1\", \"tag2\"]\n      }\n    }\n  }]\n}\n```\n\n#### saveAndStartNewIteration\n\nStops the current running iteration, creates a new iteration from it, optionally applies field updates, and starts the new iteration. This is a convenience instruction that combines stopping, updating, and starting in a single operation.\n\n##### Parameters\n\n- `changeJustification`: (Optional) The reason for stopping and starting a new iteration.\n- `value`: (Optional) An object mapping field names to field updates, using the same format as `updateExperimentFields`. These updates are applied to the new iteration before it is started.\n\nHere's an example:\n\n```json\n{\n  \"instructions\": [{\n    \"kind\": \"saveAndStartNewIteration\",\n    \"changeJustification\": \"Adjusting hypothesis based on early results\",\n    \"value\": {\n      \"hypothesis\": {\n        \"operation\": \"update\",\n        \"value\": \"Updated hypothesis text\"\n      }\n    }\n  }]\n}\n```\n\n#### startIteration\n\nStarts a new iteration for this experiment. You must [create a new iteration](https://launchdarkly.com/docs/api/experiments/create-iteration) before calling this instruction.\n\nAn iteration may not be started until it meets the following criteria:\n\n* Its associated flag is toggled on and is not archived\n* Its `randomizationUnit` is set\n* At least one of its `treatments` has a non-zero `allocationPercent`\n\n##### Parameters\n\n- `changeJustification`: The reason for starting a new iteration. Required when you call `startIteration` on an already running experiment, otherwise optional.\n\nHere's an example:\n\n```json\n{\n  \"instructions\": [{\n    \"kind\": \"startIteration\",\n    \"changeJustification\": \"It's time to start a new iteration\"\n  }]\n}\n```\n\n#### stopIteration\n\nStops the current iteration for this experiment.\n\n##### Parameters\n\n- `winningTreatmentId`: The ID of the winning treatment. Treatment IDs are returned as part of the [Get experiment](https://launchdarkly.com/docs/api/experiments/get-experiment) response. They are the `_id` of each element in the `treatments` array.\n- `winningReason`: The reason for the winner\n\nHere's an example:\n\n```json\n{\n  \"instructions\": [{\n    \"kind\": \"stopIteration\",\n    \"winningTreatmentId\": \"3a548ec2-72ac-4e59-8518-5c24f5609ccf\",\n    \"winningReason\": \"Example reason to stop the iteration\"\n  }]\n}\n```\n\n#### archiveExperiment\n\nArchives this experiment. Archived experiments are hidden by default in the LaunchDarkly user interface. You cannot start new iterations for archived experiments.\n\nHere's an example:\n\n```json\n{\n  \"instructions\": [{ \"kind\": \"archiveExperiment\" }]\n}\n```\n\n#### restoreExperiment\n\nRestores an archived experiment. After restoring an experiment, you can start new iterations for it again.\n\nHere's an example:\n\n```json\n{\n  \"instructions\": [{ \"kind\": \"restoreExperiment\" }]\n}\n```\n",
+        "description": "Update an experiment. Updating an experiment uses the semantic patch format.\n\nTo make a semantic patch request, you must append `domain-model=launchdarkly.semanticpatch` to your `Content-Type` header. To learn more, read [Updates using semantic patch](https://launchdarkly.com/docs/api#updates-using-semantic-patch).\n\n### Instructions\n\nSemantic patch requests support the following `kind` instructions for updating experiments.\n\n#### updateName\n\n> **Deprecated**: `updateName` will be removed in a future version. Use `updateExperimentFields` instead.\n\nUpdates the experiment name.\n\n##### Parameters\n\n- `value`: The new name.\n\nHere's an example:\n\n```json\n{\n  \"instructions\": [{\n    \"kind\": \"updateName\",\n    \"value\": \"Example updated experiment name\"\n  }]\n}\n```\n\n#### updateDescription\n\n> **Deprecated**: `updateDescription` will be removed in a future version. Use `updateExperimentFields` instead.\n\nUpdates the experiment description.\n\n##### Parameters\n\n- `value`: The new description.\n\nHere's an example:\n\n```json\n{\n  \"instructions\": [{\n    \"kind\": \"updateDescription\",\n    \"value\": \"Example updated description\"\n  }]\n}\n```\n\n#### updateExperimentFields\n\nUpdates one or more fields on an experiment or its current iteration. Each field update specifies an operation (`add`, `update`, or `remove`) and an optional value.\n\nWhich fields are mutable depends on the current iteration status. To discover which fields and operations are allowed, expand `mutableFieldsByStatus` on the [Get experiment](https://launchdarkly.com/docs/api/experiments/get-experiment) response.\n\n##### Parameters\n\n- `value`: An object mapping field names to field updates. Each field update has the following properties:\n  - `operation`: The operation to perform. One of `add`, `update`, or `remove`.\n  - `value`: The new value for the field. Required for `add` and `update` operations.\n\nTo find which fields are supported and which operations are allowed for each iteration status, expand `mutableFieldsByStatus` on the [Get experiment](https://launchdarkly.com/docs/api/experiments/get-experiment) response.\n\nHere's an example:\n\n```json\n{\n  \"instructions\": [{\n    \"kind\": \"updateExperimentFields\",\n    \"value\": {\n      \"name\": {\n        \"operation\": \"update\",\n        \"value\": \"Updated experiment name\"\n      },\n      \"tags\": {\n        \"operation\": \"add\",\n        \"value\": [\"tag1\", \"tag2\"]\n      }\n    }\n  }]\n}\n```\n\n##### Custom assignment source fields\n\nIf your experiment reads its assignment data from your data warehouse, two additional fields control the assignment source it uses.\n\nUse `assignmentDataSource` to attach an assignment source to an iteration, change which source it points at, or detach it. Its value is an object with the following properties:\n\n- `key`: (Required) The key of the assignment data source.\n- `experimentId`: The experiment identifier in the assignment data source. You can omit this while the experiment is a draft, but you must set it before you start the experiment.\n- `startTime`: (Optional) The start of the assignment data window, in Unix milliseconds.\n- `endTime`: (Optional) The end of the assignment data window, in Unix milliseconds. This must be later than `startTime`.\n\nTo detach the assignment source, send `null` as the value. You can only change this field while the iteration is still a draft.\n\nUse `assignmentDataSourceWindow` to change only the dates on an assignment source that is already attached. Its value is an object with the same `startTime` and `endTime` properties. The iteration must already have an assignment source. This is how you adjust the dates after an iteration has run, because the source itself is fixed at that point.\n\nMulti-armed bandits use flags for assignment, so they support neither field.\n\nHere's an example:\n\n```json\n{\n  \"instructions\": [{\n    \"kind\": \"updateExperimentFields\",\n    \"value\": {\n      \"assignmentDataSource\": {\n        \"operation\": \"update\",\n        \"value\": {\n          \"key\": \"my-assignment-data-source\",\n          \"experimentId\": \"experiment-123\",\n          \"startTime\": 1690000000000,\n          \"endTime\": 1690600000000\n        }\n      }\n    }\n  }]\n}\n```\n\n#### saveAndStartNewIteration\n\nStops the current running iteration, creates a new iteration from it, optionally applies field updates, and starts the new iteration. This is a convenience instruction that combines stopping, updating, and starting in a single operation.\n\n##### Parameters\n\n- `changeJustification`: (Optional) The reason for stopping and starting a new iteration.\n- `value`: (Optional) An object mapping field names to field updates, using the same format as `updateExperimentFields`. These updates are applied to the new iteration before it is started.\n\nHere's an example:\n\n```json\n{\n  \"instructions\": [{\n    \"kind\": \"saveAndStartNewIteration\",\n    \"changeJustification\": \"Adjusting hypothesis based on early results\",\n    \"value\": {\n      \"hypothesis\": {\n        \"operation\": \"update\",\n        \"value\": \"Updated hypothesis text\"\n      }\n    }\n  }]\n}\n```\n\n#### startIteration\n\nStarts a new iteration for this experiment. You must [create a new iteration](https://launchdarkly.com/docs/api/experiments/create-iteration) before calling this instruction.\n\nAn iteration may not be started until it meets the following criteria:\n\n* Its associated flag is toggled on and is not archived\n* Its `randomizationUnit` is set\n* At least one of its `treatments` has a non-zero `allocationPercent`\n\n##### Parameters\n\n- `changeJustification`: The reason for starting a new iteration. Required when you call `startIteration` on an already running experiment, otherwise optional.\n\nHere's an example:\n\n```json\n{\n  \"instructions\": [{\n    \"kind\": \"startIteration\",\n    \"changeJustification\": \"It's time to start a new iteration\"\n  }]\n}\n```\n\n#### stopIteration\n\nStops the current iteration for this experiment.\n\n##### Parameters\n\n- `winningTreatmentId`: The ID of the winning treatment. Treatment IDs are returned as part of the [Get experiment](https://launchdarkly.com/docs/api/experiments/get-experiment) response. They are the `_id` of each element in the `treatments` array.\n- `winningReason`: The reason for the winner\n\nHere's an example:\n\n```json\n{\n  \"instructions\": [{\n    \"kind\": \"stopIteration\",\n    \"winningTreatmentId\": \"3a548ec2-72ac-4e59-8518-5c24f5609ccf\",\n    \"winningReason\": \"Example reason to stop the iteration\"\n  }]\n}\n```\n\n#### archiveExperiment\n\nArchives this experiment. Archived experiments are hidden by default in the LaunchDarkly user interface. You cannot start new iterations for archived experiments.\n\nHere's an example:\n\n```json\n{\n  \"instructions\": [{ \"kind\": \"archiveExperiment\" }]\n}\n```\n\n#### restoreExperiment\n\nRestores an archived experiment. After restoring an experiment, you can start new iterations for it again.\n\nHere's an example:\n\n```json\n{\n  \"instructions\": [{ \"kind\": \"restoreExperiment\" }]\n}\n```\n",
         "parameters": [
           {
             "name": "projectKey",
@@ -43861,6 +43861,34 @@
           }
         }
       },
+      "AssignmentDataSourceInput": {
+        "type": "object",
+        "required": [
+          "key"
+        ],
+        "properties": {
+          "key": {
+            "type": "string",
+            "description": "The key of the assignment data source to use for this iteration",
+            "example": "my-assignment-data-source"
+          },
+          "experimentId": {
+            "type": "string",
+            "description": "The experiment identifier in the assignment data source. You can omit this while the experiment is a draft, but it must be set before you start the experiment.",
+            "example": "experiment-123"
+          },
+          "startTime": {
+            "description": "The start of the assignment data window, in Unix milliseconds",
+            "example": "1690000000000",
+            "$ref": "#/components/schemas/UnixMillis"
+          },
+          "endTime": {
+            "description": "The end of the assignment data window, in Unix milliseconds",
+            "example": "1690000000000",
+            "$ref": "#/components/schemas/UnixMillis"
+          }
+        }
+      },
       "Audience": {
         "type": "object",
         "required": [
@@ -47954,6 +47982,19 @@
               "snowflake"
             ]
           },
+          "assignmentSourceType": {
+            "type": "string",
+            "description": "The source of assignment data for this experiment. Defaults to \"launchdarkly\" when not provided.",
+            "example": "snowflake",
+            "enum": [
+              "launchdarkly",
+              "snowflake",
+              "databricks",
+              "redshift",
+              "bigquery",
+              "clickhouse"
+            ]
+          },
           "archivedDate": {
             "description": "Timestamp of when the experiment was archived",
             "example": "1654104600000",
@@ -51209,6 +51250,41 @@
           }
         }
       },
+      "IterationAssignmentDataSourceRep": {
+        "type": "object",
+        "required": [
+          "key",
+          "name",
+          "experimentId"
+        ],
+        "properties": {
+          "key": {
+            "type": "string",
+            "description": "The key of the assignment data source used for this iteration",
+            "example": "my-assignment-data-source"
+          },
+          "name": {
+            "type": "string",
+            "description": "The display name of the assignment data source",
+            "example": "Snowflake production assignments"
+          },
+          "experimentId": {
+            "type": "string",
+            "description": "The experiment identifier in the assignment data source",
+            "example": "experiment-123"
+          },
+          "startTime": {
+            "description": "The start of the assignment data window, in Unix milliseconds",
+            "example": "1690000000000",
+            "$ref": "#/components/schemas/UnixMillis"
+          },
+          "endTime": {
+            "description": "The end of the assignment data window, in Unix milliseconds",
+            "example": "1690000000000",
+            "$ref": "#/components/schemas/UnixMillis"
+          }
+        }
+      },
       "IterationInput": {
         "type": "object",
         "required": [
@@ -51250,6 +51326,10 @@
             "description": "Details on the feature flag and targeting rules for this iteration",
             "example": "{\"example-flag-key\": { \"ruleId\": \"e432f62b-55f6-49dd-a02f-eb24acf39d05\", \"flagConfigVersion\": 12, \"notInExperimentVariationId\": \"e432f62b-55f6-49dd-a02f-eb24acf39d05\" }}",
             "$ref": "#/components/schemas/FlagsInput"
+          },
+          "assignmentDataSource": {
+            "description": "Details on the custom assignment data source configuration for this iteration",
+            "$ref": "#/components/schemas/AssignmentDataSourceInput"
           },
           "randomizationUnit": {
             "type": "string",
@@ -51408,6 +51488,10 @@
           "covariateInfo": {
             "description": "Details of the covariate file for stratified sampling",
             "$ref": "#/components/schemas/CovariateInfoRep"
+          },
+          "assignmentDataSource": {
+            "description": "The custom assignment data source configuration for this iteration",
+            "$ref": "#/components/schemas/IterationAssignmentDataSourceRep"
           }
         }
       },
@@ -56708,6 +56792,11 @@
             "items": {
               "$ref": "#/components/schemas/TreatmentParameterInput"
             }
+          },
+          "assignmentVariantId": {
+            "type": "string",
+            "description": "The variant identifier in the warehouse-native assignment source that maps to this treatment",
+            "example": "treatment-1"
           }
         }
       },
@@ -56763,6 +56852,11 @@
             "items": {
               "$ref": "#/components/schemas/ParameterRep"
             }
+          },
+          "assignmentVariantId": {
+            "type": "string",
+            "description": "The variant identifier in the warehouse-native assignment source that maps to this treatment",
+            "example": "treatment_a"
           }
         }
       },
