@@ -62575,6 +62575,7 @@
                       "ownerKind": "ownerKind"
                     }
                   ],
+                  "_id": "_id",
                   "trackEvents": true
                 },
                 {
@@ -62624,6 +62625,7 @@
                       "ownerKind": "ownerKind"
                     }
                   ],
+                  "_id": "_id",
                   "trackEvents": true
                 }
               ],
@@ -63684,6 +63686,7 @@
                   "ownerKind": "ownerKind"
                 }
               ],
+              "_id": "_id",
               "trackEvents": true
             },
             {
@@ -63733,6 +63736,7 @@
                   "ownerKind": "ownerKind"
                 }
               ],
+              "_id": "_id",
               "trackEvents": true
             }
           ],
@@ -64091,9 +64095,14 @@
               "ownerKind": "ownerKind"
             }
           ],
+          "_id": "_id",
           "trackEvents": true
         },
         "properties": {
+          "_id": {
+            "description": "The rule ID. Pass it as ruleId in targeting instructions that change this rule.",
+            "type": "string"
+          },
           "clauses": {
             "description": "The clauses a context must match",
             "items": {
@@ -64107,6 +64116,7 @@
           }
         },
         "required": [
+          "_id",
           "clauses",
           "trackEvents"
         ],
