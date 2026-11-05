@@ -6,7 +6,7 @@
     "version": "3.0.3",
     "title": "LaunchDarkly REST API",
     "infoVersion": "2.0",
-    "paths": 256
+    "paths": 258
   },
   "docs": [
     {
