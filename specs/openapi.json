@@ -32995,6 +32995,17 @@
               "type": "string"
             },
             "style": "form"
+          },
+          {
+            "description": "A sort to apply to the list of agent skills. Use `usedIn` to sort by the number of AgentControl configs that use each skill, fewest first, or `-usedIn` for most first. Without a sort, skills are ordered by creation date, newest first.",
+            "explode": true,
+            "in": "query",
+            "name": "sort",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "style": "form"
           }
         ],
         "responses": {
