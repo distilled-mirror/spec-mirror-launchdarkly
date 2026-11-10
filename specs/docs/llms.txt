@@ -49,7 +49,6 @@ Pricing information for LaunchDarkly plans is available at [https://launchdarkly
 - [Using the LaunchDarkly developer toolbar](https://launchdarkly.com/docs/home/getting-started/dev-toolbar-using.md): This topic describes how to use the LaunchDarkly developer toolbar.
 - [LaunchDarkly agent skills](https://launchdarkly.com/docs/home/getting-started/skills.md): This topic describes the AI agent skills that LaunchDarkly offers for various AI applications.
 - [IDE connectors and agents](https://launchdarkly.com/docs/home/getting-started/ide.md): This category lists integrated development environment (IDE) connector integrations and agents for third-party apps.
-- [IntelliJ IDEA](https://launchdarkly.com/docs/home/getting-started/intellij.md): This topic explains how to use the LaunchDarkly IntelliJ IDEA plugin to interact with feature flags from within IntelliJ IDEs.
 - [LaunchDarkly extension for GitHub Copilot](https://launchdarkly.com/docs/home/getting-started/github-copilot-extension.md): This topic links to documentation on using the LaunchDarkly extension for GitHub Copilot on Visual Studio Marketplace.
 - [Visual Studio Code (VSCode)](https://launchdarkly.com/docs/home/getting-started/vscode.md): This topic explains how to use the LaunchDarkly VSCode extension to interact with feature flags from within VSCode.
 - [Flag cleanup custom agent for GitHub Copilot](https://launchdarkly.com/docs/home/getting-started/github-copilot-agent.md): This topic describes how to install and use the LaunchDarkly flag cleanup custom agent for GitHub Copilot.

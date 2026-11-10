@@ -52135,7 +52135,7 @@
           },
           "attributes": {
             "type": "array",
-            "description": "The available attribute filters for this iteration",
+            "description": "The attributes this iteration slices results by, whose values come from flag evaluation events.",
             "items": {
               "type": "string"
             }
