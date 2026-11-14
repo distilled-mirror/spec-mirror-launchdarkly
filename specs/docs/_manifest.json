@@ -6,13 +6,13 @@
     "version": "3.0.3",
     "title": "LaunchDarkly REST API",
     "infoVersion": "2.0",
-    "paths": 258
+    "paths": 260
   },
   "docs": [
     {
       "path": "llms.txt",
       "source": "https://launchdarkly.com/docs/llms.txt",
-      "bytes": 208596
+      "bytes": 211005
     },
     {
       "path": "api.md",

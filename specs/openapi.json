@@ -126,6 +126,10 @@
       "description": "> ### This feature is in beta\n>\n> To use this feature, pass in a header including the `LD-API-Version` key with value set to `beta`. Use this header with each call. To learn more, read [Beta resources](https://launchdarkly.com/docs/api#beta-resources).\n>\n> Resources that are in beta are still undergoing testing and development. They may change without notice, including becoming backwards incompatible.\n\nFlag links let you view external mentions of flags from other tools and services. Links to external conversations and references to your flags allow you to collaborate more easily and quickly review relevant flag contexts. To learn more, read [Flag links](https://launchdarkly.com/docs/home/flags/links).\n\nYou can create custom flag links by associating an external URL with a feature flag. After you create a flag link, it applies across all your environments. You should use caution when you delete a flag link, because it will be deleted from all your environments.\n\nWith the flag links API, you can view, create, update, and delete links to flags.\n\nSeveral of the endpoints in the flag links API require a flag link ID. The flag link ID is returned as part of the [Create flag link](https://launchdarkly.com/docs/api/flag-links-beta/create-flag-link) and [List flag links](https://launchdarkly.com/docs/api/flag-links-beta/get-flag-links) responses. It is the `_id` field, or the `_id` field of each element in the `items` array.\n"
     },
     {
+      "name": "Flag release plans (beta)",
+      "description": "> ### This feature is in beta\n>\n> To use this feature, pass in a header including the `LD-API-Version` key with value set to `beta`. Use this header with each call. To learn more, read [Beta resources](https://launchdarkly.com/docs/api#beta-resources).\n>\n> Resources that are in beta are still undergoing testing and development. They may change without notice, including becoming backwards incompatible.\n\nA flag release plan is a reusable release configuration for a flag across the environments in a project. It lists the environments to release to, the order to release them in, and how each one releases: either immediately or by running one of that environment's [environment release plans](https://launchdarkly.com/docs/api/environment-release-plans-beta). Each environment also has a trigger that starts its release, such as a manual start or a promotion from the previous environment. A project can have one default flag release plan.\n\nUse the flag release plans API to create, list, view, update, and delete the flag release plans in a project.\n"
+    },
+    {
       "name": "Flag triggers",
       "description": "> ### Flag triggers is an Enterprise feature\n>\n> Flag triggers is available to customers on an Enterprise plan. To learn more, [read about our pricing](https://launchdarkly.com/pricing/). To upgrade your plan, [contact Sales](https://launchdarkly.com/contact-sales/).\n\nFlag triggers let you initiate flag changes remotely using a unique webhook URL. For example, you can integrate triggers with your existing tools to enable or disable flags when you hit specific operational health thresholds or receive certain alerts. To learn more, read [Flag triggers](https://launchdarkly.com/docs/home/releases/triggers).\n\nWith the flag triggers API, you can create, delete, and manage triggers.\n\nSeveral of the endpoints in the flag triggers API require a flag trigger ID. The flag trigger ID is returned as part of the [Create flag trigger](https://launchdarkly.com/docs/api/flag-triggers/create-trigger-workflow) and [List flag triggers](https://launchdarkly.com/docs/api/flag-triggers/get-trigger-workflows) responses. It is the `_id` field, or the `_id` field of each element in the `items` array.\n"
     },
@@ -34145,7 +34149,7 @@
     },
     "/api/v2/projects/{projectKey}/agent-optimizations": {
       "get": {
-        "description": "Get a list of all agent optimizations in the given project.",
+        "description": "Get a list of all agent optimizations in the given project.\n\n### Filtering optimizations\n\nThe `filter` parameter supports the following fields and operators:\n\n- `query` with the `equals` operator: case-insensitive substring match on the optimization key, label, or AgentControl config key.\n- `aiConfigKey` with the `equals` operator: exact match on the key of the AgentControl config being optimized.\n\nSeparate multiple fields with a comma, for example `filter=aiConfigKey equals \"my-agent\",query equals \"tone\"`.\n",
         "operationId": "listAgentOptimizations",
         "parameters": [
           {
@@ -38823,6 +38827,568 @@
         "summary": "Set the default release plan",
         "tags": [
           "Environment release plans (beta)"
+        ]
+      }
+    },
+    "/api/v2/projects/{projectKey}/flag-release-plans": {
+      "get": {
+        "description": "List a project's flag release plans, in creation order.",
+        "operationId": "listFlagReleasePlans",
+        "parameters": [
+          {
+            "description": "Version of the endpoint.",
+            "explode": false,
+            "in": "header",
+            "name": "LD-API-Version",
+            "required": true,
+            "schema": {
+              "enum": [
+                "beta"
+              ],
+              "type": "string"
+            },
+            "style": "simple"
+          },
+          {
+            "explode": false,
+            "in": "path",
+            "name": "projectKey",
+            "required": true,
+            "schema": {
+              "minLength": 1,
+              "type": "string"
+            },
+            "style": "simple"
+          },
+          {
+            "description": "The number of flag release plans to return.",
+            "explode": true,
+            "in": "query",
+            "name": "limit",
+            "required": false,
+            "schema": {
+              "default": 25,
+              "maximum": 50,
+              "minimum": 1,
+              "type": "integer"
+            },
+            "style": "form"
+          },
+          {
+            "description": "The number of flag release plans to skip. Used for pagination.",
+            "explode": true,
+            "in": "query",
+            "name": "offset",
+            "required": false,
+            "schema": {
+              "default": 0,
+              "minimum": 0,
+              "type": "integer"
+            },
+            "style": "form"
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ListFlagReleasePlansResponse"
+                }
+              }
+            },
+            "description": "Flag release plans found."
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FlagReleasePlansError"
+                }
+              }
+            },
+            "description": "Invalid request"
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FlagReleasePlansError"
+                }
+              }
+            },
+            "description": "Missing authenticated account identity"
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FlagReleasePlansError"
+                }
+              }
+            },
+            "description": "The caller may not act on this account or project"
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FlagReleasePlansError"
+                }
+              }
+            },
+            "description": "No such project or rollout config"
+          },
+          "500": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FlagReleasePlansError"
+                }
+              }
+            },
+            "description": "Internal Server Error"
+          }
+        },
+        "summary": "List a project's flag release plans",
+        "tags": [
+          "Flag release plans (beta)"
+        ]
+      },
+      "post": {
+        "description": "Creates a flag release plan. The key must not be in use by another\nactive plan in the project, or the request is rejected with 409.\nThe request is rejected with 400 when an environment isn't in the\nproject, the maintainer isn't in the account, an environment release\nplan doesn't exist, is incomplete, or is in another environment,\n`default` is set while the project already has a default plan, or the\nproject already has the maximum number of plans. To make a new plan\nthe project's default, create it, then update it with `default` set,\nwhich demotes the current default.\n",
+        "operationId": "createFlagReleasePlan",
+        "parameters": [
+          {
+            "description": "Version of the endpoint.",
+            "explode": false,
+            "in": "header",
+            "name": "LD-API-Version",
+            "required": true,
+            "schema": {
+              "enum": [
+                "beta"
+              ],
+              "type": "string"
+            },
+            "style": "simple"
+          },
+          {
+            "explode": false,
+            "in": "path",
+            "name": "projectKey",
+            "required": true,
+            "schema": {
+              "minLength": 1,
+              "type": "string"
+            },
+            "style": "simple"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateFlagReleasePlanRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FlagReleasePlan"
+                }
+              }
+            },
+            "description": "Flag release plan created."
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FlagReleasePlansError"
+                }
+              }
+            },
+            "description": "Invalid request"
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FlagReleasePlansError"
+                }
+              }
+            },
+            "description": "Missing authenticated account identity"
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FlagReleasePlansError"
+                }
+              }
+            },
+            "description": "The caller may not act on this account or project"
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FlagReleasePlansError"
+                }
+              }
+            },
+            "description": "No such project or rollout config"
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FlagReleasePlansError"
+                }
+              }
+            },
+            "description": "The request conflicts with the current state of the rollout config"
+          },
+          "500": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FlagReleasePlansError"
+                }
+              }
+            },
+            "description": "Internal Server Error"
+          }
+        },
+        "summary": "Create a flag release plan for a project",
+        "tags": [
+          "Flag release plans (beta)"
+        ]
+      }
+    },
+    "/api/v2/projects/{projectKey}/flag-release-plans/{planKey}": {
+      "delete": {
+        "description": "Delete a flag release plan in a project.",
+        "operationId": "deleteFlagReleasePlan",
+        "parameters": [
+          {
+            "description": "Version of the endpoint.",
+            "explode": false,
+            "in": "header",
+            "name": "LD-API-Version",
+            "required": true,
+            "schema": {
+              "enum": [
+                "beta"
+              ],
+              "type": "string"
+            },
+            "style": "simple"
+          },
+          {
+            "explode": false,
+            "in": "path",
+            "name": "projectKey",
+            "required": true,
+            "schema": {
+              "minLength": 1,
+              "type": "string"
+            },
+            "style": "simple"
+          },
+          {
+            "explode": false,
+            "in": "path",
+            "name": "planKey",
+            "required": true,
+            "schema": {
+              "minLength": 1,
+              "type": "string"
+            },
+            "style": "simple"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Flag release plan deleted."
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FlagReleasePlansError"
+                }
+              }
+            },
+            "description": "Missing authenticated account identity"
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FlagReleasePlansError"
+                }
+              }
+            },
+            "description": "The caller may not act on this account or project"
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FlagReleasePlansError"
+                }
+              }
+            },
+            "description": "No such project or rollout config"
+          },
+          "500": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FlagReleasePlansError"
+                }
+              }
+            },
+            "description": "Internal Server Error"
+          }
+        },
+        "summary": "Delete a flag release plan in a project",
+        "tags": [
+          "Flag release plans (beta)"
+        ]
+      },
+      "get": {
+        "description": "Get a flag release plan in a project by plan key.",
+        "operationId": "getFlagReleasePlan",
+        "parameters": [
+          {
+            "description": "Version of the endpoint.",
+            "explode": false,
+            "in": "header",
+            "name": "LD-API-Version",
+            "required": true,
+            "schema": {
+              "enum": [
+                "beta"
+              ],
+              "type": "string"
+            },
+            "style": "simple"
+          },
+          {
+            "explode": false,
+            "in": "path",
+            "name": "projectKey",
+            "required": true,
+            "schema": {
+              "minLength": 1,
+              "type": "string"
+            },
+            "style": "simple"
+          },
+          {
+            "explode": false,
+            "in": "path",
+            "name": "planKey",
+            "required": true,
+            "schema": {
+              "minLength": 1,
+              "type": "string"
+            },
+            "style": "simple"
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FlagReleasePlan"
+                }
+              }
+            },
+            "description": "Flag release plan found."
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FlagReleasePlansError"
+                }
+              }
+            },
+            "description": "Missing authenticated account identity"
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FlagReleasePlansError"
+                }
+              }
+            },
+            "description": "The caller may not act on this account or project"
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FlagReleasePlansError"
+                }
+              }
+            },
+            "description": "No such project or rollout config"
+          },
+          "500": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FlagReleasePlansError"
+                }
+              }
+            },
+            "description": "Internal Server Error"
+          }
+        },
+        "summary": "Get a flag release plan in a project by plan key",
+        "tags": [
+          "Flag release plans (beta)"
+        ]
+      },
+      "put": {
+        "description": "Replace a flag release plan configuration in a project. This is a\nfull replace, not a merge, and anything omitted is overwritten.\nOmitting `default` clears it, so a request without it demotes the\nproject's default plan. The flag release plan's key is immutable, and\nits version increments by 1 on every successful update. The request's\nversion is an optional optimistic lock: when present it must match the\nplan's current version, and on mismatch the request is rejected with\n409 and no changes are applied, meaning the plan was edited since it\nwas read; get the plan again and retry with its current version. When\nomitted the update applies unconditionally to the plan currently\nholding the key. A flag release already started from the plan is not\naffected.\n",
+        "operationId": "updateFlagReleasePlan",
+        "parameters": [
+          {
+            "description": "Version of the endpoint.",
+            "explode": false,
+            "in": "header",
+            "name": "LD-API-Version",
+            "required": true,
+            "schema": {
+              "enum": [
+                "beta"
+              ],
+              "type": "string"
+            },
+            "style": "simple"
+          },
+          {
+            "explode": false,
+            "in": "path",
+            "name": "projectKey",
+            "required": true,
+            "schema": {
+              "minLength": 1,
+              "type": "string"
+            },
+            "style": "simple"
+          },
+          {
+            "explode": false,
+            "in": "path",
+            "name": "planKey",
+            "required": true,
+            "schema": {
+              "minLength": 1,
+              "type": "string"
+            },
+            "style": "simple"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PutFlagReleasePlanRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FlagReleasePlan"
+                }
+              }
+            },
+            "description": "Flag release plan updated."
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FlagReleasePlansError"
+                }
+              }
+            },
+            "description": "Invalid request"
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FlagReleasePlansError"
+                }
+              }
+            },
+            "description": "Missing authenticated account identity"
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FlagReleasePlansError"
+                }
+              }
+            },
+            "description": "The caller may not act on this account or project"
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FlagReleasePlansError"
+                }
+              }
+            },
+            "description": "No such project or rollout config"
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FlagReleasePlansError"
+                }
+              }
+            },
+            "description": "The request conflicts with the current state of the rollout config"
+          },
+          "500": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FlagReleasePlansError"
+                }
+              }
+            },
+            "description": "Internal Server Error"
+          }
+        },
+        "summary": "Replace a flag release plan configuration in a project",
+        "tags": [
+          "Flag release plans (beta)"
         ]
       }
     },
@@ -82612,340 +83178,6 @@
         "title": "ExpandedLinkedResourcesItems",
         "type": "object"
       },
-      "ReleasePoliciesAccessRep": {
-        "allOf": [
-          {
-            "$ref": "#/components/schemas/ReleasePoliciesAccess"
-          }
-        ],
-        "example": {
-          "allowed": [
-            {
-              "reason": {
-                "role_name": "role_name",
-                "notActions": [
-                  null,
-                  null
-                ],
-                "notResources": [
-                  "notResources",
-                  "notResources"
-                ],
-                "effect": "allow",
-                "resources": [
-                  "proj/*:env/*;qa_*:/flag/*"
-                ],
-                "actions": [
-                  "*"
-                ]
-              },
-              "action": "action"
-            },
-            {
-              "reason": {
-                "role_name": "role_name",
-                "notActions": [
-                  null,
-                  null
-                ],
-                "notResources": [
-                  "notResources",
-                  "notResources"
-                ],
-                "effect": "allow",
-                "resources": [
-                  "proj/*:env/*;qa_*:/flag/*"
-                ],
-                "actions": [
-                  "*"
-                ]
-              },
-              "action": "action"
-            }
-          ],
-          "denied": [
-            {
-              "reason": {
-                "role_name": "role_name",
-                "notActions": [
-                  null,
-                  null
-                ],
-                "notResources": [
-                  "notResources",
-                  "notResources"
-                ],
-                "effect": "allow",
-                "resources": [
-                  "proj/*:env/*;qa_*:/flag/*"
-                ],
-                "actions": [
-                  "*"
-                ]
-              },
-              "action": "action"
-            },
-            {
-              "reason": {
-                "role_name": "role_name",
-                "notActions": [
-                  null,
-                  null
-                ],
-                "notResources": [
-                  "notResources",
-                  "notResources"
-                ],
-                "effect": "allow",
-                "resources": [
-                  "proj/*:env/*;qa_*:/flag/*"
-                ],
-                "actions": [
-                  "*"
-                ]
-              },
-              "action": "action"
-            }
-          ]
-        }
-      },
-      "ReleasePoliciesAccess": {
-        "properties": {
-          "denied": {
-            "items": {
-              "$ref": "#/components/schemas/ReleasePoliciesAccessDenied"
-            },
-            "type": "array"
-          },
-          "allowed": {
-            "items": {
-              "$ref": "#/components/schemas/ReleasePoliciesAccessAllowedRep"
-            },
-            "type": "array"
-          }
-        },
-        "required": [
-          "allowed",
-          "denied"
-        ],
-        "type": "object"
-      },
-      "ReleasePoliciesAccessDenied": {
-        "example": {
-          "reason": {
-            "role_name": "role_name",
-            "notActions": [
-              null,
-              null
-            ],
-            "notResources": [
-              "notResources",
-              "notResources"
-            ],
-            "effect": "allow",
-            "resources": [
-              "proj/*:env/*;qa_*:/flag/*"
-            ],
-            "actions": [
-              "*"
-            ]
-          },
-          "action": "action"
-        },
-        "properties": {
-          "action": {
-            "type": "string"
-          },
-          "reason": {
-            "$ref": "#/components/schemas/ReleasePoliciesAccessDeniedReason"
-          }
-        },
-        "required": [
-          "action",
-          "reason"
-        ],
-        "type": "object"
-      },
-      "ReleasePoliciesAccessDeniedReason": {
-        "example": {
-          "role_name": "role_name",
-          "notActions": [
-            null,
-            null
-          ],
-          "notResources": [
-            "notResources",
-            "notResources"
-          ],
-          "effect": "allow",
-          "resources": [
-            "proj/*:env/*;qa_*:/flag/*"
-          ],
-          "actions": [
-            "*"
-          ]
-        },
-        "properties": {
-          "resources": {
-            "description": "Resource specifier strings",
-            "example": [
-              "proj/*:env/*;qa_*:/flag/*"
-            ],
-            "items": {
-              "type": "string"
-            },
-            "type": "array"
-          },
-          "notResources": {
-            "description": "Targeted resources are the resources NOT in this list. The <code>resources</code> and <code>notActions</code> fields must be empty to use this field.",
-            "items": {
-              "type": "string"
-            },
-            "type": "array"
-          },
-          "actions": {
-            "description": "Actions to perform on a resource",
-            "example": [
-              "*"
-            ],
-            "items": {
-              "$ref": "#/components/schemas/ActionSpecifier"
-            },
-            "type": "array"
-          },
-          "notActions": {
-            "description": "Targeted actions are the actions NOT in this list. The <code>actions</code> and <code>notResources</code> fields must be empty to use this field.",
-            "items": {
-              "$ref": "#/components/schemas/ActionSpecifier"
-            },
-            "type": "array"
-          },
-          "effect": {
-            "description": "Whether this statement should allow or deny actions on the resources.",
-            "enum": [
-              "allow",
-              "deny"
-            ],
-            "example": "allow",
-            "type": "string"
-          },
-          "role_name": {
-            "type": "string"
-          }
-        },
-        "required": [
-          "effect"
-        ],
-        "type": "object"
-      },
-      "ReleasePoliciesAccessAllowedRep": {
-        "example": {
-          "reason": {
-            "role_name": "role_name",
-            "notActions": [
-              null,
-              null
-            ],
-            "notResources": [
-              "notResources",
-              "notResources"
-            ],
-            "effect": "allow",
-            "resources": [
-              "proj/*:env/*;qa_*:/flag/*"
-            ],
-            "actions": [
-              "*"
-            ]
-          },
-          "action": "action"
-        },
-        "properties": {
-          "action": {
-            "type": "string"
-          },
-          "reason": {
-            "$ref": "#/components/schemas/ReleasePoliciesAccessAllowedReason"
-          }
-        },
-        "required": [
-          "action",
-          "reason"
-        ],
-        "type": "object"
-      },
-      "ReleasePoliciesAccessAllowedReason": {
-        "example": {
-          "role_name": "role_name",
-          "notActions": [
-            null,
-            null
-          ],
-          "notResources": [
-            "notResources",
-            "notResources"
-          ],
-          "effect": "allow",
-          "resources": [
-            "proj/*:env/*;qa_*:/flag/*"
-          ],
-          "actions": [
-            "*"
-          ]
-        },
-        "properties": {
-          "resources": {
-            "description": "Resource specifier strings",
-            "example": [
-              "proj/*:env/*;qa_*:/flag/*"
-            ],
-            "items": {
-              "type": "string"
-            },
-            "type": "array"
-          },
-          "notResources": {
-            "description": "Targeted resources are the resources NOT in this list. The <code>resources</code> and <code>notActions</code> fields must be empty to use this field.",
-            "items": {
-              "type": "string"
-            },
-            "type": "array"
-          },
-          "actions": {
-            "description": "Actions to perform on a resource",
-            "example": [
-              "*"
-            ],
-            "items": {
-              "$ref": "#/components/schemas/ActionSpecifier"
-            },
-            "type": "array"
-          },
-          "notActions": {
-            "description": "Targeted actions are the actions NOT in this list. The <code>actions</code> and <code>notResources</code> fields must be empty to use this field.",
-            "items": {
-              "$ref": "#/components/schemas/ActionSpecifier"
-            },
-            "type": "array"
-          },
-          "effect": {
-            "description": "Whether this statement should allow or deny actions on the resources.",
-            "enum": [
-              "allow",
-              "deny"
-            ],
-            "example": "allow",
-            "type": "string"
-          },
-          "role_name": {
-            "type": "string"
-          }
-        },
-        "required": [
-          "effect"
-        ],
-        "type": "object"
-      },
       "ReleaseType": {
         "description": "Whether the release uses metric monitoring.",
         "enum": [
@@ -85865,6 +86097,602 @@
         "type": "object"
       },
       "EnvironmentReleasePlansLink": {
+        "example": {
+          "href": "href",
+          "type": "type"
+        },
+        "properties": {
+          "href": {
+            "type": "string"
+          },
+          "type": {
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "FlagReleasePlansError": {
+        "example": {
+          "code": "code",
+          "message": "message"
+        },
+        "properties": {
+          "message": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "code": {
+            "minLength": 1,
+            "type": "string"
+          }
+        },
+        "required": [
+          "code",
+          "message"
+        ],
+        "type": "object"
+      },
+      "MaintainerResponse": {
+        "description": "The flag's maintainer, either a member or a team.",
+        "discriminator": {
+          "mapping": {
+            "member": "#/components/schemas/MaintainerResponseMember",
+            "team": "#/components/schemas/MaintainerResponseTeam"
+          },
+          "propertyName": "kind"
+        },
+        "oneOf": [
+          {
+            "$ref": "#/components/schemas/MaintainerResponseMember"
+          },
+          {
+            "$ref": "#/components/schemas/MaintainerResponseTeam"
+          }
+        ]
+      },
+      "MaintainerResponseMember": {
+        "example": {
+          "firstName": "firstName",
+          "lastName": "lastName",
+          "kind": "member",
+          "email": "email",
+          "memberId": "memberId"
+        },
+        "properties": {
+          "kind": {
+            "enum": [
+              "member"
+            ],
+            "type": "string"
+          },
+          "memberId": {
+            "type": "string"
+          },
+          "firstName": {
+            "type": "string"
+          },
+          "lastName": {
+            "type": "string"
+          },
+          "email": {
+            "description": "The member's email, used to show their avatar.",
+            "type": "string"
+          }
+        },
+        "required": [
+          "kind"
+        ],
+        "type": "object"
+      },
+      "MaintainerResponseTeam": {
+        "properties": {
+          "kind": {
+            "enum": [
+              "team"
+            ],
+            "type": "string"
+          },
+          "key": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "kind"
+        ],
+        "type": "object"
+      },
+      "ExecutionMode": {
+        "default": "sequential",
+        "description": "`sequential` releases environments in array order. `parallel` is not accepted on create or update; it is only returned for plans and releases created with it.",
+        "enum": [
+          "sequential",
+          "parallel"
+        ],
+        "type": "string"
+      },
+      "TriggerType": {
+        "enum": [
+          "flag_eval",
+          "webhook",
+          "manual",
+          "promotion"
+        ],
+        "type": "string"
+      },
+      "MaintainerIdentifier": {
+        "description": "The maintainer to assign, either a member or a team.",
+        "discriminator": {
+          "mapping": {
+            "member": "#/components/schemas/MaintainerIdentifierMember",
+            "team": "#/components/schemas/MaintainerIdentifierTeam"
+          },
+          "propertyName": "kind"
+        },
+        "oneOf": [
+          {
+            "$ref": "#/components/schemas/MaintainerIdentifierMember"
+          },
+          {
+            "$ref": "#/components/schemas/MaintainerIdentifierTeam"
+          }
+        ]
+      },
+      "MaintainerIdentifierMember": {
+        "example": {
+          "kind": "member",
+          "memberId": "memberId"
+        },
+        "properties": {
+          "kind": {
+            "enum": [
+              "member"
+            ],
+            "type": "string"
+          },
+          "memberId": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "kind",
+          "memberId"
+        ],
+        "type": "object"
+      },
+      "MaintainerIdentifierTeam": {
+        "properties": {
+          "kind": {
+            "enum": [
+              "team"
+            ],
+            "type": "string"
+          },
+          "teamKey": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "kind",
+          "teamKey"
+        ],
+        "type": "object"
+      },
+      "FlagReleasePlanEnvironment": {
+        "example": {
+          "environmentReleasePlanKey": "environmentReleasePlanKey",
+          "isImmediate": true,
+          "triggerType": "flag_eval",
+          "environmentKey": "environmentKey"
+        },
+        "properties": {
+          "environmentKey": {
+            "type": "string"
+          },
+          "environmentReleasePlanKey": {
+            "description": "The environment release plan to run. Omitted for an immediate release.",
+            "type": "string"
+          },
+          "isImmediate": {
+            "type": "boolean"
+          },
+          "triggerType": {
+            "$ref": "#/components/schemas/TriggerType"
+          }
+        },
+        "required": [
+          "environmentKey",
+          "triggerType"
+        ],
+        "type": "object"
+      },
+      "FlagReleasePlan": {
+        "example": {
+          "applicationKeys": [
+            "applicationKeys",
+            "applicationKeys"
+          ],
+          "default": false,
+          "environments": [
+            {
+              "environmentReleasePlanKey": "environmentReleasePlanKey",
+              "isImmediate": true,
+              "triggerType": "flag_eval",
+              "environmentKey": "environmentKey"
+            },
+            {
+              "environmentReleasePlanKey": "environmentReleasePlanKey",
+              "isImmediate": true,
+              "triggerType": "flag_eval",
+              "environmentKey": "environmentKey"
+            }
+          ],
+          "name": "name",
+          "description": "description",
+          "executionMode": "sequential",
+          "_id": "046b6c7f-0b8a-43b9-b35d-6489e6daee91",
+          "version": 0,
+          "key": "key",
+          "maintainer": {
+            "firstName": "firstName",
+            "lastName": "lastName",
+            "kind": "member",
+            "email": "email",
+            "memberId": "memberId"
+          }
+        },
+        "properties": {
+          "key": {
+            "type": "string"
+          },
+          "_id": {
+            "format": "uuid",
+            "type": "string"
+          },
+          "version": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "name": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "maintainer": {
+            "$ref": "#/components/schemas/MaintainerResponse"
+          },
+          "executionMode": {
+            "$ref": "#/components/schemas/ExecutionMode"
+          },
+          "applicationKeys": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "default": {
+            "default": false,
+            "description": "Whether this plan is the project's default. At most one active plan per project is the default.",
+            "type": "boolean"
+          },
+          "environments": {
+            "items": {
+              "$ref": "#/components/schemas/FlagReleasePlanEnvironment"
+            },
+            "type": "array"
+          }
+        },
+        "required": [
+          "_id",
+          "default",
+          "environments",
+          "key",
+          "name",
+          "version"
+        ],
+        "type": "object"
+      },
+      "CreateFlagReleasePlanRequest": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/FlagReleasePlanRequest"
+          },
+          {
+            "properties": {
+              "key": {
+                "maxLength": 256,
+                "minLength": 1,
+                "pattern": "^[a-zA-Z0-9][._\\-a-zA-Z0-9]*$",
+                "type": "string"
+              }
+            },
+            "required": [
+              "key"
+            ],
+            "type": "object"
+          }
+        ],
+        "example": {
+          "applicationKeys": [
+            "applicationKeys",
+            "applicationKeys"
+          ],
+          "default": true,
+          "environments": [
+            {
+              "environmentReleasePlanKey": "environmentReleasePlanKey",
+              "isImmediate": true,
+              "triggerType": "flag_eval",
+              "environmentKey": "environmentKey"
+            },
+            {
+              "environmentReleasePlanKey": "environmentReleasePlanKey",
+              "isImmediate": true,
+              "triggerType": "flag_eval",
+              "environmentKey": "environmentKey"
+            }
+          ],
+          "name": "name",
+          "description": "description",
+          "executionMode": "sequential",
+          "maintainer": {
+            "kind": "member",
+            "memberId": "memberId"
+          },
+          "key": "key"
+        }
+      },
+      "FlagReleasePlanRequest": {
+        "properties": {
+          "name": {
+            "maxLength": 256,
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "maintainer": {
+            "$ref": "#/components/schemas/MaintainerIdentifier"
+          },
+          "executionMode": {
+            "$ref": "#/components/schemas/ExecutionMode"
+          },
+          "applicationKeys": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "default": {
+            "description": "Whether this plan is the project's default. At most one active plan per project is the default. On update, omitting it demotes the current default.",
+            "type": "boolean"
+          },
+          "environments": {
+            "items": {
+              "$ref": "#/components/schemas/FlagReleasePlanEnvironment"
+            },
+            "type": "array"
+          }
+        },
+        "required": [
+          "environments",
+          "name"
+        ],
+        "type": "object"
+      },
+      "PutFlagReleasePlanRequest": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/FlagReleasePlanRequest"
+          },
+          {
+            "properties": {
+              "version": {
+                "description": "Optional. The plan version this request was based on, from a\nprevious read. Plans start at version 1. When present it must\nmatch the plan's current version — on mismatch the request is\nrejected with 409 and no changes are applied, so a stale copy\ncan't silently overwrite a concurrent edit. When omitted, the\nplan's version is not checked.\n",
+                "format": "int64",
+                "minimum": 1,
+                "type": "integer"
+              }
+            },
+            "type": "object"
+          }
+        ],
+        "example": {
+          "applicationKeys": [
+            "applicationKeys",
+            "applicationKeys"
+          ],
+          "default": true,
+          "environments": [
+            {
+              "environmentReleasePlanKey": "environmentReleasePlanKey",
+              "isImmediate": true,
+              "triggerType": "flag_eval",
+              "environmentKey": "environmentKey"
+            },
+            {
+              "environmentReleasePlanKey": "environmentReleasePlanKey",
+              "isImmediate": true,
+              "triggerType": "flag_eval",
+              "environmentKey": "environmentKey"
+            }
+          ],
+          "name": "name",
+          "description": "description",
+          "executionMode": "sequential",
+          "version": 1,
+          "maintainer": {
+            "kind": "member",
+            "memberId": "memberId"
+          }
+        }
+      },
+      "ListFlagReleasePlansResponse": {
+        "example": {
+          "_links": {
+            "next": {
+              "href": "href",
+              "type": "type"
+            },
+            "last": {
+              "href": "href",
+              "type": "type"
+            },
+            "prev": {
+              "href": "href",
+              "type": "type"
+            },
+            "self": {
+              "href": "href",
+              "type": "type"
+            },
+            "first": {
+              "href": "href",
+              "type": "type"
+            }
+          },
+          "totalCount": 6,
+          "items": [
+            {
+              "applicationKeys": [
+                "applicationKeys",
+                "applicationKeys"
+              ],
+              "default": false,
+              "environments": [
+                {
+                  "environmentReleasePlanKey": "environmentReleasePlanKey",
+                  "isImmediate": true,
+                  "triggerType": "flag_eval",
+                  "environmentKey": "environmentKey"
+                },
+                {
+                  "environmentReleasePlanKey": "environmentReleasePlanKey",
+                  "isImmediate": true,
+                  "triggerType": "flag_eval",
+                  "environmentKey": "environmentKey"
+                }
+              ],
+              "name": "name",
+              "description": "description",
+              "executionMode": "sequential",
+              "_id": "046b6c7f-0b8a-43b9-b35d-6489e6daee91",
+              "version": 0,
+              "key": "key",
+              "maintainer": {
+                "firstName": "firstName",
+                "lastName": "lastName",
+                "kind": "member",
+                "email": "email",
+                "memberId": "memberId"
+              }
+            },
+            {
+              "applicationKeys": [
+                "applicationKeys",
+                "applicationKeys"
+              ],
+              "default": false,
+              "environments": [
+                {
+                  "environmentReleasePlanKey": "environmentReleasePlanKey",
+                  "isImmediate": true,
+                  "triggerType": "flag_eval",
+                  "environmentKey": "environmentKey"
+                },
+                {
+                  "environmentReleasePlanKey": "environmentReleasePlanKey",
+                  "isImmediate": true,
+                  "triggerType": "flag_eval",
+                  "environmentKey": "environmentKey"
+                }
+              ],
+              "name": "name",
+              "description": "description",
+              "executionMode": "sequential",
+              "_id": "046b6c7f-0b8a-43b9-b35d-6489e6daee91",
+              "version": 0,
+              "key": "key",
+              "maintainer": {
+                "firstName": "firstName",
+                "lastName": "lastName",
+                "kind": "member",
+                "email": "email",
+                "memberId": "memberId"
+              }
+            }
+          ]
+        },
+        "properties": {
+          "items": {
+            "items": {
+              "$ref": "#/components/schemas/FlagReleasePlan"
+            },
+            "type": "array"
+          },
+          "totalCount": {
+            "description": "The total number of flag release plans in the project, before pagination.",
+            "type": "integer"
+          },
+          "_links": {
+            "$ref": "#/components/schemas/FlagReleasePlansPaginatedLinks"
+          }
+        },
+        "required": [
+          "items",
+          "totalCount"
+        ],
+        "type": "object"
+      },
+      "FlagReleasePlansPaginatedLinks": {
+        "example": {
+          "next": {
+            "href": "href",
+            "type": "type"
+          },
+          "last": {
+            "href": "href",
+            "type": "type"
+          },
+          "prev": {
+            "href": "href",
+            "type": "type"
+          },
+          "self": {
+            "href": "href",
+            "type": "type"
+          },
+          "first": {
+            "href": "href",
+            "type": "type"
+          }
+        },
+        "properties": {
+          "first": {
+            "$ref": "#/components/schemas/FlagReleasePlansLink"
+          },
+          "last": {
+            "$ref": "#/components/schemas/FlagReleasePlansLink"
+          },
+          "next": {
+            "$ref": "#/components/schemas/FlagReleasePlansLink"
+          },
+          "prev": {
+            "$ref": "#/components/schemas/FlagReleasePlansLink"
+          },
+          "self": {
+            "$ref": "#/components/schemas/FlagReleasePlansLink"
+          }
+        },
+        "required": [
+          "self"
+        ],
+        "type": "object"
+      },
+      "FlagReleasePlansLink": {
         "example": {
           "href": "href",
           "type": "type"
