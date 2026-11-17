@@ -509,6 +509,7 @@ Pricing information for LaunchDarkly plans is available at [https://launchdarkly
 - [Views](https://launchdarkly.com/docs/home/account/views.md): This category explains what views are in LaunchDarkly and how to use them to organize resources in your projects.
 - [Create views](https://launchdarkly.com/docs/home/account/views/create.md): This topic explains how to create views and link resources to those views.
 - [Manage views](https://launchdarkly.com/docs/home/account/views/manage.md): This topic explains how to edit and delete views in LaunchDarkly, and how to require resources to be linked to a view.
+- [Link applications to views](https://launchdarkly.com/docs/home/account/views/applications.md): This topic explains how to link an application to a view, review the flags the application evaluates, and automatically link evaluated flags to the view.
 
 ### Environments
 
@@ -545,14 +546,14 @@ Pricing information for LaunchDarkly plans is available at [https://launchdarkly
 - [Using the advanced editor](https://launchdarkly.com/docs/home/account/roles/advanced-editor.md): This topic explains how to access and use the advanced editor to create complex roles and policies. The advanced editor is a tool for experienced LaunchDarkly members who want to create their own roles.
 - [Managing role assignments](https://launchdarkly.com/docs/home/account/roles/manage-role-assignments.md): This topic explains the different role types, and how different roles interact. You can use LaunchDarkly roles to give each member precise permissions and access to different aspects of LaunchDarkly.
 - [Assigning roles to members](https://launchdarkly.com/docs/home/account/roles/manage-role-assign.md): This topic explains how to assign roles to members in LaunchDarkly.
-- [Viewing member roles](https://launchdarkly.com/docs/home/account/roles/manage-role-view.md): This topic explains how to view roles for members in LaunchDarkly.
+- [Viewing member roles and access](https://launchdarkly.com/docs/home/account/roles/manage-role-view.md): This topic explains how to review the roles assigned to members in LaunchDarkly, and how to view a summary of what a member or team can access.
 - [Changing member roles](https://launchdarkly.com/docs/home/account/roles/manage-role-change.md): This topic explains how to change the roles assigned to members in LaunchDarkly.
 - [Removing member roles](https://launchdarkly.com/docs/home/account/roles/manage-role-remove.md): This topic explains how to remove roles from members in LaunchDarkly.
 - [Assigning roles to teams](https://launchdarkly.com/docs/home/account/roles/manage-role-team.md): This topic explains how to assign roles to teams in LaunchDarkly.
 - [Changing account Owners](https://launchdarkly.com/docs/home/account/roles/owners.md): This topic explains how to change which account member has the Owner role in your LaunchDarkly account, as well as what the Owner role entails.
 - [Managing roles](https://launchdarkly.com/docs/home/account/roles/manage-roles.md): This section explains what roles are and how to manage them. Roles give you precise access control to everything in LaunchDarkly, including feature flags, projects, environments, metrics, and teams. Use them to enforce access policies that meet your exact needs.
-- [Organization roles](https://launchdarkly.com/docs/home/account/roles/organization-roles.md): This topic explains the organization roles that come with every LaunchDarkly account, and how they relate to each other.
-- [Project roles](https://launchdarkly.com/docs/home/account/roles/project-roles.md): This topic explains the project roles that come with some LaunchDarkly accounts, and how they relate to each other.
+- [Organization roles](https://launchdarkly.com/docs/home/account/roles/organization-roles.md): This topic explains the organization roles that come with every LaunchDarkly account, describes what each role can do, and explains how they relate to each other.
+- [Project roles](https://launchdarkly.com/docs/home/account/roles/project-roles.md): This topic explains the project roles that come with some LaunchDarkly accounts, describes what each role can do, and explains how to update them.
 - [Creating roles and policies](https://launchdarkly.com/docs/home/account/roles/role-create.md): This topic explains how to create roles and policies in LaunchDarkly.
 - [Editing roles](https://launchdarkly.com/docs/home/account/roles/role-edit.md): This topic explains how to edit roles and policies in LaunchDarkly.
 - [Deleting roles](https://launchdarkly.com/docs/home/account/roles/role-delete.md): This topic explains how to delete roles in LaunchDarkly.
@@ -722,7 +723,7 @@ Pricing information for LaunchDarkly plans is available at [https://launchdarkly
 - [Teams and custom roles](https://launchdarkly.com/docs/guides/teams-roles.md): This category has guides that teach you how to use teams and roles.
 - [Building teams in LaunchDarkly](https://launchdarkly.com/docs/guides/teams-roles/teams.md): This guide explains the best practices for getting started using teams in LaunchDarkly. Teams help large organizations manage their members and member access in LaunchDarkly more easily.
 - [Creating roles](https://launchdarkly.com/docs/guides/teams-roles/custom-roles.md): This guide explains best practices for creating and managing roles, and how to use a single-sign-on (SSO) provider for cross-domain identity management (SCIM) provisioning.
-- [Onboarding to preset roles](https://launchdarkly.com/docs/guides/teams-roles/preset-roles-onboarding.md): This topic explains how to start using preset roles.
+- [Onboarding to preset roles](https://launchdarkly.com/docs/guides/teams-roles/preset-roles-onboarding.md): This topic explains how to start using preset roles, describes what each preset role can do, and explains how to enable and assign them.
 
 ### SDKs
 
@@ -929,8 +930,9 @@ Pricing information for LaunchDarkly plans is available at [https://launchdarkly
 - [AI SDKs](https://launchdarkly.com/docs/sdk/ai.md): This category contains documentation topics explaining LaunchDarkly AI SDKs.
 - [.NET AI SDK reference](https://launchdarkly.com/docs/sdk/ai/dotnet.md): This topic documents how to get started with the .NET AI SDK, and links to reference information on all of the supported features.
 - [Go AI SDK reference](https://launchdarkly.com/docs/sdk/ai/go.md): This topic documents how to get started with the Go AI SDK, and links to reference information on all of the supported features.
+- [Go AI SDK reference (legacy)](https://launchdarkly.com/docs/sdk/ai/go-legacy.md): This topic documents how to use the legacy Go AI SDK, and links to reference information on all of the supported features.
 - [Java AI SDK reference](https://launchdarkly.com/docs/sdk/ai/java.md): This topic documents how to get started with the Java AI SDK, and links to reference information on all of the supported features.
-- [Migrate from the legacy AI SDKs](https://launchdarkly.com/docs/sdk/ai/migration.md): This topic explains how to migrate from the legacy Python and Node.js AI SDKs to the current handler-based AI SDKs.
+- [Migrate from the legacy AI SDKs](https://launchdarkly.com/docs/sdk/ai/migration.md): This topic explains how to migrate from the legacy Python, Node.js, and Go AI SDKs to the current handler-based AI SDKs.
 - [Node.js (server-side) AI SDK reference](https://launchdarkly.com/docs/sdk/ai/node-js.md): This topic explains how to get started with the Node.js AI SDK.
 - [Node.js (server-side) AI SDK reference (legacy)](https://launchdarkly.com/docs/sdk/ai/node-js-legacy.md): This topic documents how to get started with the Node.js (server-side) AI SDK, and links to reference information on all of the supported features. You can use either JavaScript or TypeScript when working with the Node.js (server-side) AI SDK.
 - [Python AI SDK reference](https://launchdarkly.com/docs/sdk/ai/python.md): This topic explains how to get started with the Python AI SDK.
@@ -1204,6 +1206,7 @@ Pricing information for LaunchDarkly plans is available at [https://launchdarkly
 
 ### AgentControl configs
 
+- [Run AgentControl evaluations in CI with evaluations from code](https://launchdarkly.com/docs/tutorials/aic-cicd.md): This tutorial shows how to run an AgentControl agent against a dataset on every pull request, using evaluations from code and GitHub Actions.
 - [Finish your software factory: take a bad change back before anyone notices](https://launchdarkly.com/docs/tutorials/agent-pipeline-quality-control.md): This tutorial explains how to finish the run side of a software factory. You join a live band that already generates, validates, and deploys, then watch a guarded rollout revert a silent failure without a person.
 - [Use LaunchDarkly AgentControl to control model administration with LiteLLM](https://launchdarkly.com/docs/tutorials/agentcontrol-litellm-gateway.md): Centralized model routing, prompt governance, and telemetry for any OpenAI-compatible application, with no code changes.
 - [Uncover security risks in your agent skills before deploying](https://launchdarkly.com/docs/tutorials/tessl-security-gate.md): This tutorial explains how to catch a dangerous agent skill before an agent ever runs it: review it automatically, block it in CI if it fails, and only let your agent load skills that passed.
@@ -1218,7 +1221,6 @@ Pricing information for LaunchDarkly plans is available at [https://launchdarkly
 - [The AI iteration loop for deploying reliable agents with LangGraph](https://launchdarkly.com/docs/tutorials/ai-iteration-loop-for-reliable-agents.md): Set the foundation for an AI iteration loop with LaunchDarkly feature flags, AgentControl, and variation targeting, using a LangGraph decor agent as a running example.
 - [Building a data extraction pipeline with LaunchDarkly](https://launchdarkly.com/docs/tutorials/data-extraction-pipeline.md): Turn unstructured text into structured JSON with runtime-configurable schemas. Production-ready pipeline with AgentControl for instant model and prompt changes.
 - [When to add online evals to your AgentControl](https://launchdarkly.com/docs/tutorials/when-to-add-online-evals.md): A practical guide for LLM observability, AI evaluation, and real-time quality monitoring in production with LaunchDarkly
-- [AgentControl config CI/CD pipeline: automated quality gates and safe deployment](https://launchdarkly.com/docs/tutorials/aic-cicd.md): Build a CI/CD pipeline that validates and tests AgentControl before deployment, with automated quality gates, guardrails, and instant rollback.
 - [Smart AI agent targeting with MCP tools](https://launchdarkly.com/docs/tutorials/multi-agent-mcp-targeting.md): Transform your basic multi-agent system with business tiers, geographic targeting, and MCP tool integration using AgentControl.
 - [Build a LangGraph multi-agent system in 20 minutes with LaunchDarkly AgentControl](https://launchdarkly.com/docs/tutorials/agents-langgraph.md): Build a multi-agent system with dynamic configuration in 20 minutes using LangGraph multi-agent workflows, RAG search, and AgentControl.
 - [Snowflake Cortex completion API + LaunchDarkly SDK integration](https://launchdarkly.com/docs/tutorials/snowflake-tutorial.md): Walk through an integration between the Snowflake Cortex Completion API and LaunchDarkly's AI SDKs to make runtime changes to AI models and prompts.
@@ -1256,6 +1258,12 @@ Pricing information for LaunchDarkly plans is available at [https://launchdarkly
 - [Build a user frustration detection & response system](https://launchdarkly.com/docs/tutorials/connecting-rage-clicks-to-guarded-releases.md): Learn how to connect rage click detection to LaunchDarkly Guarded Releases for automating actions.
 - [Add Observability to your React Native app in 5 minutes](https://launchdarkly.com/docs/tutorials/react-native-observability.md): See how your React Native iOS app is performing. Integrate LaunchDarkly’s new Observability SDK.
 
+### Experimentation
+
+- [Prompt an A/B test using Cursor and LaunchDarkly](https://launchdarkly.com/docs/tutorials/prompt-ab-test.md): Prompt a coding agent like Cursor to build an app, create a flag, and set up an A/B test in LaunchDarkly, with your approval at every step.
+- [Benchmark LangGraph, Strands, OpenAI Agents, and Google ADK on the same agent graph](https://launchdarkly.com/docs/tutorials/agent-graph-experiments.md): Benchmark LangGraph, Strands, OpenAI Agents SDK, and Google ADK by running all four over one LaunchDarkly agent graph with the model held constant. An experiment ranks them on latency and tokens with an LLM-as-a-judge quality guardrail, then the same flag promotes the winner to production with no redeploy.
+- [Using LaunchDarkly feature flags and Experimentation with Wordpress](https://launchdarkly.com/docs/tutorials/wordpress.md): This tutorial teaches you how to install and configure a LaunchDarkly SDK in a self-hosted WordPress environment, use feature flags for controlled rollouts and targeted content, and set up A/B experiments across a WordPress landing page.
+
 ### Developer productivity
 
 - [4 hacks to turbocharge your Cursor productivity](https://launchdarkly.com/docs/tutorials/cursor-tips-and-tricks.md): Tips and tricks to make Cursor more accurate, personalized, and extensible.
@@ -1273,6 +1281,7 @@ Pricing information for LaunchDarkly plans is available at [https://launchdarkly
 ### Video
 
 - [Video tutorials](https://launchdarkly.com/docs/tutorials/videos.md): Get hands-on with LaunchDarkly via step-by-step technical videos
+- [Prompt an A/B test using Cursor and LaunchDarkly](https://launchdarkly.com/docs/tutorials/videos/prompt-ab-test.md): Prompt a coding agent like Cursor to build an app, create a flag, and set up an A/B test in LaunchDarkly, with your approval at every step.
 - [Agent graphs: taming multi-agent architecture](https://launchdarkly.com/docs/tutorials/videos/agent-graphs.md): Learn how to set up real-world agent workflows using AgentControl configs with battle-tested patterns for swapping models, monitoring, and framework integration.
 - [Build a multi-agent system with LaunchDarkly Agent Skills](https://launchdarkly.com/docs/tutorials/videos/agent-skills-quickstart.md): Skip the UI. Tell your AI coding assistant what to build and watch it create your agents.
 - [Introducing judges: enhancing AI response quality monitoring](https://launchdarkly.com/docs/tutorials/videos/introducing-judges.md): Learn how to use LaunchDarkly Judges to automatically evaluate AI model responses for relevance, accuracy, and toxicity.
