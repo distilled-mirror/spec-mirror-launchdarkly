@@ -4,6 +4,8 @@
 
 # API access tokens
 
+> This topic explains how to use API access tokens to authenticate with the LaunchDarkly REST API.
+
 **Developer**
 
 **Federal docs**
