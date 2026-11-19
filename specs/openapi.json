@@ -1485,7 +1485,7 @@
             }
           },
           "400": {
-            "description": "Unsupported filter field. Filter field must be one of: requestorId, projectKey, notifyMemberIds, reviewStatus, or status",
+            "description": "Unsupported filter field. Filter field must be one of: requestorId, projectKey, notifyMemberIds, reviewStatus, status, resourceKind, resourceId, or creationDate",
             "content": {
               "application/json": {
                 "schema": {
@@ -1529,7 +1529,7 @@
           "Approvals"
         ],
         "summary": "List approval requests",
-        "description": "Get all approval requests.\n\n### Filtering approvals\n\nLaunchDarkly supports the `filter` query param for filtering, with the following fields:\n\n- `notifyMemberIds` filters for only approvals that are assigned to a member in the specified list. For example: `filter=notifyMemberIds anyOf [\"memberId1\", \"memberId2\"]`.\n- `requestorId` filters for only approvals that correspond to the ID of the member who requested the approval. For example: `filter=requestorId equals 457034721476302714390214`.\n- `resourceId` filters for only approvals that correspond to the the specified resource identifier. For example: `filter=resourceId equals proj/my-project:env/my-environment:flag/my-flag`.\n- `resourceKind` filters for only approvals that correspond to the specified resource kind. For example: `filter=resourceKind equals flag`. Currently, `flag`, `segment`, and `aiConfig` resource kinds are supported.\n- `reviewStatus` filters for only approvals which correspond to the review status in the specified list. The possible values are `approved`, `declined`, and `pending`. For example: `filter=reviewStatus anyOf [\"pending\", \"approved\"]`.\n- `status` filters for only approvals which correspond to the status in the specified list. The possible values are `pending`, `scheduled`, `failed`, and `completed`. For example: `filter=status anyOf [\"pending\", \"scheduled\"]`.\n\nYou can also apply multiple filters at once. For example, setting `filter=projectKey equals my-project, reviewStatus anyOf [\"pending\",\"approved\"]` matches approval requests which correspond to the `my-project` project key, and a review status of either `pending` or `approved`.\n\n### Expanding approval response\n\nLaunchDarkly supports the `expand` query param to include additional fields in the response, with the following fields:\n\n- `flag` includes the flag the approval request belongs to\n- `project` includes the project the approval request belongs to\n- `environments` includes the environments the approval request relates to\n\nFor example, `expand=project,flag` includes the `project` and `flag` fields in the response.\n",
+        "description": "Get all approval requests.\n\n### Filtering approvals\n\nLaunchDarkly supports the `filter` query param for filtering, with the following fields:\n\n- `notifyMemberIds` filters for only approvals that are assigned to a member in the specified list. For example: `filter=notifyMemberIds anyOf [\"memberId1\", \"memberId2\"]`.\n- `requestorId` filters for only approvals that correspond to the ID of the member who requested the approval. For example: `filter=requestorId equals 457034721476302714390214`.\n- `resourceId` filters for only approvals that correspond to the the specified resource identifier. For example: `filter=resourceId equals proj/my-project:env/my-environment:flag/my-flag`.\n- `resourceKind` filters for only approvals that correspond to the specified resource kind. For example: `filter=resourceKind equals flag`. Currently, `flag`, `segment`, and `aiConfig` resource kinds are supported.\n- `reviewStatus` filters for only approvals which correspond to the review status in the specified list. The possible values are `approved`, `declined`, and `pending`. For example: `filter=reviewStatus anyOf [\"pending\", \"approved\"]`.\n- `status` filters for only approvals which correspond to the status in the specified list. The possible values are `pending`, `scheduled`, `failed`, and `completed`. For example: `filter=status anyOf [\"pending\", \"scheduled\"]`.\n- `creationDate` filters for only approvals created before or after a time. Use the `before` or `after` operator with Unix milliseconds or an RFC 3339 timestamp in quotes. Both are exclusive. For example: `filter=creationDate after 1794000000000` or `filter=creationDate after \"2026-11-10T00:00:00Z\", creationDate before \"2026-11-17T00:00:00Z\"`. URL-encode a `+` in a timestamp's offset as `%2B`, or use `Z`.\n\nYou can also apply multiple filters at once. For example, setting `filter=projectKey equals my-project, reviewStatus anyOf [\"pending\",\"approved\"]` matches approval requests which correspond to the `my-project` project key, and a review status of either `pending` or `approved`.\n\n### Expanding approval response\n\nLaunchDarkly supports the `expand` query param to include additional fields in the response, with the following fields:\n\n- `flag` includes the flag the approval request belongs to\n- `project` includes the project the approval request belongs to\n- `environments` includes the environments the approval request relates to\n\nFor example, `expand=project,flag` includes the `project` and `flag` fields in the response.\n",
         "parameters": [
           {
             "name": "filter",
@@ -61457,6 +61457,7 @@
                 }
               ],
               "name": "name",
+              "defaultThreshold": 0.9,
               "key": "key",
               "isInverted": true,
               "updatedAt": 4
@@ -61779,6 +61780,7 @@
                 }
               ],
               "name": "name",
+              "defaultThreshold": 0.9,
               "key": "key",
               "isInverted": true,
               "updatedAt": 4
@@ -62126,6 +62128,7 @@
             }
           ],
           "name": "name",
+          "defaultThreshold": 0.9,
           "key": "key",
           "isInverted": true,
           "updatedAt": 4
@@ -62207,6 +62210,12 @@
             "description": "The success direction of a judge. Offline evaluations use it to decide whether a score passes.\n\n- `true`: A lower score is better. Use this for a judge that scores bad output, such as a toxicity or hallucination judge.\n- `false`: A higher score is better. Use this for a judge that scores good output, such as an accuracy or relevance judge.\n\nThe response includes this field only when `mode` is `judge`. For a built-in judge key, the value is always the built-in direction. Built-in judge keys are `ld-ai-judge-accuracy`, `ld-ai-judge-relevance`, and `ld-ai-judge-toxicity`, with or without a `-<timestamp>` suffix such as `ld-ai-judge-accuracy-1760000000000`. A custom judge with no stored direction omits this field.\n",
             "example": true,
             "type": "boolean"
+          },
+          "defaultThreshold": {
+            "description": "The judge's threshold: the pass line for its main score, from 0 to 1. It applies wherever the judge is used. The average score passes when it is at or above this value, or at or below it when `isInverted` is `true`.\n\nThe response includes this field only when `mode` is `judge` and a threshold is set.\n",
+            "example": 0.9,
+            "format": "double",
+            "type": "number"
           },
           "dependencies": {
             "description": "Resources that depend on this config, grouped by type",
@@ -62313,6 +62322,7 @@
             "viewKeys"
           ],
           "evaluationMetricKey": "evaluationMetricKey",
+          "defaultThreshold": 0.9,
           "key": "key",
           "isInverted": true,
           "tags": [
@@ -62379,6 +62389,12 @@
             "description": "The success direction of a judge. Offline evaluations use it to decide whether a score passes.\n\n- `true`: A lower score is better. Use this for a judge that scores bad output, such as a toxicity or hallucination judge.\n- `false`: A higher score is better. Use this for a judge that scores good output, such as an accuracy or relevance judge.\n\n**Required for a custom judge.** A custom judge has `mode` set to `judge` and a `key` that is not a built-in judge key. Built-in judge keys are `ld-ai-judge-accuracy`, `ld-ai-judge-relevance`, and `ld-ai-judge-toxicity`, with or without a `-<timestamp>` suffix such as `ld-ai-judge-accuracy-1760000000000`. For a built-in judge key, this field is optional, and the API always uses the built-in direction.\n\nDo not send this field when `mode` is `agent` or `completion`.\n\nThis field is not in the schema's `required` list, because only custom judges need it.\n\nThe API returns a `400` error in these cases:\n- `isInverted is required for a custom judge: ...`: You create a custom judge without this field. Send `true` or `false`.\n- `isInverted is only supported for judge mode`: You send this field and `mode` is `agent` or `completion`. Remove the field, or set `mode` to `judge`.\n- `isInverted is not supported`: Custom judges are not available for your account. Remove the field from the request.\n",
             "example": true,
             "type": "boolean"
+          },
+          "defaultThreshold": {
+            "description": "The judge's threshold: the pass line for its main score, from 0 to 1. It applies wherever the judge is used. Omit it to create the judge with no threshold.\n\nSend this field only when `mode` is `judge`.\n\nThe API returns a `400` error in these cases:\n- `Threshold is only supported for judges`: You send this field and `mode` is `agent` or `completion`.\n- `Threshold must be from 0 to 1`: The value is below 0 or above 1.\n- `Thresholds don't support classifier rules yet`: The default variation uses classifier rules.\n- `Threshold is not supported`: Thresholds are not available for your account. Remove the field from the request.\n",
+            "example": 0.9,
+            "format": "double",
+            "type": "number"
           }
         },
         "required": [
@@ -62393,7 +62409,9 @@
           "maintainerTeamKey": "example-team-key",
           "name": "name",
           "description": "description",
+          "clearDefaultThreshold": true,
           "evaluationMetricKey": "evaluationMetricKey",
+          "defaultThreshold": 0.9,
           "defaultVariationKey": "defaultVariationKey",
           "isInverted": true,
           "tags": [
@@ -62437,6 +62455,17 @@
           },
           "isInverted": {
             "description": "The success direction of a judge. Offline evaluations use it to decide whether a score passes.\n\n- `true`: A lower score is better. Use this for a judge that scores bad output, such as a toxicity or hallucination judge.\n- `false`: A higher score is better. Use this for a judge that scores good output, such as an accuracy or relevance judge.\n\nSend this field only when the agent config's `mode` is `judge`. If you omit it, the current direction does not change. For a built-in judge key, the API always returns the built-in direction. Built-in judge keys are `ld-ai-judge-accuracy`, `ld-ai-judge-relevance`, and `ld-ai-judge-toxicity`, with or without a `-<timestamp>` suffix such as `ld-ai-judge-accuracy-1760000000000`.\n\nThe API returns a `400` error in these cases:\n- `isInverted is only supported for judge mode`: You send this field and the agent config's `mode` is `agent` or `completion`. Remove the field.\n- `isInverted is not supported`: Custom judges are not available for your account. Remove the field from the request.\n",
+            "example": true,
+            "type": "boolean"
+          },
+          "defaultThreshold": {
+            "description": "The judge's threshold: the pass line for its main score, from 0 to 1. It applies wherever the judge is used. If you omit it, the current threshold does not change. To remove the threshold, send `clearDefaultThreshold` instead.\n\nThe API returns a `400` error in these cases:\n- `Threshold is only supported for judges`: You send this field and the agent config's `mode` is `agent` or `completion`.\n- `Threshold must be from 0 to 1`: The value is below 0 or above 1.\n- `Thresholds don't support classifier rules yet`: Every active variation of the judge uses classifier rules. Archived variations don't count.\n- `Threshold can't be set and cleared in the same request`: You send this field and `clearDefaultThreshold: true`.\n- `Threshold is not supported`: Thresholds are not available for your account. Remove the field from the request.\n",
+            "example": 0.9,
+            "format": "double",
+            "type": "number"
+          },
+          "clearDefaultThreshold": {
+            "description": "Set to `true` to remove the judge's threshold. Don't send it with `defaultThreshold`.\n\nThe API returns a `400` error with `Threshold is not supported` when thresholds are not available for your account.\n",
             "example": true,
             "type": "boolean"
           }
@@ -64179,6 +64208,8 @@
                       "id": "id"
                     }
                   ],
+                  "description": "description",
+                  "disabled": true,
                   "_id": "_id",
                   "trackEvents": true,
                   "variation": 1
@@ -64230,6 +64261,8 @@
                       "id": "id"
                     }
                   ],
+                  "description": "description",
+                  "disabled": true,
                   "_id": "_id",
                   "trackEvents": true,
                   "variation": 1
@@ -64529,6 +64562,7 @@
                     "attribute": "country",
                     "type": "contextAttribute"
                   },
+                  "environmentReleasePlanCount": 0,
                   "eventDefault": {
                     "disabled": true,
                     "value": 0
@@ -64770,6 +64804,7 @@
                     "attribute": "country",
                     "type": "contextAttribute"
                   },
+                  "environmentReleasePlanCount": 0,
                   "eventDefault": {
                     "disabled": true,
                     "value": 0
@@ -65268,6 +65303,8 @@
                   "id": "id"
                 }
               ],
+              "description": "description",
+              "disabled": true,
               "_id": "_id",
               "trackEvents": true,
               "variation": 1
@@ -65319,6 +65356,8 @@
                   "id": "id"
                 }
               ],
+              "description": "description",
+              "disabled": true,
               "_id": "_id",
               "trackEvents": true,
               "variation": 1
@@ -65631,6 +65670,8 @@
               "id": "id"
             }
           ],
+          "description": "description",
+          "disabled": true,
           "_id": "_id",
           "trackEvents": true,
           "variation": 1
@@ -65638,6 +65679,14 @@
         "properties": {
           "_id": {
             "description": "The rule ID. Pass it as ruleId in targeting instructions that change this rule.",
+            "type": "string"
+          },
+          "disabled": {
+            "description": "Whether the rule is disabled. A disabled rule doesn't match any contexts.",
+            "type": "boolean"
+          },
+          "description": {
+            "description": "The rule description",
             "type": "string"
           },
           "clauses": {
@@ -71209,6 +71258,7 @@
                   "attribute": "country",
                   "type": "contextAttribute"
                 },
+                "environmentReleasePlanCount": 0,
                 "eventDefault": {
                   "disabled": true,
                   "value": 0
@@ -71450,6 +71500,7 @@
                   "attribute": "country",
                   "type": "contextAttribute"
                 },
+                "environmentReleasePlanCount": 0,
                 "eventDefault": {
                   "disabled": true,
                   "value": 0
@@ -71711,6 +71762,7 @@
               "attribute": "country",
               "type": "contextAttribute"
             },
+            "environmentReleasePlanCount": 0,
             "eventDefault": {
               "disabled": true,
               "value": 0
@@ -71958,6 +72010,7 @@
             "attribute": "country",
             "type": "contextAttribute"
           },
+          "environmentReleasePlanCount": 0,
           "eventDefault": {
             "disabled": true,
             "value": 0
@@ -71989,6 +72042,11 @@
           },
           "releasePolicyCount": {
             "description": "The number of release policies using this metric",
+            "example": 0,
+            "type": "integer"
+          },
+          "environmentReleasePlanCount": {
+            "description": "The number of environment release plans using this metric",
             "example": 0,
             "type": "integer"
           },
@@ -84715,6 +84773,11 @@
           },
           "releasePolicyCount": {
             "description": "The number of release policies using this metric",
+            "example": 0,
+            "type": "integer"
+          },
+          "environmentReleasePlanCount": {
+            "description": "The number of environment release plans using this metric",
             "example": 0,
             "type": "integer"
           },
