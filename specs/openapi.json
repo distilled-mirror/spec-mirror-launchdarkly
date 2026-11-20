@@ -30691,6 +30691,17 @@
               "type": "string"
             },
             "style": "form"
+          },
+          {
+            "description": "Whether to include Shadow Test events. When `true`, each metric also counts the matching `$ld:ai-shadow:*` events, under the variation the Shadow Test ran. Defaults to `false`.",
+            "explode": true,
+            "in": "query",
+            "name": "includeShadow",
+            "required": false,
+            "schema": {
+              "type": "boolean"
+            },
+            "style": "form"
           }
         ],
         "responses": {
@@ -30830,6 +30841,17 @@
             "required": false,
             "schema": {
               "type": "string"
+            },
+            "style": "form"
+          },
+          {
+            "description": "Whether to include Shadow Test events. When `true`, each metric also counts the matching `$ld:ai-shadow:*` events, under the variation the Shadow Test ran. Defaults to `false`.",
+            "explode": true,
+            "in": "query",
+            "name": "includeShadow",
+            "required": false,
+            "schema": {
+              "type": "boolean"
             },
             "style": "form"
           }
