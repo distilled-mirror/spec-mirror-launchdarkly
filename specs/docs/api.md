@@ -10,13 +10,13 @@
 
 **EU docs**
 
-This documentation describes LaunchDarkly's REST API. To access the complete OpenAPI spec directly, use [Get OpenAPI spec](https://launchdarkly.com/docs/api/other/gets-the-openapi-spec-in-json.md).
+This documentation describes the LaunchDarkly REST API. To access the complete OpenAPI spec directly, use [Get OpenAPI spec](https://launchdarkly.com/docs/api/other/gets-the-openapi-spec-in-json.md).
 
 To learn how to use LaunchDarkly using the user interface (UI) instead, read our [product documentation](https://launchdarkly.com/docs/home.md).
 
 ## Authentication
 
-LaunchDarkly's REST API uses the HTTPS protocol with a minimum TLS version of 1.2.
+The LaunchDarkly REST API uses the HTTPS protocol with a minimum TLS version of 1.2.
 
 All REST API resources are authenticated with either [personal or service access tokens](https://launchdarkly.com/docs/home/account/api), or session cookies. Other authentication mechanisms are not supported. You can manage personal access tokens on your [**Authorization**](https://app.launchdarkly.com/settings/authorization) page in the LaunchDarkly UI.
 
@@ -480,4 +480,4 @@ If you would like to upgrade your integration to use a new API version, you can 
   </tbody>
 </table>
 
-To learn more about how EOL is determined, read LaunchDarkly's [End of Life (EOL) Policy](https://launchdarkly.com/policies/end-of-life-policy/).
+To learn more about how EOL is determined, read the LaunchDarkly [End of Life (EOL) Policy](https://launchdarkly.com/policies/end-of-life-policy/).
