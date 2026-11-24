@@ -1206,7 +1206,7 @@ Pricing information for LaunchDarkly plans is available at [https://launchdarkly
 
 ### AgentControl configs
 
-- [Run AgentControl evaluations in CI with evaluations from code](https://launchdarkly.com/docs/tutorials/aic-cicd.md): This tutorial shows how to run an AgentControl agent against a dataset on every pull request, using evaluations from code and GitHub Actions.
+- [Run AgentControl offline evaluations in CI](https://launchdarkly.com/docs/tutorials/aic-cicd.md): This tutorial shows how to run an AgentControl agent against a dataset on every pull request, using offline evaluations and GitHub Actions.
 - [Finish your software factory: take a bad change back before anyone notices](https://launchdarkly.com/docs/tutorials/agent-pipeline-quality-control.md): This tutorial explains how to finish the run side of a software factory. You join a live band that already generates, validates, and deploys, then watch a guarded rollout revert a silent failure without a person.
 - [Use LaunchDarkly AgentControl to control model administration with LiteLLM](https://launchdarkly.com/docs/tutorials/agentcontrol-litellm-gateway.md): Centralized model routing, prompt governance, and telemetry for any OpenAI-compatible application, with no code changes.
 - [Uncover security risks in your agent skills before deploying](https://launchdarkly.com/docs/tutorials/tessl-security-gate.md): This tutorial explains how to catch a dangerous agent skill before an agent ever runs it: review it automatically, block it in CI if it fails, and only let your agent load skills that passed.
