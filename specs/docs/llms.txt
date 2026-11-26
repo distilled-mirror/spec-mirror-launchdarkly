@@ -12,7 +12,7 @@ Pricing information for LaunchDarkly plans is available at [https://launchdarkly
 
 - [Welcome to LaunchDarkly Docs](https://launchdarkly.com/docs/home.md)
 - [Launch Insights](https://launchdarkly.com/docs/home/getting-started/launch-insights.md): This topic describes the Launch Insights dashboard. Launch Insights is an executive-level dashboard that summarizes how your organization is adopting the best practices associated with risk-free releases.
-- [LaunchDarkly architecture](https://launchdarkly.com/docs/home/getting-started/architecture.md): This topic gives a high-level explanation of LaunchDarkly's platform architecture.
+- [LaunchDarkly architecture](https://launchdarkly.com/docs/home/getting-started/architecture.md): This topic gives a high-level explanation of the LaunchDarkly platform architecture.
 - [LaunchDarkly vocabulary](https://launchdarkly.com/docs/home/getting-started/vocabulary.md): This topic defines common words used in the LaunchDarkly application and documentation.
 
 ### Onboarding
@@ -39,7 +39,7 @@ Pricing information for LaunchDarkly plans is available at [https://launchdarkly
 - [Vega](https://launchdarkly.com/docs/home/getting-started/vega.md): This topic explains Vega, the LaunchDarkly AI-powered agent for investigating and fixing issues and managing feature flags.
 - [Vega AI providers](https://launchdarkly.com/docs/home/getting-started/vega-ai-providers.md): This topic explains how to choose the AI provider that Vega uses: the managed AI provider from LaunchDarkly, or a custom AI provider with your own Anthropic or OpenAI key.
 - [Connecting Vega to GitHub](https://launchdarkly.com/docs/home/getting-started/vega-github.md): This topic explains how to connect Vega to your GitHub account so that Vega can read code, make code changes, and open pull requests.
-- [Using Vega in Slack](https://launchdarkly.com/docs/home/getting-started/vega-slack.md): This topic explains how to use Vega directly in Slack to investigate issues, clean up flags, and interact with LaunchDarkly's AI agent from your team's workspace.
+- [Using Vega in Slack](https://launchdarkly.com/docs/home/getting-started/vega-slack.md): This topic explains how to use Vega directly in Slack to investigate issues, clean up flags, and interact with the LaunchDarkly AI agent from your team's workspace.
 - [LaunchDarkly CLI](https://launchdarkly.com/docs/home/getting-started/ldcli.md): This topic describes how to get started with the LaunchDarkly CLI.
 - [LaunchDarkly CLI commands](https://launchdarkly.com/docs/home/getting-started/ldcli-commands.md): This topic describes common commands and configuration options in the LaunchDarkly CLI.
 - [LaunchDarkly MCP server](https://launchdarkly.com/docs/home/getting-started/mcp.md): This topic explains how to get started with the LaunchDarkly Model Context Protocol (MCP) server.
@@ -58,6 +58,21 @@ Pricing information for LaunchDarkly plans is available at [https://launchdarkly
 - [Logging in with SSO](https://launchdarkly.com/docs/home/getting-started/login-sso.md): This topic explains how to log into LaunchDarkly for the first time using an SSO provider.
 - [Using feature management](https://launchdarkly.com/docs/home/getting-started/feature-management.md): This topic discusses using feature management at a high level, describes some key parts of the LaunchDarkly user interface (UI), and suggests different ways to learn more about working in LaunchDarkly.
 - [Getting started in different roles](https://launchdarkly.com/docs/home/getting-started/roles.md): This topic includes suggested paths through the LaunchDarkly documentation specific to your role.
+
+## Release Autopilot
+
+### Release Autopilot
+
+- [Release Autopilot](https://launchdarkly.com/docs/home/release-autopilot.md): This topic explains what Release Autopilot is, how it moves a change from pull request to flag cleanup, and where you can use each of its features.
+- [Setting up Release Autopilot](https://launchdarkly.com/docs/home/release-autopilot/setup.md): This topic explains how to install the LaunchDarkly GitHub app, choose the repositories Release Autopilot runs on, and configure how it releases flags.
+- [Deploy signals and flag release plans](https://launchdarkly.com/docs/home/release-autopilot/deploy-signals.md): This topic explains how to configure the flag release plans that Release Autopilot uses to release flags, and how to send deploy signals from your deployment pipeline.
+- [Auto-classification](https://launchdarkly.com/docs/home/release-autopilot/autoclassification.md): This topic explains how Release Autopilot reviews each pull request and recommends whether the change should be released behind a feature flag.
+- [Auto-flagging](https://launchdarkly.com/docs/home/release-autopilot/autoflag.md): This topic explains how auto-flagging in Release Autopilot creates feature flags for your pull requests, how it assigns a maintainer to each flag, and how it handles projects that require a team maintainer.
+- [Auto-release](https://launchdarkly.com/docs/home/release-autopilot/autorelease.md): This topic explains auto-release in Release Autopilot.
+- [Auto-cleanup](https://launchdarkly.com/docs/home/release-autopilot/autocleanup.md): This topic explains how auto-cleanup removes flags from your code when the flags are no longer needed, and how to turn on automated flag cleanup for a project.
+- [Releases page](https://launchdarkly.com/docs/home/release-autopilot/releases-page.md): Read about the status of every flag release in your project in one view.
+- [Agent skills](https://launchdarkly.com/docs/home/release-autopilot/agent-skills.md): This topic explains which agent skills are available to support Release Autopilot.
+- [Release Autopilot FAQ](https://launchdarkly.com/docs/home/release-autopilot/faq.md): This topic answers frequently asked questions about Release Autopilot, including commands, flag recommendations, repository guidance, notifications, and the change history.
 
 ## AgentControl
 
@@ -80,6 +95,8 @@ Pricing information for LaunchDarkly plans is available at [https://launchdarkly
 - [Playgrounds](https://launchdarkly.com/docs/home/agentcontrol/playground.md): This topic explains how to use LLM playgrounds to create and run evaluations that measure the quality of model outputs before deployment.
 - [Offline evaluations](https://launchdarkly.com/docs/home/agentcontrol/offline-evaluations.md): This topic explains how to use offline evaluations to validate config variations before releasing them to production.
 - [Datasets](https://launchdarkly.com/docs/home/agentcontrol/datasets.md): This topic explains how to create, manage, and use datasets for offline evaluations.
+- [Span annotations](https://launchdarkly.com/docs/home/agentcontrol/span-annotations.md): This topic explains how to review a span in a trace by marking it correct or incorrect, adding a comment, and writing the expected output.
+- [Datasets from traces](https://launchdarkly.com/docs/home/agentcontrol/datasets-from-traces.md): Add a reviewed span from a trace to a dataset and learn what the resulting dataset row contains.
 - [Online evaluations](https://launchdarkly.com/docs/home/agentcontrol/online-evaluations.md): This topic describes how to run online evaluations on config variations by attaching judges that score responses for accuracy, relevance, and toxicity.
 - [Judges](https://launchdarkly.com/docs/home/agentcontrol/judges.md): This topic explains how to create and manage custom judges for online evaluations in AgentControl.
 - [Evaluations from code](https://launchdarkly.com/docs/home/agentcontrol/evaluations-from-code.md): This topic explains how to run AI evaluations from your own code or CI workflow and send the results to LaunchDarkly for inspection and comparison.
@@ -231,6 +248,8 @@ Pricing information for LaunchDarkly plans is available at [https://launchdarkly
 
 - [Releasing features with LaunchDarkly](https://launchdarkly.com/docs/home/releases/releasing.md): This topic compares several options LaunchDarkly provides for releasing features to production gradually and safely.
 - [Release policies](https://launchdarkly.com/docs/home/releases/release-policies.md): This topic explains how to use release policies to define preferred release methods for environments and standardize how your organization configures feature releases.
+- [Environment release plans](https://launchdarkly.com/docs/home/releases/environment-release-plans.md): This topic explains what environment release plans are and how they help your organization release features consistently.
+- [Creating and managing environment release plans](https://launchdarkly.com/docs/home/releases/environment-release-plans-create.md): This topic explains how to create, edit, clone, and delete environment release plans.
 - [Health checks for releases](https://launchdarkly.com/docs/home/releases/health-checks.md): This topic explains how to use health checks to confirm your release setup and troubleshoot configuration problems.
 - [Change history](https://launchdarkly.com/docs/home/releases/change-history.md): This topic explains how to track changes made in LaunchDarkly. LaunchDarkly keeps a running log of changes made to feature flags in a given environment.
 - [Restoring previous flag versions](https://launchdarkly.com/docs/home/releases/version-restore.md): This topic explains how to use the change history tab to restore a feature flag to a previous version.
@@ -278,7 +297,7 @@ Pricing information for LaunchDarkly plans is available at [https://launchdarkly
 ### Release management tools
 
 - [Release management tools](https://launchdarkly.com/docs/home/releases/release-management.md): This category explains how you can more finely control your use of feature flags by release management tools within LaunchDarkly.
-- [Approvals](https://launchdarkly.com/docs/home/releases/approvals.md): This topic introduces LaunchDarkly's approvals feature. It explains what approvals are and how to configure them.
+- [Approvals](https://launchdarkly.com/docs/home/releases/approvals.md): This topic introduces LaunchDarkly approvals. It explains what approvals are and how to configure them.
 - [Requesting approvals](https://launchdarkly.com/docs/home/releases/approval-requests.md): This topic explains how to create approval requests.
 - [Reviewing approval requests](https://launchdarkly.com/docs/home/releases/approval-reviews.md): This topic explains how to review, approve, and decline approval requests.
 - [Deleting approval requests](https://launchdarkly.com/docs/home/releases/approvals-delete.md): This topic explains how to delete approval requests.
@@ -305,14 +324,14 @@ Pricing information for LaunchDarkly plans is available at [https://launchdarkly
 
 ## Observability
 
-- [Observability](https://launchdarkly.com/docs/home/observability.md): This section contains documentation on LaunchDarkly's observability features.
+- [Observability](https://launchdarkly.com/docs/home/observability.md): This section contains documentation on LaunchDarkly observability features.
 - [Session replay](https://launchdarkly.com/docs/home/observability/session-replay.md): This topic explains how to use LaunchDarkly observability features to perform session replays.
-- [Error monitoring](https://launchdarkly.com/docs/home/observability/errors.md): This topic explains how to use LaunchDarkly's observability features to understand and view errors in your application.
-- [Logs](https://launchdarkly.com/docs/home/observability/logs.md): This topic explains how to use LaunchDarkly's observability features to view session logs.
+- [Error monitoring](https://launchdarkly.com/docs/home/observability/errors.md): This topic explains how to use LaunchDarkly observability features to understand and view errors in your application.
+- [Logs](https://launchdarkly.com/docs/home/observability/logs.md): This topic explains how to use LaunchDarkly observability features to view session logs.
 - [Traces](https://launchdarkly.com/docs/home/observability/traces.md): This topic explains how to use the observability Traces page to view OpenTelemetry trace data stored in LaunchDarkly.
 - [Product analytics events](https://launchdarkly.com/docs/home/observability/product-analytics.md): This topic describes how to use LaunchDarkly product analytics events with observability features to help you understand how system performance affects user activities in your application.
 - [LLM observability](https://launchdarkly.com/docs/home/observability/llm-observability.md): This topic explains how LaunchDarkly captures and displays large language model (LLM) spans, and how it groups related LLM spans into conversations.
-- [Alerts](https://launchdarkly.com/docs/home/observability/alerts.md): This topic explains how to set alerts for LaunchDarkly's observability features. Alerts are a way to keep members of your organization aware of what is happening in your application.
+- [Alerts](https://launchdarkly.com/docs/home/observability/alerts.md): This topic explains how to set alerts for LaunchDarkly observability features. Alerts are a way to keep members of your organization aware of what is happening in your application.
 - [Vega for auto-remediation](https://launchdarkly.com/docs/home/observability/vega.md): This topic explains how to use Vega to investigate and fix observability issues in LaunchDarkly.
 - [Search specification](https://launchdarkly.com/docs/home/observability/search.md): This topic explains how to use the LaunchDarkly observability query builder and search syntax to find specific sessions, errors, logs, traces, and metrics.
 - [Observability settings](https://launchdarkly.com/docs/home/observability/settings.md): This topic describes the project-level settings available for sessions, errors, logs, and traces.
@@ -340,9 +359,10 @@ Pricing information for LaunchDarkly plans is available at [https://launchdarkly
 - [Azure Monitor](https://launchdarkly.com/docs/home/observability/azure-monitor.md): This topic explains how to stream Azure Monitor logs and metrics from your Azure subscription to LaunchDarkly observability features.
 - [Database monitoring](https://launchdarkly.com/docs/home/observability/database-monitoring.md): This topic explains how to use LaunchDarkly observability features to monitor a ClickHouse database, and optionally a PostgreSQL database.
 - [Datadog Agent ingestion](https://launchdarkly.com/docs/home/observability/datadog-agent.md): This topic explains how to send traces, metrics, and logs from the Datadog Agent to LaunchDarkly observability features.
-- [Fluent Bit](https://launchdarkly.com/docs/home/observability/fluentbit.md): This topic explains how to send logs from Fluent Bit to LaunchDarkly's observability dashboards.
+- [Fluent Bit](https://launchdarkly.com/docs/home/observability/fluentbit.md): This topic explains how to send logs from Fluent Bit to the LaunchDarkly observability dashboards.
+- [JSON log drain](https://launchdarkly.com/docs/home/observability/json-log-drain.md): This topic explains how to send JSON-formatted logs over HTTP to LaunchDarkly observability features, including from Fastly log streams and Courier outbound webhooks.
 - [Syslog log drain](https://launchdarkly.com/docs/home/observability/syslog.md): This topic explains how to send syslog-formatted logs to LaunchDarkly observability features, including from hosting platforms like Render.
-- [Vercel](https://launchdarkly.com/docs/home/observability/vercel.md): This topic explains how to send logs from Vercel to LaunchDarkly's observability features.
+- [Vercel](https://launchdarkly.com/docs/home/observability/vercel.md): This topic explains how to send logs from Vercel to the LaunchDarkly observability features.
 
 ## Experimentation
 
@@ -385,6 +405,7 @@ Pricing information for LaunchDarkly plans is available at [https://launchdarkly
 - [Outliers in Bayesian experiments](https://launchdarkly.com/docs/home/experimentation/outliers.md): This topic explains how LaunchDarkly Experimentation handles outliers in its Bayesian experiment analyses.
 - [Frequentist experiment results](https://launchdarkly.com/docs/home/experimentation/frequentist-results.md): This topic explains how to read the results of a frequentist experiment.
 - [Filtering experiment results](https://launchdarkly.com/docs/home/experimentation/filters.md): This topic explains how to use attribute filters to narrow experiment results by attribute.
+- [Slice results by event property](https://launchdarkly.com/docs/home/experimentation/event-properties.md): This topic explains how to view warehouse native experiment results separately for each value of an event property on a metric's data source.
 
 ### Multi-armed bandits
 
@@ -423,6 +444,7 @@ Pricing information for LaunchDarkly plans is available at [https://launchdarkly
 - [Custom numeric metrics](https://launchdarkly.com/docs/home/metrics/custom-numeric.md): This topic explains how to create a custom numeric metric in LaunchDarkly.
 - [Filtering custom metric events](https://launchdarkly.com/docs/home/metrics/event-filters.md): This topic explains how to use filters to include only specific custom events in a metric, based on context attributes, event properties, or warehouse column values.
 - [Count distinct metrics](https://launchdarkly.com/docs/home/metrics/count-distinct.md): This topic explains how to create a count distinct metric, which measures the number of unique values in a warehouse column.
+- [Event-level percentile metrics](https://launchdarkly.com/docs/home/metrics/event-level-percentiles.md): This topic explains how to create event-level percentile metrics, which compute a percentile over every metric event from a Snowflake warehouse data source, rather than over one value per unit.
 - [Ratio metrics](https://launchdarkly.com/docs/home/metrics/ratio-metrics.md): This topic explains how to create LaunchDarkly ratio metrics.
 - [Creating metrics from traces](https://launchdarkly.com/docs/home/metrics/create-trace-metrics.md): This topic explains how to create LaunchDarkly custom metrics from OpenTelemetry traces.
 - [Managing metrics](https://launchdarkly.com/docs/home/metrics/manage-metrics.md): This topic explains how to view, edit, archive, and delete existing metrics.
@@ -485,8 +507,8 @@ Pricing information for LaunchDarkly plans is available at [https://launchdarkly
 - [Connect apps and services to LaunchDarkly](https://launchdarkly.com/docs/home/infrastructure/apps.md): This category has documentation topics about different methods to connect your services and applications to LaunchDarkly.
 - [Custom properties](https://launchdarkly.com/docs/home/infrastructure/custom-properties.md): This topic explains how to set up and use custom properties in LaunchDarkly. They let you store integration data in a feature flag. Each custom property you add to a feature flag can contain a list of associated values.
 - [OAuth applications](https://launchdarkly.com/docs/home/infrastructure/oauth.md): This topic explains how to authorize or revoke access of an OAuth app. You can connect your LaunchDarkly account to external applications using the OAuth 2.0 protocol.
-- [Webhooks](https://launchdarkly.com/docs/home/infrastructure/webhooks.md): This topic explains how to create and use webhooks in LaunchDarkly. LaunchDarkly's webhooks allow you to build your own integrations. When something changes, LaunchDarkly sends an HTTP POST payload to the webhook's configured URL.
-- [The LaunchDarkly API](https://launchdarkly.com/docs/home/infrastructure/api.md): This topic explains how to access LaunchDarkly's API documentation.
+- [Webhooks](https://launchdarkly.com/docs/home/infrastructure/webhooks.md): This topic explains how to create and use webhooks in LaunchDarkly. LaunchDarkly webhooks allow you to build your own integrations. When something changes, LaunchDarkly sends an HTTP POST payload to the webhook's configured URL.
+- [The LaunchDarkly API](https://launchdarkly.com/docs/home/infrastructure/api.md): This topic explains how to access the LaunchDarkly API documentation.
 
 ### LaunchDarkly in federal environments
 
@@ -593,7 +615,7 @@ Pricing information for LaunchDarkly plans is available at [https://launchdarkly
 - [Managing sessions](https://launchdarkly.com/docs/home/account/sessions.md): This topic explains how session duration settings work in LaunchDarkly, and how to configure them. LaunchDarkly offers administrators a set of controls to manage how long account members stay logged in to their account, and how often they need to re-authenticate. You can also reset sessions for everyone in your organization.
 - [Organization access settings](https://launchdarkly.com/docs/home/account/org-settings.md): This topic explains how to enable and disable organization access settings in LaunchDarkly.
 - [Organization announcements](https://launchdarkly.com/docs/home/account/org-announcements.md): This topic explains how to enable a custom announcement banner that appears in LaunchDarkly for everyone in your organization.
-- [Support options](https://launchdarkly.com/docs/home/account/enhanced-support.md): This topic explains LaunchDarkly's Support options, including how to use enhanced support, and how to allow LaunchDarkly to use generative AI for Support tickets.
+- [Support options](https://launchdarkly.com/docs/home/account/enhanced-support.md): This topic explains the LaunchDarkly Support options, including how to use enhanced support, and how to allow LaunchDarkly to use generative AI for Support tickets.
 - [Resetting your password](https://launchdarkly.com/docs/home/account/reset-password.md): This topic explains how to reset your LaunchDarkly password, and what to do if you do not receive a reset email.
 
 ### Billing and usage
@@ -627,7 +649,6 @@ Pricing information for LaunchDarkly plans is available at [https://launchdarkly
 ### Feature flags
 
 - [Feature flags](https://launchdarkly.com/docs/guides/flags.md): This category has guides that teach you how to use and manage feature flags.
-- [Best practices for upgrading users to contexts](https://launchdarkly.com/docs/guides/flags/upgrading-contexts.md): This guide summarizes what contexts are and describes best practices for upgrading your LaunchDarkly account and SDKs from users to contexts.
 - [Creating flags](https://launchdarkly.com/docs/guides/flags/creating-flags.md): This guide explains the best practices for flag creating that we at LaunchDarkly consider most important.
 - [Deciding between flag targeting strategies](https://launchdarkly.com/docs/guides/flags/targeting-recommendations.md): This guide outlines the few use cases where individual targeting might be more effective than other types of targeting, and explains how the SDK uses big segments to facilitate efficient targeting.
 - [Defining and targeting mobile applications](https://launchdarkly.com/docs/guides/flags/defining-mobile-apps.md): This guide discusses best practices for defining applications in LaunchDarkly so that you can easily target specific apps and versions.
@@ -674,7 +695,7 @@ Pricing information for LaunchDarkly plans is available at [https://launchdarkly
 - [Designing experiments](https://launchdarkly.com/docs/guides/experimentation/designing-experiments.md): This guide provides strategies and best practices to design an effective experiment in LaunchDarkly.
 - [Example experiments](https://launchdarkly.com/docs/guides/experimentation/example-experiments.md): This guide provides examples of experiments you can build in LaunchDarkly.
 - [Experimentation best practices](https://launchdarkly.com/docs/guides/experimentation/best-practices.md): This topic includes some recommended best practices for using LaunchDarkly Experimentation.
-- [Bayesian versus frequentist statistics](https://launchdarkly.com/docs/guides/experimentation/bayesian-frequentist.md): This guide explains the difference between Bayesian and frequentist statistics, both of which are available in LaunchDarkly’s Experimentation framework.
+- [Bayesian versus frequentist statistics](https://launchdarkly.com/docs/guides/experimentation/bayesian-frequentist.md): This guide explains the difference between Bayesian and frequentist statistics, both of which are available in the LaunchDarkly Experimentation framework.
 - [Maintaining consistency across user sessions when running experiments](https://launchdarkly.com/docs/guides/experimentation/logged-out-logged-in.md): This guide provides strategies to manage experiments that include users with multiple user sessions interacting with your app.
 - [Measuring Experimentation impact with holdouts](https://launchdarkly.com/docs/guides/experimentation/holdouts.md): This guide explains how to create a holdout group to measure the effectiveness of your Experimentation program.
 - [Migrating from Statsig to LaunchDarkly Experimentation](https://launchdarkly.com/docs/guides/experimentation/migrate-from-statsig.md): This guide explains how to migrate your Statsig experiment implementation to LaunchDarkly Experimentation.
@@ -712,8 +733,8 @@ Pricing information for LaunchDarkly plans is available at [https://launchdarkly
 - [Account management](https://launchdarkly.com/docs/guides/account.md): This category has guides that teach you how to manage your LaunchDarkly account.
 - [LaunchDarkly for large enterprise teams](https://launchdarkly.com/docs/guides/account/large-teams.md): This guide explains how to plan a LaunchDarkly implementation for a large enterprise organization.
 - [Merging LaunchDarkly accounts](https://launchdarkly.com/docs/guides/account/merge-accounts.md): This tutorial explains how to use a LaunchDarkly Labs utility to merge two existing LaunchDarkly projects in different accounts.
-- [Migrating your existing feature flag solution to LaunchDarkly](https://launchdarkly.com/docs/guides/account/migrating-solutions.md): This guide provides guidance and tips for how to effectively migrate from a third-party or homegrown feature flagging system to LaunchDarkly's feature management platform.
-- [Minimizing LaunchDarkly's access to end user data](https://launchdarkly.com/docs/guides/account/user-data.md): This guide explains different options to configure your product's relationship with LaunchDarkly to minimize when your end users' data is transmitted to our servers.
+- [Migrating your existing feature flag solution to LaunchDarkly](https://launchdarkly.com/docs/guides/account/migrating-solutions.md): This guide provides guidance and tips for how to effectively migrate from a third-party or homegrown feature flagging system to the LaunchDarkly feature management platform.
+- [Minimizing LaunchDarkly access to end user data](https://launchdarkly.com/docs/guides/account/user-data.md): This guide explains different options to configure your product's relationship with LaunchDarkly to minimize when your end users' data is transmitted to our servers.
 - [Onboarding to views](https://launchdarkly.com/docs/guides/account/views-onboarding.md): This topic explains how to start using views.
 - [Using LaunchDarkly with Protected Health Information (PHI)](https://launchdarkly.com/docs/guides/account/protected-health-info.md): This guide explains what to consider when you need to send Protected Health Information (PHI) to LaunchDarkly, and how to enable HIPAA compliance for your LaunchDarkly account.
 - [Using SSO with LaunchDarkly](https://launchdarkly.com/docs/guides/account/sso.md): This guide provides a high-level overview of the single sign-on (SSO) options you can use with LaunchDarkly.
@@ -730,7 +751,7 @@ Pricing information for LaunchDarkly plans is available at [https://launchdarkly
 - [SDKs](https://launchdarkly.com/docs/guides/sdk.md): This category has guides that teach you how to use LaunchDarkly SDKs.
 - [Use cases for SDK wrappers](https://launchdarkly.com/docs/guides/sdk/sdk-wrappers.md): This guide explains how to use an SDK wrapper to facilitate interactions between LaunchDarkly SDKs and your codebase.
 - [Using LaunchDarkly without a supported SDK](https://launchdarkly.com/docs/guides/sdk/unsupported-sdk.md): This guide explains your options for working with LaunchDarkly without a supported SDK for your tech stack.
-- [Using mobile SDKs](https://launchdarkly.com/docs/guides/sdk/mobile.md): This guide explores some best practices for using LaunchDarkly's mobile SDKs.
+- [Using mobile SDKs](https://launchdarkly.com/docs/guides/sdk/mobile.md): This guide explores some best practices for using LaunchDarkly mobile SDKs.
 - [Using the Lua SDK with HAProxy](https://launchdarkly.com/docs/guides/sdk/haproxy.md): This topic explains how to use the LaunchDarkly Lua server-side SDK with HAProxy.
 - [Using the Lua SDK with NGINX](https://launchdarkly.com/docs/guides/sdk/nginx.md): This topic explains how to use the LaunchDarkly Lua server-side SDK with NGINX.
 - [Using the JavaScript SDK in Salesforce Lightning Web Components](https://launchdarkly.com/docs/guides/sdk/lightning-web-components.md): This guide explains how to configure your Salesforce environment to use the LaunchDarkly JavaScript or React Web client-side SDKs in Lightning Web Components (LWCs).
@@ -751,7 +772,7 @@ Pricing information for LaunchDarkly plans is available at [https://launchdarkly
 ### REST API
 
 - [REST API](https://launchdarkly.com/docs/guides/api.md): This category has guides that teach you about the LaunchDarkly REST API.
-- [Comparing LaunchDarkly's SDKs and REST API](https://launchdarkly.com/docs/guides/api/comparing-sdk-rest-api.md): This guide explains the differences between LaunchDarkly's SDKs and LaunchDarkly's REST API and associated client libraries, and when you should use each.
+- [Comparing LaunchDarkly SDKs and REST API](https://launchdarkly.com/docs/guides/api/comparing-sdk-rest-api.md): This guide explains the differences between LaunchDarkly SDKs and the LaunchDarkly REST API and associated client libraries, and when you should use each.
 - [Using the LaunchDarkly REST API](https://launchdarkly.com/docs/guides/api/rest-api.md): This guide explains how to get started with the LaunchDarkly REST API. It describes how to create API access tokens, make requests, and evaluate the responses, and introduces common use cases.
 - [REST API migration guide: 20220603 to 20240415](https://launchdarkly.com/docs/guides/api/api-migration-guide.md): This topic explains changes in the 20240415 version of the LaunchDarkly REST API and how to migrate to that version.
 
@@ -763,7 +784,7 @@ Pricing information for LaunchDarkly plans is available at [https://launchdarkly
 
 - [SDK concepts](https://launchdarkly.com/docs/sdk/concepts.md): This category contains documentation topics explaining high-level concepts relevant to LaunchDarkly SDKs.
 - [Getting started with SDKs](https://launchdarkly.com/docs/sdk/concepts/getting-started.md): This topic explains the prerequisites you must consider when you're setting up a LaunchDarkly SDK for the first time.
-- [Choosing an SDK type](https://launchdarkly.com/docs/sdk/concepts/client-side-server-side.md): This topic explains the different security considerations and architectural differences between LaunchDarkly's client-side, server-side, AI, and edge SDKs. It helps you determine which type of SDK to use.
+- [Choosing an SDK type](https://launchdarkly.com/docs/sdk/concepts/client-side-server-side.md): This topic explains the different security considerations and architectural differences between LaunchDarkly client-side, server-side, AI, and edge SDKs. It helps you determine which type of SDK to use.
 - [Analytics events](https://launchdarkly.com/docs/sdk/concepts/events.md): This topic explains analytics events, how SDKs send them to LaunchDarkly, and what features they are generated for.
 - [Filtered SDK payloads](https://launchdarkly.com/docs/sdk/concepts/payload-filtering.md): This topic explains how to use filtered SDK payloads to reduce the size of the flag, and segment data LaunchDarkly delivers to an SDK.
 - [Apple App Store data collection policy](https://launchdarkly.com/docs/sdk/concepts/apple-app-store.md): This topic explains the implications of using a LaunchDarkly SDK in an app you submit to the Apple App Store.
@@ -775,19 +796,19 @@ Pricing information for LaunchDarkly plans is available at [https://launchdarkly
 - [Sample applications](https://launchdarkly.com/docs/sdk/concepts/sample-applications.md): This topic lists the sample applications available for learning how to work with LaunchDarkly SDKs.
 - [Server-side SDK bandwidth usage](https://launchdarkly.com/docs/sdk/concepts/server-side-bandwidth.md): This topic explains how to estimate bandwidth usage for server-side SDKs.
 - [Using flag types](https://launchdarkly.com/docs/sdk/concepts/flag-types.md): This topic explains feature flag templates and how they affect flag evaluations in different LaunchDarkly SDKs.
-- [Version notifications](https://launchdarkly.com/docs/sdk/concepts/version-notifications.md): This topic explains how to set up notifications to learn about version updates and end of life notices for LaunchDarkly's SDKs.
-- [Versioning policy](https://launchdarkly.com/docs/sdk/concepts/versioning.md): This topic explains LaunchDarkly's SDK versioning policy, which is based on the semantic versioning standard.
+- [Version notifications](https://launchdarkly.com/docs/sdk/concepts/version-notifications.md): This topic explains how to set up notifications to learn about version updates and end of life notices for LaunchDarkly SDKs.
+- [Versioning policy](https://launchdarkly.com/docs/sdk/concepts/versioning.md): This topic explains the LaunchDarkly SDK versioning policy, which is based on the semantic versioning standard.
 - [Supported versions](https://launchdarkly.com/docs/sdk/concepts/supported-versions.md): This topic lists the currently supported versions of all LaunchDarkly SDKs.
 
 ### SDK features
 
-- [SDK features](https://launchdarkly.com/docs/sdk/features.md): This category contains documentation topics explaining the features available in LaunchDarkly's SDKs.
+- [SDK features](https://launchdarkly.com/docs/sdk/features.md): This category contains documentation topics explaining the features available in LaunchDarkly SDKs.
 - [SDK configuration](https://launchdarkly.com/docs/sdk/features/config.md): This topic explains how to configure various LaunchDarkly SDKs.
 - [Application metadata configuration](https://launchdarkly.com/docs/sdk/features/app-config.md): This topic explains how to configure LaunchDarkly SDKs to send application metadata to LaunchDarkly.
 - [Migration configuration](https://launchdarkly.com/docs/sdk/features/migration-config.md): This topic explains how to configure LaunchDarkly SDKs to manage migrations or modernizations.
 - [Service endpoint configuration](https://launchdarkly.com/docs/sdk/features/service-endpoint-configuration.md): This topic explains how to configure LaunchDarkly SDKs to connect to alternate service endpoints. Typically this is only required for customers working with the LaunchDarkly federal instance.
 - [Agent skills](https://launchdarkly.com/docs/sdk/features/agent-skills.md): This topic explains how to use agent skills with LaunchDarkly AI SDKs. This feature is available for AI SDKs only.
-- [Aliasing users](https://launchdarkly.com/docs/sdk/features/aliasing-users.md): This topic explains how to alias the users of various LaunchDarkly SDKs, both client- and server-side.
+- [Aliasing users](https://launchdarkly.com/docs/sdk/features/aliasing-users.md): This topic explains how to alias the users of certain LaunchDarkly SDKs.
 - [Anonymous contexts](https://launchdarkly.com/docs/sdk/features/anonymous.md): This topic explains how to configure contexts as anonymous in LaunchDarkly SDKs. These features are available for all SDKs.
 - [Automatic environment attributes](https://launchdarkly.com/docs/sdk/features/environment-attributes.md): This topic explains how LaunchDarkly automatically provides data about the environment where the application is running.
 - [Big segments](https://launchdarkly.com/docs/sdk/features/big-segments.md): This topic explains how the big segments feature works in the LaunchDarkly SDKs that support it.
@@ -795,7 +816,6 @@ Pricing information for LaunchDarkly plans is available at [https://launchdarkly
 - [Caching contexts to local storage](https://launchdarkly.com/docs/sdk/features/local-storage.md): This topic explains how context caching to local storage works for SDKs that support the feature.
 - [Context configuration](https://launchdarkly.com/docs/sdk/features/context-config.md): This topic explains how to configure contexts in LaunchDarkly SDKs. This feature is available for both client-side and server-side SDKs.
 - [Customizing AgentControl configs](https://launchdarkly.com/docs/sdk/features/agentcontrol-config.md): This topic explains how to customize an AgentControl config. This feature is available for AI SDKs only.
-- [Data saving mode](https://launchdarkly.com/docs/sdk/features/data-saving-mode.md): This topic explains how data saving mode works in the LaunchDarkly SDKs that support it.
 - [Experimentation](https://launchdarkly.com/docs/sdk/features/experimentation.md): This topic explains how to set up select client-side LaunchDarkly SDKs to use the Experimentation feature.
 - [Flag overrides](https://launchdarkly.com/docs/sdk/features/flag-overrides.md): This topic explains how to use flag overrides in server-side SDKs.
 - [Flag variation evaluation](https://launchdarkly.com/docs/sdk/features/evaluating.md): This topic explains how to use the flag evaluation feature to serve different feature flag variations to contexts and users.
@@ -818,6 +838,7 @@ Pricing information for LaunchDarkly plans is available at [https://launchdarkly
 - [Relay Proxy configuration](https://launchdarkly.com/docs/sdk/features/relay-proxy-configuration.md): This topic explains how to configure LaunchDarkly SDKs to connect to your Relay Proxy in various modes.
 - [Using daemon mode](https://launchdarkly.com/docs/sdk/features/relay-proxy-configuration/daemon-mode.md): This topic explains how to configure LaunchDarkly SDKs to connect to your Relay Proxy when you are running in daemon mode.
 - [Using proxy mode](https://launchdarkly.com/docs/sdk/features/relay-proxy-configuration/proxy-mode.md): This topic explains how to configure LaunchDarkly SDKs to connect to your Relay Proxy when you are running in proxy mode.
+- [Runtime Delivery Network](https://launchdarkly.com/docs/sdk/features/runtime-delivery-network.md): This topic explains how the Runtime Delivery Network (RDN) works in the LaunchDarkly SDKs that support it.
 - [Secure mode](https://launchdarkly.com/docs/sdk/features/secure-mode.md): This topic explains how to use the secure mode feature for safely evaluating feature flags in your web browser.
 - [Shutting down](https://launchdarkly.com/docs/sdk/features/shutdown.md): This topic explains how to safely shut down different LaunchDarkly SDKs.
 - [Storing data](https://launchdarkly.com/docs/sdk/features/storing-data.md): This topic explains which external databases each server-side SDK can use to store flag data.
@@ -832,7 +853,7 @@ Pricing information for LaunchDarkly plans is available at [https://launchdarkly
 
 ### Client-side SDKs
 
-- [Client-side SDKs](https://launchdarkly.com/docs/sdk/client-side.md): This category contains documentation topics explaining LaunchDarkly's client-side SDKs.
+- [Client-side SDKs](https://launchdarkly.com/docs/sdk/client-side.md): This category contains documentation topics explaining the LaunchDarkly client-side SDKs.
 - [.NET SDK reference (client-side)](https://launchdarkly.com/docs/sdk/client-side/dotnet.md): This topic documents how to get started with the client-side .NET SDK, and links to reference information on all of the supported features.
 - [.NET (client-side) SDK 4.x to 5.0 migration guide](https://launchdarkly.com/docs/sdk/client-side/dotnet/migration-4-to-5.md): This topic explains the changes in the .NET (client-side) SDK 5.0 release and how to migrate to that version.
 - [.NET (client-side) SDK 3.x to 4.0 migration guide](https://launchdarkly.com/docs/sdk/client-side/dotnet/migration-3-to-4.md): This topic explains the changes in the .NET (client-side) SDK 4.0 release and how to migrate to that version.
@@ -874,7 +895,7 @@ Pricing information for LaunchDarkly plans is available at [https://launchdarkly
 - [React Native SDK 8.x to 9.0 migration guide](https://launchdarkly.com/docs/sdk/client-side/react/migration-8-to-9-react-native.md): This topic explains the changes in the React Native SDK version 9.0 release and how to migrate to that version.
 - [React Native SDK 7.x to 8.0 migration guide](https://launchdarkly.com/docs/sdk/client-side/react/migration-7-to-8-react-native.md): This topic explains the changes in the React Native SDK 8 release and how to migrate to that version.
 - [React Native SDK 6.x to 7.0 migration guide](https://launchdarkly.com/docs/sdk/client-side/react/migration-6-to-7-react-native.md): This topic explains the changes in the React Native SDK 7 release and how to migrate to that version.
-- [Gatsby plugin](https://launchdarkly.com/docs/sdk/client-side/react/gatsby.md): This topic explains where to find documentation on LaunchDarkly's Gatsby plugin, and the prerequisites for using it.
+- [Gatsby plugin](https://launchdarkly.com/docs/sdk/client-side/react/gatsby.md): This topic explains where to find documentation on the LaunchDarkly Gatsby plugin, and the prerequisites for using it.
 - [Roku SDK reference](https://launchdarkly.com/docs/sdk/client-side/roku.md): This topic documents how to get started with the client-side Roku SDK, and links to reference information on all of the supported features.
 - [Roku SDK 1.x to 2.0 migration guide](https://launchdarkly.com/docs/sdk/client-side/roku/migration-1-to-2.md): This topic explains the changes in the Roku SDK 2.0 release and how to migrate to that version.
 - [Vue SDK reference](https://launchdarkly.com/docs/sdk/client-side/vue.md): This topic documents how to get started with the Vue SDK.
@@ -883,7 +904,7 @@ Pricing information for LaunchDarkly plans is available at [https://launchdarkly
 
 ### Server-side SDKs
 
-- [Server-side SDKs](https://launchdarkly.com/docs/sdk/server-side.md): This category contains documentation topics explaining LaunchDarkly's server-side SDKs.
+- [Server-side SDKs](https://launchdarkly.com/docs/sdk/server-side.md): This category contains documentation topics explaining the LaunchDarkly server-side SDKs.
 - [.NET SDK reference (server-side)](https://launchdarkly.com/docs/sdk/server-side/dotnet.md): This topic documents how to get started with the server-side .NET SDK, and links to reference information on all of the supported features.
 - [.NET (server-side) SDK 7.x to 8.0 migration guide](https://launchdarkly.com/docs/sdk/server-side/dotnet/migration-7-to-8.md): This topic explains the changes in the .NET (server-side) SDK 8.0 release and how to migrate to that version.
 - [.NET (server-side) SDK 6.x to 7.0 migration guide](https://launchdarkly.com/docs/sdk/server-side/dotnet/migration-6-to-7.md): This topic explains the changes in the .NET (server-side) SDK 7.0 release and how to migrate to that version.
@@ -941,7 +962,7 @@ Pricing information for LaunchDarkly plans is available at [https://launchdarkly
 
 ### Edge SDKs
 
-- [Edge SDKs](https://launchdarkly.com/docs/sdk/edge.md): This category contains documentation topics explaining LaunchDarkly's edge SDKs.
+- [Edge SDKs](https://launchdarkly.com/docs/sdk/edge.md): This category contains documentation topics explaining LaunchDarkly edge SDKs.
 - [Akamai SDK reference](https://launchdarkly.com/docs/sdk/edge/akamai.md): This topic documents how to get started with the Akamai SDK, and links to reference information on all of the supported features.
 - [Cloudflare SDK reference](https://launchdarkly.com/docs/sdk/edge/cloudflare.md): This topic documents how to get started with the Cloudflare SDK, and links to reference information on all of the supported features.
 - [Cloudflare SDK 1.x to 2.0 migration guide](https://launchdarkly.com/docs/sdk/edge/cloudflare/migration-1-to-2.md): This topic explains the changes in the Cloudflare SDK 2.0 release and how to migrate to that version.
@@ -960,7 +981,7 @@ Pricing information for LaunchDarkly plans is available at [https://launchdarkly
 ### Observability SDKs
 
 - [Observability SDKs](https://launchdarkly.com/docs/sdk/observability.md): This category contains documentation topics explaining the observability capabilities available for LaunchDarkly SDKs.
-- [SDK features for observability](https://launchdarkly.com/docs/sdk/observability/features.md): This category contains documentation topics explaining the features available in LaunchDarkly's observability SDKs.
+- [SDK features for observability](https://launchdarkly.com/docs/sdk/observability/features.md): This category contains documentation topics explaining the features available in LaunchDarkly observability SDKs.
 - [Configuration for client-side observability](https://launchdarkly.com/docs/sdk/features/observability-config-client-side.md): This topic explains how to configure the observability plugin for client-side SDKs.
 - [Configuration for server-side observability](https://launchdarkly.com/docs/sdk/features/observability-config-server-side.md): This topic explains how to configure the observability plugin for server-side SDKs.
 - [Configuration for session replay](https://launchdarkly.com/docs/sdk/features/session-replay-config.md): This topic explains how to configure the SDK session replay plugin.
@@ -1008,7 +1029,7 @@ Pricing information for LaunchDarkly plans is available at [https://launchdarkly
 - [Monitoring the Relay Proxy](https://launchdarkly.com/docs/sdk/relay-proxy/monitoring.md): This topic explains best practices for monitoring the Relay Proxy as it runs, as well as information about exporting metrics and other data.
 - [Upgrading the Relay Proxy](https://launchdarkly.com/docs/sdk/relay-proxy/upgrading.md): This topic explains how to upgrade, roll back, and validate deployments of the Relay Proxy, and what to do when a version approaches its end-of-life date.
 - [Relay Proxy 8.x to 9.0 migration guide](https://launchdarkly.com/docs/sdk/relay-proxy/migration-8-to-9.md): This topic explains the changes in the Relay Proxy 9.0 release and how to migrate to that version.
-- [Versioning policy](https://launchdarkly.com/docs/sdk/relay-proxy/versioning.md): This topic explains LaunchDarkly's Relay Proxy versioning policy, which is based on the semantic versioning standard.
+- [Versioning policy](https://launchdarkly.com/docs/sdk/relay-proxy/versioning.md): This topic explains the LaunchDarkly Relay Proxy versioning policy, which is based on the semantic versioning standard.
 
 ## Integrations
 
@@ -1037,7 +1058,7 @@ Pricing information for LaunchDarkly plans is available at [https://launchdarkly
 ### Data Export
 
 - [Data Export](https://launchdarkly.com/docs/integrations/data-export.md): This topic explains how to use the Data Export feature to export and store flag, context, and Experimentation event data. Data Export provides a real-time export of raw analytics data, including feature flag requests, analytics events, custom events, Experimentation events, and more.
-- [Streaming Data Export](https://launchdarkly.com/docs/integrations/data-export/streaming.md): This section includes links to LaunchDarkly's streaming Data Export integrations.
+- [Streaming Data Export](https://launchdarkly.com/docs/integrations/data-export/streaming.md): This section includes links to the LaunchDarkly streaming Data Export integrations.
 - [Streaming Data Export schema reference](https://launchdarkly.com/docs/integrations/data-export/schema-reference.md): This topic explains the schema of Data Export events, including feature, index, identify, summary, and custom events.
 - [Amazon Kinesis](https://launchdarkly.com/docs/integrations/data-export/kinesis.md): This topic explains how to create and test an Amazon Kinesis destination for Data Export.
 - [Azure Event Hubs](https://launchdarkly.com/docs/integrations/data-export/event-hub.md): This topic explains how to configure and use the Azure Event Hubs Data Export destination.
@@ -1046,7 +1067,7 @@ Pricing information for LaunchDarkly plans is available at [https://launchdarkly
 - [mParticle schema reference](https://launchdarkly.com/docs/integrations/data-export/mparticle-schema-reference.md): This topic explains the different event kinds for mParticle Data Export destinations.
 - [Twilio Segment for Data Export](https://launchdarkly.com/docs/integrations/data-export/segment.md): This topic explains how to create and test a Segment destination for Data Export.
 - [Twilio Segment schema reference](https://launchdarkly.com/docs/integrations/data-export/segment-schema-reference.md): This topic explains the different event kinds for Twilio Segment Data Export destinations.
-- [Warehouse Data Export](https://launchdarkly.com/docs/integrations/data-export/warehouse.md): This section includes links to LaunchDarkly's warehouse Data Export integrations.
+- [Warehouse Data Export](https://launchdarkly.com/docs/integrations/data-export/warehouse.md): This section includes links to the LaunchDarkly warehouse Data Export integrations.
 - [Warehouse Data Export schema reference](https://launchdarkly.com/docs/integrations/data-export/warehouse-schema-reference.md): This topic explains the different event kinds for warehouse Data Export destinations.
 - [BigQuery Data Export](https://launchdarkly.com/docs/integrations/data-export/bigquery.md): This topic explains how to create and test a BigQuery destination for Data Export.
 - [ClickHouse Data Export](https://launchdarkly.com/docs/integrations/data-export/clickhouse.md): This topic explains how to create and test a ClickHouse destination for Data Export.
@@ -1059,7 +1080,7 @@ Pricing information for LaunchDarkly plans is available at [https://launchdarkly
 
 - [Edge tools](https://launchdarkly.com/docs/integrations/edge.md): This category lists integrations with third-party edge providers. Each integration requires that you use the appropriate edge SDK.
 - [Akamai](https://launchdarkly.com/docs/integrations/akamai.md): This topic explains how to use the LaunchDarkly Akamai integration.
-- [Cloudflare](https://launchdarkly.com/docs/integrations/cloudflare.md): This topic explains how to use LaunchDarkly's Cloudflare integration.
+- [Cloudflare](https://launchdarkly.com/docs/integrations/cloudflare.md): This topic explains how to use the LaunchDarkly Cloudflare integration.
 - [Fastly](https://launchdarkly.com/docs/integrations/fastly.md): This topic explains how to use the LaunchDarkly Fastly integration.
 - [Netlify](https://launchdarkly.com/docs/integrations/netlify.md): This topic explains how to use Netlify's LaunchDarkly integration.
 - [Vercel](https://launchdarkly.com/docs/integrations/vercel.md): This topic explains how to use the LaunchDarkly Vercel integration.
@@ -1101,26 +1122,26 @@ Pricing information for LaunchDarkly plans is available at [https://launchdarkly
 - [Datadog](https://launchdarkly.com/docs/integrations/datadog.md): This topic explains the LaunchDarkly Datadog integrations available, including events and triggers.
 - [Using the Datadog events integration](https://launchdarkly.com/docs/integrations/datadog/events.md): This topic explains how to configure and use the LaunchDarkly Datadog events integration.
 - [Using the Datadog dashboard widget](https://launchdarkly.com/docs/integrations/datadog/dashboard-widget.md): This topic explains how to configure and use the LaunchDarkly Datadog dashboard widget.
-- [Using flag triggers with Datadog](https://launchdarkly.com/docs/integrations/datadog/triggers.md): This topic explains how to use LaunchDarkly's trigger feature with Datadog.
+- [Using flag triggers with Datadog](https://launchdarkly.com/docs/integrations/datadog/triggers.md): This topic explains how to use LaunchDarkly triggers with Datadog.
 - [Datadog RUM](https://launchdarkly.com/docs/integrations/datadog/rum.md): This topic explains how to send LaunchDarkly feature flag evaluation data to Datadog Real User Monitoring (RUM) and how to use that data once it arrives.
 - [Dynatrace](https://launchdarkly.com/docs/integrations/dynatrace.md): This topic explains the LaunchDarkly Dynatrace integrations available, including events and triggers.
 - [Using the Dynatrace events integration](https://launchdarkly.com/docs/integrations/dynatrace/events.md): This topic explains how to configure and use the LaunchDarkly Dynatrace events integration.
-- [Using flag triggers with Dynatrace](https://launchdarkly.com/docs/integrations/dynatrace/triggers.md): This topic explains how to use LaunchDarkly's triggers feature with Dynatrace.
+- [Using flag triggers with Dynatrace](https://launchdarkly.com/docs/integrations/dynatrace/triggers.md): This topic explains how to use LaunchDarkly triggers with Dynatrace.
 - [Elastic Stack](https://launchdarkly.com/docs/integrations/elastic-stack.md): This topic explains how to use the LaunchDarkly Elastic Stack integration. The Elastic Stack, formerly referred to as the ELK stack, is a search platform used widely as an observability and security platform.
 - [Grafana](https://launchdarkly.com/docs/integrations/grafana.md): This topic explains how to use the LaunchDarkly Grafana integration. You can use the integration to send flag, environment, and project updates to Grafana to add context to your graphs.
 - [Honeycomb](https://launchdarkly.com/docs/integrations/honeycomb.md): This topic explains the LaunchDarkly Honeycomb integrations available, including events and triggers.
 - [Using the Honeycomb events integration](https://launchdarkly.com/docs/integrations/honeycomb/events.md): This topic explains how to configure and use the LaunchDarkly Honeycomb events integration.
-- [Using flag triggers with Honeycomb](https://launchdarkly.com/docs/integrations/honeycomb/triggers.md): This topic explains how to use LaunchDarkly's triggers feature with Honeycomb.
+- [Using flag triggers with Honeycomb](https://launchdarkly.com/docs/integrations/honeycomb/triggers.md): This topic explains how to use LaunchDarkly triggers with Honeycomb.
 - [Last9](https://launchdarkly.com/docs/integrations/last9.md): This topic explains how to configure and send LaunchDarkly events to Last9.
 - [Mezmo](https://launchdarkly.com/docs/integrations/mezmo.md): This topic explains how to use the LaunchDarkly Mezmo integration. Mezmo is a log management and analysis tool which allows customers to aggregate and view all server logs in a single place.
 - [New Relic One](https://launchdarkly.com/docs/integrations/new-relic.md): This topic explains the LaunchDarkly New Relic integrations available, including events, triggers, and observability ingestion.
 - [Using the New Relic One events integration](https://launchdarkly.com/docs/integrations/new-relic/events.md): This topic explains how to configure and use the LaunchDarkly New Relic One events integration.
-- [Using flag triggers with New Relic One](https://launchdarkly.com/docs/integrations/new-relic/triggers.md): This topic explains how to use LaunchDarkly's trigger feature with New Relic One.
+- [Using flag triggers with New Relic One](https://launchdarkly.com/docs/integrations/new-relic/triggers.md): This topic explains how to use LaunchDarkly triggers with New Relic One.
 - [PagerDuty for guarded rollouts](https://launchdarkly.com/docs/integrations/pagerduty-guardian-edition.md): This topic explains how to use the LaunchDarkly PagerDuty integration for guarded rollouts.
 - [Splunk](https://launchdarkly.com/docs/integrations/splunk.md): This topic explains how to use the LaunchDarkly Splunk integration, which sends audit events when LaunchDarkly resources change.
 - [Splunk Observability Cloud (formerly SignalFx)](https://launchdarkly.com/docs/integrations/splunk-observability.md): This topic explains the LaunchDarkly Splunk Observability Cloud integrations available, including events and triggers.
 - [Using the Splunk Observability Cloud events integration](https://launchdarkly.com/docs/integrations/splunk-observability/events.md): This topic explains how to use the LaunchDarkly Splunk Observability Cloud events integration.
-- [Using flag triggers with Splunk Observability Cloud](https://launchdarkly.com/docs/integrations/splunk-observability/triggers.md): This topic explains how to use LaunchDarkly's trigger feature with Splunk Observability Cloud.
+- [Using flag triggers with Splunk Observability Cloud](https://launchdarkly.com/docs/integrations/splunk-observability/triggers.md): This topic explains how to use LaunchDarkly triggers with Splunk Observability Cloud.
 
 ### Segments integrations
 
@@ -1143,13 +1164,13 @@ Pricing information for LaunchDarkly plans is available at [https://launchdarkly
 - [Using the ServiceNow approvals integration](https://launchdarkly.com/docs/integrations/servicenow/approvals.md): This topic explains how to use the ServiceNow approvals integration to request approvals for LaunchDarkly changes in ServiceNow.
 - [Sleuth](https://launchdarkly.com/docs/integrations/sleuth.md): This topic explains how to configure and use the LaunchDarkly integration to track feature flags as a source of change in Sleuth.
 - [Tray](https://launchdarkly.com/docs/integrations/tray.md): This topic links to Tray's documentation for its LaunchDarkly integration. Tray is a workflow automation and API integration tool.
-- [Trello](https://launchdarkly.com/docs/integrations/trello.md): This topic explains how to use LaunchDarkly's Trello integration to link your feature flags to Trello boards.
+- [Trello](https://launchdarkly.com/docs/integrations/trello.md): This topic explains how to use the LaunchDarkly Trello integration to link your feature flags to Trello boards.
 - [Zapier](https://launchdarkly.com/docs/integrations/zapier.md): This topic explains how to set up and use the LaunchDarkly Zapier integration.
 
 ### More integrations
 
 - [More integrations](https://launchdarkly.com/docs/integrations/more.md): This category lists integrations with third-party apps not related to other categories of tools.
-- [Ansible Collection](https://launchdarkly.com/docs/integrations/ansible.md): This topic links to the API documentation for LaunchDarkly's Ansible Collection integration.
+- [Ansible Collection](https://launchdarkly.com/docs/integrations/ansible.md): This topic links to the API documentation for the LaunchDarkly Ansible Collection integration.
 - [AWS CloudTrail Lake](https://launchdarkly.com/docs/integrations/cloudtrail.md): This topic explains how to configure the AWS CloudTrail Lake integration for LaunchDarkly.
 - [AWS PrivateLink](https://launchdarkly.com/docs/integrations/privatelink.md): This topic explains how to configure the AWS PrivateLink integration for LaunchDarkly event egress traffic.
 - [Bitbucket Pipelines](https://launchdarkly.com/docs/integrations/bitbucket-pipelines.md): This topic explains how to create and enable feature flags using Bitbucket Pipelines, a continuous delivery platform that lets your team build, test, and deploy from Bitbucket.
@@ -1188,7 +1209,7 @@ Pricing information for LaunchDarkly plans is available at [https://launchdarkly
 - [Reserved custom properties](https://launchdarkly.com/docs/integrations/partner-integrations/custom-properties.md): This topic explains how to use the reserved custom properties integration framework capability.
 - [Synced segments capability](https://launchdarkly.com/docs/integrations/partner-integrations/synced-segments.md): This topic explains how to use the synced segments integration framework capability.
 - [Triggers capability](https://launchdarkly.com/docs/integrations/partner-integrations/triggers.md): This topic explains how to use the triggers integration framework capability.
-- [Validating an integration](https://launchdarkly.com/docs/integrations/partner-integrations/validating.md): This topic provides an overview of LaunchDarkly's integration validation server. This is a tool that lets LaunchDarkly partners test their integrations with LaunchDarkly.
+- [Validating an integration](https://launchdarkly.com/docs/integrations/partner-integrations/validating.md): This topic provides an overview of the LaunchDarkly integration validation server. This is a tool that lets LaunchDarkly partners test their integrations with LaunchDarkly.
 
 ## Tutorials
 
@@ -1198,7 +1219,7 @@ Pricing information for LaunchDarkly plans is available at [https://launchdarkly
 
 - [Collecting user feedback in your app with feature flags](https://launchdarkly.com/docs/tutorials/collect-qualitative-user-feedback-homepage.md): Learn how users feel about your app's features so you can make data-driven product decisions with sentiment analysis.
 - [How to target users in production without redeploying code](https://launchdarkly.com/docs/tutorials/videos/target-users-production.md): This video explains how to use LaunchDarkly to create a segments that target different users in production.
-- [A deeper look at LaunchDarkly architecture: more than feature flags](https://launchdarkly.com/docs/tutorials/ld-arch-deep-dive.md): Our infrastructure delivers flags in milliseconds so you can ship software at scale. Learn about how LaunchDarkly's foundations works under the hood.
+- [A deeper look at LaunchDarkly architecture: more than feature flags](https://launchdarkly.com/docs/tutorials/ld-arch-deep-dive.md): Our infrastructure delivers flags in milliseconds so you can ship software at scale. Learn how the foundations of LaunchDarkly work under the hood.
 - [Using LaunchDarkly feature flags and Experimentation with Wordpress](https://launchdarkly.com/docs/tutorials/wordpress.md): This tutorial teaches you how to install and configure a LaunchDarkly SDK in a self-hosted WordPress environment, use feature flags for controlled rollouts and targeted content, and set up A/B experiments across a WordPress landing page.
 - [How to vibe code safely using LaunchDarkly feature flags](https://launchdarkly.com/docs/tutorials/videos/vibe-coding-error-protection.md): How to vibe code safely, using LaunchDarkly feature flags
 - [How to implement WebSockets and kill switches in a Python application](https://launchdarkly.com/docs/tutorials/python-flask-websockets-kill-switch-flags.md): Kill switches can prevent your entire app from failing. Learn to use a websocket library to update your Python Flask app when a kill switch flag is flipped.
@@ -1206,7 +1227,10 @@ Pricing information for LaunchDarkly plans is available at [https://launchdarkly
 
 ### AgentControl configs
 
-- [Run AgentControl offline evaluations in CI](https://launchdarkly.com/docs/tutorials/aic-cicd.md): This tutorial shows how to run an AgentControl agent against a dataset on every pull request, using offline evaluations and GitHub Actions.
+- [Cheaper per success, worse for users: testing tool search on an LLM agent](https://launchdarkly.com/docs/tutorials/llm-tool-search.md): Tool search cut an agent's tokens per task by 78% and its success rate from 71% to 27%.
+- [Your LLM's p90 time to successful completion might not exist](https://launchdarkly.com/docs/tutorials/llm-p90.md): Two Claude models landed within half a second at p90 among successes, until we counted the tasks they failed.
+- [When to use Agent vs Completion mode for an AgentControl configuration](https://launchdarkly.com/docs/tutorials/when-to-use-agent-vs-completion.md): Understand the difference between Agent and Completion mode in AgentControl configurations, and when to choose each with the LaunchDarkly AI SDK.
+- [Run AgentControl evaluations in CI with evaluations from code](https://launchdarkly.com/docs/tutorials/aic-cicd.md): This tutorial shows how to run an AgentControl agent against a dataset on every pull request, using evaluations from code and GitHub Actions.
 - [Finish your software factory: take a bad change back before anyone notices](https://launchdarkly.com/docs/tutorials/agent-pipeline-quality-control.md): This tutorial explains how to finish the run side of a software factory. You join a live band that already generates, validates, and deploys, then watch a guarded rollout revert a silent failure without a person.
 - [Use LaunchDarkly AgentControl to control model administration with LiteLLM](https://launchdarkly.com/docs/tutorials/agentcontrol-litellm-gateway.md): Centralized model routing, prompt governance, and telemetry for any OpenAI-compatible application, with no code changes.
 - [Uncover security risks in your agent skills before deploying](https://launchdarkly.com/docs/tutorials/tessl-security-gate.md): This tutorial explains how to catch a dangerous agent skill before an agent ever runs it: review it automatically, block it in CI if it fails, and only let your agent load skills that passed.
@@ -1223,7 +1247,7 @@ Pricing information for LaunchDarkly plans is available at [https://launchdarkly
 - [When to add online evals to your AgentControl](https://launchdarkly.com/docs/tutorials/when-to-add-online-evals.md): A practical guide for LLM observability, AI evaluation, and real-time quality monitoring in production with LaunchDarkly
 - [Smart AI agent targeting with MCP tools](https://launchdarkly.com/docs/tutorials/multi-agent-mcp-targeting.md): Transform your basic multi-agent system with business tiers, geographic targeting, and MCP tool integration using AgentControl.
 - [Build a LangGraph multi-agent system in 20 minutes with LaunchDarkly AgentControl](https://launchdarkly.com/docs/tutorials/agents-langgraph.md): Build a multi-agent system with dynamic configuration in 20 minutes using LangGraph multi-agent workflows, RAG search, and AgentControl.
-- [Snowflake Cortex completion API + LaunchDarkly SDK integration](https://launchdarkly.com/docs/tutorials/snowflake-tutorial.md): Walk through an integration between the Snowflake Cortex Completion API and LaunchDarkly's AI SDKs to make runtime changes to AI models and prompts.
+- [Snowflake Cortex completion API + LaunchDarkly SDK integration](https://launchdarkly.com/docs/tutorials/snowflake-tutorial.md): Walk through an integration between the Snowflake Cortex Completion API and LaunchDarkly AI SDKs to make runtime changes to AI models and prompts.
 - [Using AgentControl to review database changes](https://launchdarkly.com/docs/tutorials/ai-configs-review-database-changes.md): Learn how to use AgentControl to automatically review and validate database schema changes before they are deployed.
 - [DeepSeek vs Qwen: local model showdown featuring LaunchDarkly AgentControl](https://launchdarkly.com/docs/tutorials/ollama-javascript.md): Compare the performance of two new open source models (DeepSeek r1 and Alibaba's Qwen) using Ollama and AgentControl.
 
@@ -1232,7 +1256,7 @@ Pricing information for LaunchDarkly plans is available at [https://launchdarkly
 - [Already using Datadog? Here's how to gate and observe your AI agent skills with LaunchDarkly (without OpenTelemetry)](https://launchdarkly.com/docs/tutorials/datadog-to-launchdarkly-traces-part-one.md): Learn how to forward Datadog application performance monitoring (APM) trace data to LaunchDarkly using the Datadog Agent, gate AI agent skills with feature flags, and set up dual shipping. OpenTelemetry is not required.
 - [Catch your first silent AI failure with Vega AI in under 10 minutes](https://launchdarkly.com/docs/tutorials/silent-failure-vega-ai-investigation.md): Learn how to instrument an AI agent to expose silent failures and use Vega AI to automatically investigate the root cause.
 - [The human-in-the-loop alternative to autonomous remediation](https://launchdarkly.com/docs/tutorials/human-in-the-loop-vega-alt.md): Triage a real LaunchDarkly alert in Claude Code: correlate error groups, traces, and AgentControl variations to find the root cause.
-- [OpenTelemetry for LLM applications: a practical guide with LaunchDarkly and Langfuse](https://launchdarkly.com/docs/tutorials/otel-llm-practical-guide-with-langfuse.md): Instrument a real LLM application with OpenTelemetry spans, capture the right attributes, and fan out traces simultaneously to Langfuse and LaunchDarkly's Guarded Releases.
+- [OpenTelemetry for LLM applications: a practical guide with LaunchDarkly and Langfuse](https://launchdarkly.com/docs/tutorials/otel-llm-practical-guide-with-langfuse.md): Instrument a real LLM application with OpenTelemetry spans, capture the right attributes, and fan out traces simultaneously to Langfuse and LaunchDarkly Guarded Releases.
 - [Application tracing in .NET for performance monitoring](https://launchdarkly.com/docs/tutorials/application-tracing-in-dot-net.md): Learn how to implement application tracing in .NET using built-in tracing, DiagnosticSource, Application Insights, OpenTelemetry, and NLog to monitor performance and troubleshoot issues.
 - [Distributed tracing in Next.js apps](https://launchdarkly.com/docs/tutorials/distributed-tracing-in-nextjs.md): ![Watch on YouTube](https://www.youtube.com/live/z9g-eOPwndk)
 - [Real-time monitoring in Django: essential tools and techniques](https://launchdarkly.com/docs/tutorials/django-monitoring-solutions.md): In the fast-paced world of web development, real-time monitoring stands as a crucial component in maintaining the performance and reliability of Django applications.
@@ -1253,13 +1277,15 @@ Pricing information for LaunchDarkly plans is available at [https://launchdarkly
 - [Day 6 | 💸 The famous green character that stole your cloud budget: the cardinality problem](https://launchdarkly.com/docs/tutorials/cloud-budget-observability-holiday.md): Learn 3 ways to stop cardinality from stealing your cloud budget.
 - [Day 1 | 🎄 Observability under the tree: what changed in 2025](https://launchdarkly.com/docs/tutorials/observability-2025-recap-holiday.md): Get a full recap of key innovations in observability this year: AI-native OTel, mobile session replay and more.
 - [Day 2 | 🎅 He knows if you have been bad or good... But what if he gets it wrong?](https://launchdarkly.com/docs/tutorials/day-two-holiday-campaign_2025.md): When Santa's AI misjudges Emma and puts her on the Naughty List, traditional observability can't help. Find out why AI agents need three layers of observability.
-- [Day 4 | ❄️ Tracing the impact of holiday styling in your Node.js app](https://launchdarkly.com/docs/tutorials/observability-holiday-tracing.md): Use LaunchDarkly's flags with the observability SDK to release and observe seasonal-themed CSS.
-- [Detecting user frustration: understanding Rage Clicks and Session Replay](https://launchdarkly.com/docs/tutorials/detecting-user-frustration-session-replay.md): Learn how to automatically detect user frustration with LaunchDarkly's session replay and rage clicks.
+- [Day 4 | ❄️ Tracing the impact of holiday styling in your Node.js app](https://launchdarkly.com/docs/tutorials/observability-holiday-tracing.md): Use LaunchDarkly flags with the observability SDK to release and observe seasonal-themed CSS.
+- [Detecting user frustration: understanding Rage Clicks and Session Replay](https://launchdarkly.com/docs/tutorials/detecting-user-frustration-session-replay.md): Learn how to automatically detect user frustration with LaunchDarkly session replay and rage clicks.
 - [Build a user frustration detection & response system](https://launchdarkly.com/docs/tutorials/connecting-rage-clicks-to-guarded-releases.md): Learn how to connect rage click detection to LaunchDarkly Guarded Releases for automating actions.
-- [Add Observability to your React Native app in 5 minutes](https://launchdarkly.com/docs/tutorials/react-native-observability.md): See how your React Native iOS app is performing. Integrate LaunchDarkly’s new Observability SDK.
+- [Add Observability to your React Native app in 5 minutes](https://launchdarkly.com/docs/tutorials/react-native-observability.md): See how your React Native iOS app is performing. Integrate the new LaunchDarkly Observability SDK.
 
 ### Experimentation
 
+- [Cheaper per success, worse for users: testing tool search on an LLM agent](https://launchdarkly.com/docs/tutorials/llm-tool-search.md): Tool search cut an agent's tokens per task by 78% and its success rate from 71% to 27%.
+- [Your LLM's p90 time to successful completion might not exist](https://launchdarkly.com/docs/tutorials/llm-p90.md): Two Claude models landed within half a second at p90 among successes, until we counted the tasks they failed.
 - [Prompt an A/B test using Cursor and LaunchDarkly](https://launchdarkly.com/docs/tutorials/prompt-ab-test.md): Prompt a coding agent like Cursor to build an app, create a flag, and set up an A/B test in LaunchDarkly, with your approval at every step.
 - [Benchmark LangGraph, Strands, OpenAI Agents, and Google ADK on the same agent graph](https://launchdarkly.com/docs/tutorials/agent-graph-experiments.md): Benchmark LangGraph, Strands, OpenAI Agents SDK, and Google ADK by running all four over one LaunchDarkly agent graph with the model held constant. An experiment ranks them on latency and tokens with an LLM-as-a-judge quality guardrail, then the same flag promotes the winner to production with no redeploy.
 - [Using LaunchDarkly feature flags and Experimentation with Wordpress](https://launchdarkly.com/docs/tutorials/wordpress.md): This tutorial teaches you how to install and configure a LaunchDarkly SDK in a self-hosted WordPress environment, use feature flags for controlled rollouts and targeted content, and set up A/B experiments across a WordPress landing page.
